@@ -18,7 +18,8 @@ export default function Hero() {
 
   return (
     <section className="hero" id="hero" aria-label="Introduction">
-      {/* ── AMBIENT SOLAR AURA & VOLUMETRIC GLOW ── */}
+
+      {/* ── FULL-SECTION AMBIENT BACKGROUND ── */}
       <div className="hero__bg" aria-hidden="true">
         <div className="hero__solar-orb hero__solar-orb--main" />
         <div className="hero__solar-orb hero__solar-orb--secondary" />
@@ -26,27 +27,39 @@ export default function Hero() {
         <Canvas3D className="hero__canvas3d" />
       </div>
 
-      <div className="container hero__container">
-        {/* ── TOP: Announcement Badge ── */}
-        <div className="hero__announcement">
-          <a href="#contact" className="hero__announcement-badge border-glow-pulse">
-            <span className="hero__pulse-dot" />
-            <span>Open to Opportunities · Vadodara &amp; Remote</span>
-            <span className="hero__announcement-arrow">↗</span>
-          </a>
-        </div>
+      {/* ── 3D SILICON STAGE — ABSOLUTE RIGHT-HALF BACKGROUND ── */}
+      <div className="hero__stage-bg" aria-hidden="true">
+        <Neural3DStage />
+      </div>
 
-        {/* ── CENTER: RedSun Headline & Value Proposition ── */}
-        <div className="hero__heading-block">
+      {/* ── MAIN CONTENT LAYOUT ── */}
+      <div className="hero__inner">
+
+        {/* LEFT CONTENT COLUMN */}
+        <div className="hero__content">
+
+          {/* Status badge */}
+          <div className="hero__announcement">
+            <a href="#contact" className="hero__announcement-badge border-glow-pulse">
+              <span className="hero__pulse-dot" />
+              <span>Open to Opportunities · Vadodara &amp; Remote</span>
+              <span className="hero__announcement-arrow">↗</span>
+            </a>
+          </div>
+
+          {/* Hero Headline */}
           <h1 className="hero__title">
-            Turning Complex Ideas
-            <span className="hero__title-gradient">Into Intelligent Web Products.</span>
+            <span className="hero__title-line">Turning Complex</span>
+            <span className="hero__title-line">Ideas Into</span>
+            <span className="hero__title-gradient">Intelligent Web</span>
+            <span className="hero__title-gradient">Products.</span>
           </h1>
+
           <p className="hero__subtitle">
-            Full-Stack Web Developer &amp; Software Engineer. Operating Executive at <strong>Pattern LLC</strong> (2026 – Present). BCA graduate from Semcom, CVM University with <strong>9.55 CGPA (Rank 1)</strong>. Architecting high-concurrency systems, dynamic PHP/Python backends, and responsive React experiences.
+            Full-Stack Web Developer &amp; Software Engineer. Operating Executive at <strong>Pattern LLC</strong> (2026 – Present). BCA graduate from Semcom with <strong>9.55 CGPA (Rank 1)</strong>. Architecting high-concurrency systems, dynamic backends, and stunning React experiences.
           </p>
 
-          {/* Action CTAs */}
+          {/* CTA Buttons */}
           <div className="hero__actions">
             <MagneticButton
               as="a"
@@ -88,35 +101,28 @@ export default function Hero() {
               <span className="hero__btn-badge">v2.0</span>
             </MagneticButton>
           </div>
-        </div>
 
-        {/* ── INTEGRATED HIGH-TECH TELEMETRY HUD BAR ── */}
-        <div className="hero__hud-bar" aria-label="System Quick Metrics">
-          <div className="hero__hud-item">
-            <span className="hero__hud-val"><AnimatedCounter end={9.55} decimals={2} duration={2000} /></span>
-            <span className="hero__hud-lbl">CGPA DISTINCTION (RANK 1)</span>
-          </div>
-          <div className="hero__hud-sep" />
-          <div className="hero__hud-item">
-            <span className="hero__hud-val">Pattern LLC</span>
-            <span className="hero__hud-lbl">OPERATING EXECUTIVE (2026)</span>
-          </div>
-          <div className="hero__hud-sep" />
-          <div className="hero__hud-item">
-            <span className="hero__hud-val"><AnimatedCounter end={7} suffix="+" duration={1800} /></span>
-            <span className="hero__hud-lbl">SHIPPED SYSTEMS</span>
-          </div>
-          <div className="hero__hud-sep" />
-          <div className="hero__hud-item">
-            <span className="hero__hud-val">Full-Stack</span>
-            <span className="hero__hud-lbl">REACT · PYTHON · PHP · DB</span>
+          {/* Stats Row */}
+          <div className="hero__stats-row">
+            <div className="hero__stat">
+              <span className="hero__stat-val"><AnimatedCounter end={9.55} decimals={2} duration={2000} /></span>
+              <span className="hero__stat-lbl">CGPA · RANK 1</span>
+            </div>
+            <div className="hero__stat-div" />
+            <div className="hero__stat">
+              <span className="hero__stat-val">Pattern LLC</span>
+              <span className="hero__stat-lbl">OPS EXECUTIVE 2026</span>
+            </div>
+            <div className="hero__stat-div" />
+            <div className="hero__stat">
+              <span className="hero__stat-val"><AnimatedCounter end={7} suffix="+" duration={1800} /></span>
+              <span className="hero__stat-lbl">SHIPPED SYSTEMS</span>
+            </div>
           </div>
         </div>
 
-        {/* ── THE 3D SILICON PROCESSOR & NEURAL CIRCUIT STAGE (Direct Hero Stage, as in reference video) ── */}
-        <div className="hero__stage-container">
-          <Neural3DStage />
-        </div>
+        {/* RIGHT SPACER — 3D stage fills this area via absolute positioning */}
+        <div className="hero__stage-spacer" aria-hidden="true" />
       </div>
 
       {/* ── REDSUN INFINITE TECH MARQUEE TICKER ── */}

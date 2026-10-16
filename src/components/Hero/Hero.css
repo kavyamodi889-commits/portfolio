@@ -1,17 +1,15 @@
 /* ════════════════════════════════════════════════════════════════
    HERO — GCORE / REDSUN LUXURY SILICON OBSIDIAN AESTHETIC
+   Split Layout: Left content · Right 3D Stage Background
    ════════════════════════════════════════════════════════════════ */
 
 .hero {
   min-height: 100vh;
   position: relative;
   overflow: hidden;
-  padding-top: 110px;
-  padding-bottom: 20px;
   background: var(--bg);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 /* ── Ambient Background & Solar Orbs ── */
@@ -31,21 +29,20 @@
 }
 
 .hero__solar-orb--main {
-  width: 700px;
-  height: 700px;
-  top: -140px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: radial-gradient(circle, rgba(255, 87, 34, 0.18) 0%, rgba(234, 88, 12, 0.06) 50%, transparent 70%);
+  width: 800px;
+  height: 800px;
+  top: -200px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(255, 87, 34, 0.22) 0%, rgba(234, 88, 12, 0.09) 50%, transparent 70%);
   animation: float 8s ease-in-out infinite;
 }
 
 .hero__solar-orb--secondary {
   width: 500px;
   height: 500px;
-  top: 250px;
-  right: -120px;
-  background: radial-gradient(circle, rgba(255, 120, 40, 0.16) 0%, transparent 70%);
+  bottom: 0;
+  left: -80px;
+  background: radial-gradient(circle, rgba(255, 120, 40, 0.12) 0%, transparent 70%);
   filter: blur(85px);
   animation: floatRotate 14s ease-in-out infinite;
 }
@@ -54,39 +51,102 @@
   position: absolute;
   inset: 0;
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 48px 48px;
-  opacity: 0.5;
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 52px 52px;
+  opacity: 0.55;
 }
 
 .hero__canvas3d {
   position: absolute;
-  top: 10%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 750px;
-  height: 750px;
-  pointer-events: auto;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
   z-index: 0;
-  opacity: 0.35;
+  opacity: 0.18;
 }
 
-/* ── Container ── */
-.hero__container {
-  position: relative;
-  z-index: 2;
+/* ── 3D SILICON STAGE — ABSOLUTE POSITIONED BACKGROUND ── */
+.hero__stage-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end; /* Chip anchors to right side */
+  padding-right: 2%;
+  overflow: visible;
+}
+
+/* Strong dark gradient shield on left to protect text legibility */
+.hero__stage-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 68%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    #070810 0%,
+    #070810 40%,
+    rgba(7, 8, 16, 0.95) 55%,
+    rgba(7, 8, 16, 0.6) 72%,
+    transparent 100%
+  );
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* ── MAIN SPLIT LAYOUT ── */
+.hero__inner {
+  position: relative;
+  z-index: 3;
+  display: flex;
   align-items: center;
   width: 100%;
+  min-height: 100vh;
+  padding-top: 90px;
+  padding-bottom: 20px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: clamp(20px, 5vw, 100px);
+  padding-right: clamp(20px, 5vw, 80px);
 }
 
-/* ── Top Announcement Badge ── */
+/* LEFT CONTENT COLUMN */
+.hero__content {
+  flex: 0 0 auto;
+  width: min(520px, 48%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  position: relative;
+  z-index: 5;
+  /* Dark shim behind text for legibility against 3D stage bleed */
+  padding: 32px 36px 32px 0;
+}
+
+/* Right side spacer — occupied by 3D stage */
+.hero__stage-spacer {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Status Announcement Badge ── */
 .hero__announcement {
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  justify-content: flex-start;
+  margin-bottom: 24px;
   animation: fadeUp 0.6s var(--ease-spring) both;
 }
 
@@ -124,6 +184,7 @@
   border-radius: 50%;
   background: #10b981;
   box-shadow: 0 0 10px #10b981;
+  flex-shrink: 0;
   animation: pulse-dot 2s infinite ease-in-out;
 }
 
@@ -132,41 +193,43 @@
   font-size: 14px;
 }
 
-/* ── Heading Block ── */
-.hero__heading-block {
-  text-align: center;
-  max-width: 860px;
-  margin: 0 auto 28px;
-  position: relative;
-  z-index: 3;
-}
-
+/* ── Hero Title ── */
 .hero__title {
   font-family: var(--font-sans);
-  font-size: clamp(2.3rem, 5.2vw, 4.1rem);
+  font-size: clamp(2.8rem, 5.2vw, 5rem);
   font-weight: 900;
-  line-height: 1.12;
-  letter-spacing: -0.035em;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
   color: #ffffff;
-  margin: 0 0 18px;
+  margin: 0 0 24px;
   animation: fadeUp 0.7s var(--ease-spring) 0.1s both;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero__title-line {
+  display: block;
+  color: #ffffff;
 }
 
 .hero__title-gradient {
   display: block;
-  background: linear-gradient(135deg, #ffffff 25%, #ff8c42 70%, #ff5722 100%);
+  background: linear-gradient(135deg, #ffffff 20%, #ff9d5c 55%, #ff5722 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   animation: gradient-shift 6s ease infinite;
 }
 
+/* ── Subtitle ── */
 .hero__subtitle {
-  font-size: clamp(0.95rem, 1.8vw, 1.08rem);
+  font-size: clamp(0.92rem, 1.5vw, 1.05rem);
   color: #94a3b8;
-  line-height: 1.7;
-  max-width: 680px;
-  margin: 0 auto 28px;
+  line-height: 1.75;
+  max-width: 540px;
+  margin: 0 0 32px;
   animation: fadeUp 0.7s var(--ease-spring) 0.2s both;
 }
 
@@ -175,14 +238,17 @@
   font-weight: 700;
 }
 
-/* Actions */
+/* ── Action Buttons ── */
 .hero__actions {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 14px;
+  justify-content: flex-start;
+  gap: 10px;
   flex-wrap: wrap;
+  margin-bottom: 36px;
   animation: fadeUp 0.7s var(--ease-spring) 0.3s both;
+  width: 100%;
+  max-width: 480px;
 }
 
 .hero__btn-primary {
@@ -268,59 +334,50 @@
   border-radius: var(--r-full);
 }
 
-/* ── HIGH-TECH TELEMETRY HUD BAR ── */
-.hero__hud-bar {
+/* ── STATS ROW (replaces old HUD bar) ── */
+.hero__stats-row {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 20px;
-  padding: 10px 24px;
-  background: rgba(14, 16, 25, 0.75);
+  padding: 14px 22px;
+  background: rgba(14, 16, 25, 0.7);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 120, 40, 0.25);
-  border-radius: var(--r-full);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 87, 34, 0.1);
-  margin-bottom: 12px;
-  z-index: 3;
-  animation: fadeUp 0.7s var(--ease-spring) 0.35s both;
+  border: 1px solid rgba(255, 120, 40, 0.22);
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 87, 34, 0.08);
+  animation: fadeUp 0.7s var(--ease-spring) 0.4s both;
   flex-wrap: wrap;
 }
 
-.hero__hud-item {
+.hero__stat {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.hero__hud-val {
+.hero__stat-val {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   color: #ffffff;
+  line-height: 1;
 }
 
-.hero__hud-lbl {
+.hero__stat-lbl {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
   color: #ff9d5c;
+  text-transform: uppercase;
 }
 
-.hero__hud-sep {
+.hero__stat-div {
   width: 1px;
-  height: 14px;
-  background: rgba(255, 255, 255, 0.12);
-}
-
-/* ── 3D STAGE CONTAINER (DIRECT HERO BASE, NO EXTRA BOXING) ── */
-.hero__stage-container {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
 }
 
 /* ── Tech Marquee ── */
@@ -328,12 +385,13 @@
   width: 100%;
   overflow: hidden;
   position: relative;
-  padding: 18px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(10, 12, 18, 0.7);
+  padding: 16px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(8, 10, 16, 0.8);
   backdrop-filter: blur(10px);
-  margin-top: 24px;
+  z-index: 4;
+  flex-shrink: 0;
+  margin-top: auto;
 }
 
 .hero__marquee-track {
@@ -348,30 +406,109 @@
   align-items: center;
   gap: 8px;
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 600;
-  color: #64748b;
+  color: #475569;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .hero__marquee-dot {
   color: #ff5722;
-  font-size: 10px;
+  font-size: 9px;
 }
 
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to { transform: translateX(-33.333%); }
 }
 
-/* Responsive adjustments */
-@media (max-width: 860px) {
-  .hero__hud-sep {
+/* ════════════════ RESPONSIVE ════════════════ */
+
+@media (max-width: 1024px) {
+  .hero__stage-bg {
+    width: 70%;
+    opacity: 0.7;
+  }
+  .hero__content {
+    width: min(560px, 55%);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero__inner {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 100px;
+    padding-left: 20px;
+    padding-right: 20px;
+    gap: 0;
+  }
+
+  .hero__content {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 20px;
+  }
+
+  .hero__title {
+    font-size: clamp(2.2rem, 8vw, 3.2rem);
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero__subtitle {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .hero__actions {
+    justify-content: center;
+  }
+
+  .hero__stats-row {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__stage-bg {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    flex-shrink: 0;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    order: 1;
+  }
+
+  .hero__stage-bg::before {
     display: none;
   }
-  .hero__hud-bar {
-    border-radius: var(--r-xl);
-    gap: 12px 20px;
+
+  .hero__content {
+    order: 0;
+  }
+
+  .hero__stage-spacer {
+    display: none;
+  }
+
+  .hero__announcement {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+  .hero__stat-div {
+    display: none;
+  }
+  .hero__stats-row {
+    gap: 12px 16px;
   }
 }

@@ -2,14 +2,15 @@ import { useEffect, useRef, useState, useMemo } from 'react'
 import './Neural3DStage.css'
 
 // Satellite nodes placed in perspective around the central silicon processor
+// All nodes shifted right (+120px) so they stay within the right-panel background
 const NODES = [
   {
     id: 'react',
     label: 'React 19',
     sub: 'Modern Frontend',
     icon: '⚛',
-    x: -300,
-    y: -75,
+    x: -160,
+    y: -100,
     telemetry: 'Virtual DOM · Fiber Engine · 60 FPS'
   },
   {
@@ -17,8 +18,8 @@ const NODES = [
     label: 'Python / FastAPI',
     sub: 'AI & Microservices',
     icon: '🐍',
-    x: -380,
-    y: 55,
+    x: -220,
+    y: 60,
     telemetry: 'AsyncIO · Machine Learning · REST'
   },
   {
@@ -26,8 +27,8 @@ const NODES = [
     label: 'MySQL & ACID',
     sub: 'High Concurrency DB',
     icon: '🗄',
-    x: -250,
-    y: 155,
+    x: -120,
+    y: 175,
     telemetry: 'Indexing · Transactions · Replication'
   },
   {
