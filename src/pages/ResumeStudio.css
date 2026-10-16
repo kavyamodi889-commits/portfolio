@@ -1,16 +1,21 @@
-/* ─── RESUME STUDIO PAGE ─────────────────────────────────────── */
+/* ═══════════════════════════════════════════
+   RESUME STUDIO — REDSUN SOLAR OBSIDIAN
+   ═══════════════════════════════════════════ */
+
 .resume-studio-page {
   display: flex;
   min-height: 100vh;
-  background: var(--color-bg-alt);
+  background: #09090b;
+  color: #ffffff;
 }
 
 /* Sidebar */
 .resume-studio__sidebar {
   width: 320px;
   flex-shrink: 0;
-  background: var(--color-surface);
-  border-right: 1px solid var(--color-border);
+  background: rgba(14, 16, 25, 0.95);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   overflow-y: auto;
   position: sticky;
   top: 0;
@@ -29,24 +34,26 @@
   align-items: center;
   gap: var(--space-2);
   font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--color-text-muted);
+  font-weight: 600;
+  color: var(--text-3);
   text-decoration: none;
   transition: color var(--transition-fast);
   padding: var(--space-1) 0;
 }
 
-.studio-back-link:hover { color: var(--color-accent); }
+.studio-back-link:hover {
+  color: #ff7828;
+}
 
 .studio-sidebar__heading {
   font-size: var(--text-xl);
-  font-weight: var(--font-bold);
-  color: var(--color-text);
+  font-weight: 800;
+  color: #ffffff;
 }
 
 .studio-sidebar__sub {
   font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  color: var(--text-4);
   margin-top: var(--space-1);
 }
 
@@ -55,23 +62,26 @@
   flex-direction: column;
   gap: var(--space-3);
   padding-top: var(--space-4);
-  border-top: 1px solid var(--color-border-subtle);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.studio-sidebar__section:first-child { border-top: none; padding-top: 0; }
+.studio-sidebar__section:first-child {
+  border-top: none;
+  padding-top: 0;
+}
 
 .studio-panel-label {
   font-size: var(--text-xs);
-  font-weight: var(--font-bold);
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-text-muted);
+  color: #ff7828;
   font-family: var(--font-mono);
 }
 
 .studio-panel-note {
   font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  color: var(--text-4);
   line-height: var(--leading-relaxed);
 }
 
@@ -86,36 +96,37 @@
   text-align: left;
   padding: var(--space-4);
   border-radius: var(--radius-lg);
-  border: 2px solid var(--color-border);
-  background: var(--color-bg-alt);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  background: rgba(20, 23, 35, 0.6);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .studio-template-btn:hover {
-  border-color: var(--color-violet-300);
-  background: var(--color-violet-50);
+  border-color: rgba(255, 87, 34, 0.35);
+  background: rgba(25, 29, 45, 0.8);
 }
 
 .studio-template-btn.active {
-  border-color: var(--color-accent);
-  background: var(--color-accent-light);
+  border-color: #ff5722;
+  background: rgba(255, 87, 34, 0.12);
+  box-shadow: 0 0 20px rgba(255, 87, 34, 0.2);
 }
 
 .studio-template-btn__name {
   font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--color-text);
+  font-weight: 700;
+  color: #ffffff;
   margin-bottom: var(--space-1);
 }
 
 .studio-template-btn.active .studio-template-btn__name {
-  color: var(--color-accent-hover);
+  color: #ff7828;
 }
 
 .studio-template-btn__desc {
   font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  color: var(--text-3);
   line-height: var(--leading-relaxed);
 }
 
@@ -135,7 +146,7 @@
 }
 
 .studio-toggle--no-data {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
@@ -148,16 +159,17 @@
 
 .studio-toggle__track {
   position: relative;
-  width: 36px;
+  width: 38px;
   height: 20px;
   border-radius: var(--radius-full);
-  background: var(--color-border);
+  background: rgba(255, 255, 255, 0.15);
   flex-shrink: 0;
   transition: background var(--transition-fast);
 }
 
 .studio-toggle input:checked + .studio-toggle__track {
-  background: var(--color-accent);
+  background: #ff5722;
+  box-shadow: 0 0 10px rgba(255, 87, 34, 0.5);
 }
 
 .studio-toggle__thumb {
@@ -167,40 +179,36 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #fff;
-  box-shadow: var(--shadow-xs);
+  background: #ffffff;
   transition: transform var(--transition-fast);
 }
 
 .studio-toggle input:checked + .studio-toggle__track .studio-toggle__thumb {
-  transform: translateX(16px);
-}
-
-.studio-toggle input:focus-visible + .studio-toggle__track {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 2px;
+  transform: translateX(18px);
 }
 
 .studio-toggle__label {
   font-size: var(--text-sm);
-  color: var(--color-text-secondary);
+  color: #cbd5e1;
 }
 
 .studio-toggle__empty {
   font-size: var(--text-xs);
-  color: var(--color-text-placeholder);
+  color: var(--text-4);
 }
 
 /* Actions */
 .studio-actions {
+  display: flex;
+  flex-direction: column;
   gap: var(--space-3) !important;
 }
 
 .studio-download-msg {
   font-size: var(--text-xs);
-  color: var(--color-text-secondary);
-  background: var(--color-accent-light);
-  border: 1px solid var(--color-violet-200);
+  color: #ff7828;
+  background: rgba(255, 87, 34, 0.12);
+  border: 1px solid rgba(255, 87, 34, 0.3);
   border-radius: var(--radius-md);
   padding: var(--space-3);
   line-height: var(--leading-relaxed);
@@ -217,17 +225,17 @@
 
 .studio-info__steps li {
   font-size: var(--text-xs);
-  color: var(--color-text-secondary);
+  color: var(--text-3);
   line-height: var(--leading-relaxed);
 }
 
 .studio-info__steps code {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  background: var(--color-bg-alt);
-  padding: 1px 4px;
+  font-size: 0.72rem;
+  background: rgba(255, 87, 34, 0.15);
+  padding: 2px 6px;
   border-radius: var(--radius-sm);
-  color: var(--color-accent);
+  color: #ff7828;
 }
 
 /* Preview area */
@@ -239,19 +247,20 @@
   padding: var(--space-10);
   overflow-y: auto;
   min-height: 100vh;
+  background: #09090b;
 }
 
 #resume-print-area {
   width: 100%;
   max-width: 794px; /* A4 width in px at 96dpi */
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 87, 34, 0.1);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  background: #ffffff;
 }
 
-/* ─── PRINT STYLES ─────────────────────────────────────────────── */
+/* Print Styles */
 @media print {
-  /* Hide everything except resume content */
   .navbar,
   .resume-studio__sidebar,
   .resume-studio__actions,
@@ -294,49 +303,26 @@
     margin: 15mm 20mm;
   }
 
-  /* Prevent heading-content splitting */
   h1, h2, h3 { page-break-after: avoid; }
   .resume-section { page-break-inside: avoid; }
   .resume-entry { page-break-inside: avoid; }
 }
 
-/* ─── RESPONSIVE ─────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .resume-studio-page {
     flex-direction: column;
   }
-
   .resume-studio__sidebar {
     width: 100%;
     height: auto;
     position: static;
-    overflow: visible;
   }
-
   .studio-sidebar__inner {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--space-4);
-    align-items: start;
   }
-
-  .studio-sidebar__section {
-    border-top: none;
-    padding-top: 0;
-  }
-
   .resume-studio__preview {
     padding: var(--space-6);
-    min-height: 60vh;
-  }
-}
-
-@media (max-width: 640px) {
-  .studio-sidebar__inner {
-    grid-template-columns: 1fr;
-  }
-
-  .resume-studio__preview {
-    padding: var(--space-4) var(--space-2);
   }
 }

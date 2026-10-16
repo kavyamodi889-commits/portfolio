@@ -13,9 +13,9 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
-/* Header band — Pinterest luxury subtle gradient & clean branding */
+/* Header band — RedSun luxury solar gradient & clean branding */
 .mod-resume__header {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #9333ea 100%);
+  background: linear-gradient(135deg, #09090b 0%, #1c1917 45%, #ea580c 100%);
   padding: 32px 40px;
   color: #ffffff;
   position: relative;
@@ -129,10 +129,10 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #6366f1;
+  color: #ea580c;
   margin-bottom: 12px;
   padding-bottom: 5px;
-  border-bottom: 1.5px solid #ede9fe;
+  border-bottom: 1.5px solid #ffedd5;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -144,7 +144,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #7c3aed;
+  background: #ff5722;
 }
 
 .mod-section__text {

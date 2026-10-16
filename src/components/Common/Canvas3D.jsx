@@ -42,7 +42,7 @@ export default function Canvas3D({ className = '' }) {
         y,
         z,
         baseSize: Math.random() * 2 + 1.2,
-        color: i % 3 === 0 ? '#06b6d4' : i % 2 === 0 ? '#8b5cf6' : '#ec4899',
+        color: i % 4 === 0 ? '#ff7828' : i % 3 === 0 ? '#ff5722' : i % 2 === 0 ? '#ff3d00' : '#06b6d4',
       })
     }
 
@@ -164,7 +164,7 @@ export default function Canvas3D({ className = '' }) {
 
           if (dist < maxDistance) {
             const lineAlpha = (1 - dist / maxDistance) * 0.22 * Math.min(p1.alpha, p2.alpha)
-            ctx.strokeStyle = `rgba(139, 92, 246, ${lineAlpha})`
+            ctx.strokeStyle = `rgba(255, 87, 34, ${lineAlpha})`
             ctx.beginPath()
             ctx.moveTo(p1.projX, p1.projY)
             ctx.lineTo(p2.projX, p2.projY)
