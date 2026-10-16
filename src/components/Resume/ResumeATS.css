@@ -1,0 +1,200 @@
+/* ─── ATS PROFESSIONAL RESUME ────────────────────────────────── */
+
+.ats-resume {
+  background: #ffffff;
+  color: #1a1523;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11.5px;
+  line-height: 1.5;
+  padding: 36px 48px;
+  min-height: 297mm;
+  width: 210mm;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Header */
+.ats-resume__header {
+  margin-bottom: 18px;
+  border-bottom: 2px solid #1a1523;
+  padding-bottom: 14px;
+}
+
+.ats-resume__name {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #1a1523;
+  margin-bottom: 4px;
+}
+
+.ats-resume__headline {
+  font-size: 12px;
+  color: #4a4558;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
+}
+
+.ats-resume__contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-size: 10.5px;
+  color: #4a4558;
+}
+
+.ats-resume__contact span { display: inline-flex; align-items: center; }
+
+.ats-resume__contact a {
+  color: #5b21b6;
+  text-decoration: none;
+}
+
+.ats-resume__contact a:hover {
+  text-decoration: underline;
+}
+
+/* Body */
+.ats-resume__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Sections */
+.ats-section {
+  margin-bottom: 14px;
+  page-break-inside: avoid;
+}
+
+.ats-section__title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #1a1523;
+  margin-bottom: 3px;
+}
+
+.ats-section__rule {
+  height: 1px;
+  background: #1a1523;
+  margin-bottom: 8px;
+}
+
+.ats-section__text {
+  font-size: 11px;
+  color: #2d2638;
+  line-height: 1.6;
+}
+
+/* Skills */
+.ats-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ats-skills__row {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.ats-skills__cat {
+  font-weight: 700;
+  font-size: 11px;
+  color: #1a1523;
+  white-space: nowrap;
+  min-width: 140px;
+}
+
+.ats-skills__items {
+  font-size: 11px;
+  color: #2d2638;
+}
+
+/* Entries */
+.ats-entry {
+  margin-bottom: 10px;
+  page-break-inside: avoid;
+}
+
+.ats-entry:last-child { margin-bottom: 0; }
+
+.ats-entry__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.ats-entry__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a1523;
+  flex: 1;
+}
+
+.ats-entry__date {
+  font-size: 10.5px;
+  color: #7c7590;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ats-entry__sub {
+  font-size: 11px;
+  color: #4a4558;
+  margin-bottom: 3px;
+}
+
+.ats-entry__badge {
+  color: #7c3aed;
+  font-weight: 600;
+}
+
+.ats-entry__link {
+  font-size: 10.5px;
+  color: #5b21b6;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.ats-entry__link:hover {
+  text-decoration: underline;
+}
+
+.ats-entry__desc {
+  font-size: 11px;
+  color: #2d2638;
+  line-height: 1.55;
+  margin-top: 3px;
+}
+
+.ats-entry__bullets {
+  margin-top: 4px;
+  padding-left: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ats-entry__bullets li {
+  font-size: 11px;
+  color: #2d2638;
+  list-style: disc;
+  line-height: 1.5;
+}
+
+/* Print */
+@media print {
+  .ats-resume {
+    padding: 0;
+    width: 100%;
+    font-size: 11px;
+    box-shadow: none;
+  }
+}

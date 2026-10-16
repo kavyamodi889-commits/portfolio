@@ -1,0 +1,199 @@
+/* ─── RECRUITER & RESUME SHOWCASE ───────────────────────────── */
+
+.recruiter-section {
+  background: var(--color-bg);
+  position: relative;
+}
+
+.recruiter__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .recruiter__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dossier Card */
+.recruiter__card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-lg);
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-4));
+}
+
+.recruiter__badge-row {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+}
+
+.recruiter__status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.recruiter__candidate-name {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.recruiter__candidate-headline {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+}
+
+.recruiter__facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-6);
+}
+
+.recruiter__fact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.recruiter__fact-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.recruiter__fact-value {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.recruiter__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.recruiter__download-msg {
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  margin-top: var(--space-3);
+  font-weight: 500;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-primary-subtle);
+  border-radius: var(--radius-md);
+}
+
+/* Preview Container */
+.recruiter__preview-container {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+}
+
+.recruiter__preview-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.recruiter__template-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.recruiter__template-tab {
+  background: transparent;
+  border: none;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.recruiter__template-tab:hover {
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.recruiter__template-tab.active {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.recruiter__studio-cta {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.recruiter__studio-cta:hover {
+  text-decoration: underline;
+}
+
+/* Scaled Viewport */
+.recruiter__preview-viewport {
+  height: 580px;
+  overflow-y: auto;
+  background: #f1f5f9;
+  padding: var(--space-4);
+  display: flex;
+  justify-content: center;
+}
+
+.recruiter__preview-scale {
+  width: 100%;
+  max-width: 650px;
+  background: #fff;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 640px) {
+  .recruiter__preview-viewport {
+    height: 440px;
+    padding: var(--space-2);
+  }
+}
