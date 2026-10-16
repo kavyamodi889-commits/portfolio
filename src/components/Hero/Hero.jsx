@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import { profile, contactLinks } from '../../data/portfolioData'
+import Canvas3D from '../Common/Canvas3D'
+import TiltCard from '../Common/TiltCard'
 import './Hero.css'
 
-// SVG icons inline to avoid dependencies
 function GitHubIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -42,7 +43,15 @@ function DownloadIcon() {
 export default function Hero() {
   const scrollToProjects = () => {
     const el = document.getElementById('projects')
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (el) {
+      const navOffset = 70
+      const elementPosition = el.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - navOffset
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      })
+    }
   }
 
   const githubLink = contactLinks.find((l) => l.icon === 'github')
@@ -50,7 +59,10 @@ export default function Hero() {
 
   return (
     <section className="hero" id="home" aria-label="Introduction">
-      {/* Abstract orb background */}
+      {/* 3D Interactive Particle Constellation Canvas */}
+      <Canvas3D />
+
+      {/* Ambient background glow orbs */}
       <div className="hero__orb-container" aria-hidden="true">
         <div className="hero__orb hero__orb--primary" />
         <div className="hero__orb hero__orb--secondary" />
@@ -59,28 +71,47 @@ export default function Hero() {
       </div>
 
       <div className="container hero__content">
+        {/* Left Column: Introduction & CTAs */}
         <div className="hero__text animate-fade-in">
-          {/* Label */}
+          {/* Status Badge */}
           <div className="hero__label animate-fade-in delay-1">
             <span className="hero__label-dot" />
-            <span>Available for opportunities</span>
+            <span className="hero__label-text">Available for Full-Time &amp; Freelance Roles</span>
           </div>
 
-          {/* Name */}
+          {/* Headline Name */}
           <h1 className="hero__name animate-fade-in delay-2">
             Hi, I&apos;m{' '}
             <span className="hero__name-highlight">{profile.name}</span>
           </h1>
 
-          {/* Tagline */}
-          <p className="hero__tagline animate-fade-in delay-3">
-            {profile.tagline}
+          {/* Animated Role Tagline */}
+          <div className="hero__role-badge animate-fade-in delay-3">
+            <span className="hero__role-cyan">Full-Stack Developer</span>
+            <span className="hero__role-divider">/</span>
+            <span className="hero__role-purple">Software Engineer</span>
+          </div>
+
+          {/* Bio Summary */}
+          <p className="hero__summary animate-fade-in delay-4">
+            BCA graduate from <strong>Semcom (9.55 CGPA)</strong> and intern at <strong>Anugrah Accounting</strong>. I build high-performance web systems, responsive desktop business software, and modern cloud platforms using <strong>React, Python, PHP, MySQL, and VB.NET</strong>.
           </p>
 
-          {/* Summary */}
-          <p className="hero__summary animate-fade-in delay-4">
-            {profile.summary}
-          </p>
+          {/* Quick Stats Grid */}
+          <div className="hero__stats-row animate-fade-in delay-4">
+            <div className="hero__stat-pill">
+              <span className="stat-pill-val">9.55</span>
+              <span className="stat-pill-lbl">CGPA (Semcom)</span>
+            </div>
+            <div className="hero__stat-pill">
+              <span className="stat-pill-val">7+</span>
+              <span className="stat-pill-lbl">Live Projects</span>
+            </div>
+            <div className="hero__stat-pill">
+              <span className="stat-pill-val">100%</span>
+              <span className="stat-pill-lbl">Clean Code</span>
+            </div>
+          </div>
 
           {/* CTAs */}
           <div className="hero__actions animate-fade-in delay-5">
@@ -90,7 +121,8 @@ export default function Hero() {
               type="button"
               id="hero-explore-btn"
             >
-              Explore My Work
+              <span>Explore My Work</span>
+              <span className="btn-arrow" aria-hidden="true">&darr;</span>
             </button>
             <Link
               to="/resume"
@@ -99,11 +131,11 @@ export default function Hero() {
               title="Open Resume Studio & Download PDF"
             >
               <DownloadIcon />
-              Download Résumé
+              <span>Résumé Studio</span>
             </Link>
           </div>
 
-          {/* Social links */}
+          {/* Social Links */}
           <div className="hero__social animate-fade-in delay-6">
             {githubLink && (
               <a
@@ -128,50 +160,56 @@ export default function Hero() {
                 id="hero-linkedin-link"
               >
                 <LinkedInIcon />
-                <span>linkedin.com/in/kavya-modi</span>
+                <span>LinkedIn</span>
               </a>
             )}
           </div>
         </div>
 
-        {/* Visual element */}
-        <div className="hero__visual animate-fade-in-right delay-3" aria-hidden="true">
-          <div className="hero__visual-card">
-            <div className="hero__visual-window">
+        {/* Right Column: 3D Interactive Tilt Card with Code Terminal */}
+        <div className="hero__visual animate-fade-in-right delay-3">
+          <TiltCard maxTilt={14} scale={1.03} className="hero__tilt-card">
+            <div className="hero__visual-card">
+              {/* Window Header */}
               <div className="hero__visual-dots">
-                <span /><span /><span />
+                <span className="dot dot--red" />
+                <span className="dot dot--yellow" />
+                <span className="dot dot--green" />
+                <span className="hero__card-filename">developer.config.ts</span>
               </div>
+
+              {/* Code display */}
               <div className="hero__visual-code">
                 <div className="hero__code-line">
                   <span className="c-keyword">const</span>{' '}
-                  <span className="c-var">kavya</span>{' '}
+                  <span className="c-var">engineer</span>{' '}
                   <span className="c-op">=</span>{' '}
                   <span className="c-brace">{'{'}</span>
                 </div>
                 <div className="hero__code-line hero__code-line--indent">
-                  <span className="c-prop">role</span>
+                  <span className="c-prop">name</span>
                   <span className="c-colon">:</span>{' '}
-                  <span className="c-string">&apos;Developer&apos;</span><span className="c-comma">,</span>
+                  <span className="c-string">&apos;Kavya Modi&apos;</span><span className="c-comma">,</span>
                 </div>
                 <div className="hero__code-line hero__code-line--indent">
-                  <span className="c-prop">skills</span>
+                  <span className="c-prop">role</span>
                   <span className="c-colon">:</span>{' '}
-                  <span className="c-brace">[</span>
-                  <span className="c-string">&apos;PHP&apos;</span>
-                  <span className="c-comma">,</span>{' '}
-                  <span className="c-string">&apos;Python&apos;</span>
-                  <span className="c-comma">,</span>
-                  <span className="c-brace">]</span><span className="c-comma">,</span>
+                  <span className="c-string">&apos;Full Stack Web &amp; Software&apos;</span><span className="c-comma">,</span>
                 </div>
                 <div className="hero__code-line hero__code-line--indent">
                   <span className="c-prop">degree</span>
                   <span className="c-colon">:</span>{' '}
-                  <span className="c-string">&apos;BCA · Semcom&apos;</span><span className="c-comma">,</span>
+                  <span className="c-string">&apos;BCA · Semcom (9.55 CGPA)&apos;</span><span className="c-comma">,</span>
                 </div>
                 <div className="hero__code-line hero__code-line--indent">
-                  <span className="c-prop">cgpa</span>
+                  <span className="c-prop">stack</span>
                   <span className="c-colon">:</span>{' '}
-                  <span className="c-string">&apos;9.55 / 10&apos;</span><span className="c-comma">,</span>
+                  <span className="c-brace">[</span>
+                  <span className="c-string">&apos;React&apos;</span><span className="c-comma">,</span>{' '}
+                  <span className="c-string">&apos;Python&apos;</span><span className="c-comma">,</span>{' '}
+                  <span className="c-string">&apos;PHP&apos;</span><span className="c-comma">,</span>{' '}
+                  <span className="c-string">&apos;MySQL&apos;</span>
+                  <span className="c-brace">]</span><span className="c-comma">,</span>
                 </div>
                 <div className="hero__code-line hero__code-line--indent">
                   <span className="c-prop">internship</span>
@@ -179,9 +217,9 @@ export default function Hero() {
                   <span className="c-string">&apos;Anugrah Accounting&apos;</span><span className="c-comma">,</span>
                 </div>
                 <div className="hero__code-line hero__code-line--indent">
-                  <span className="c-prop">building</span>
+                  <span className="c-prop">status</span>
                   <span className="c-colon">:</span>{' '}
-                  <span className="c-string">&apos;Production Apps&apos;</span><span className="c-comma">,</span>
+                  <span className="c-string c-highlight">&apos;Open to Opportunities&apos;</span>
                 </div>
                 <div className="hero__code-line">
                   <span className="c-brace">{'}'}</span>
@@ -190,23 +228,25 @@ export default function Hero() {
                   <span className="c-cursor">█</span>
                 </div>
               </div>
+
+              {/* 3D Floating Tech Badges */}
+              <div className="hero__badge hero__badge--1">⚡ React + Vite</div>
+              <div className="hero__badge hero__badge--2">🐍 Python &amp; FastAPI</div>
+              <div className="hero__badge hero__badge--3">💾 MySQL + PHP</div>
             </div>
-            {/* Skill badges floating */}
-            <div className="hero__badge hero__badge--1">PHP + MySQL</div>
-            <div className="hero__badge hero__badge--2">VB.NET</div>
-            <div className="hero__badge hero__badge--3">React</div>
-          </div>
+          </TiltCard>
         </div>
       </div>
 
-      {/* Scroll hint */}
+      {/* Floating Scroll Indicator Button */}
       <button
         className="hero__scroll-hint"
         onClick={scrollToProjects}
-        aria-label="Scroll to projects"
+        aria-label="Scroll to featured projects"
         type="button"
         id="hero-scroll-btn"
       >
+        <span className="scroll-hint-text">EXPLORE</span>
         <ArrowDownIcon />
       </button>
     </section>

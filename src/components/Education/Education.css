@@ -1,13 +1,21 @@
-/* ─── EDUCATION & EXPERIENCE ─────────────────────────────────── */
+/* ─── EDUCATION / EXPERIENCE — CYBER LUXURY ─────────────────── */
 .education-section {
-  background: var(--color-bg);
+  background: rgba(4, 5, 10, 0.5);
+  position: relative;
 }
 
 .education__layout {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: var(--space-12);
   margin-bottom: var(--space-16);
+}
+
+@media (max-width: 800px) {
+  .education__layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
 }
 
 .edu-col-header {
@@ -17,22 +25,34 @@
 .edu-col-badge {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--color-primary);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 600;
-  display: inline-block;
-  margin-bottom: var(--space-1);
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: var(--space-2);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+}
+
+.edu-col-badge--edu {
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  color: #06b6d4;
 }
 
 .edu-col-badge--exp {
-  color: #d97706;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #f59e0b;
 }
 
 .edu-col-title {
   font-size: var(--text-2xl);
-  font-weight: 700;
-  color: var(--color-text);
+  font-weight: 800;
+  color: #f1f5f9;
+  letter-spacing: -0.02em;
 }
 
 /* Timeline */
@@ -45,7 +65,7 @@
 
 .timeline__item {
   display: flex;
-  gap: var(--space-6);
+  gap: var(--space-5);
   position: relative;
 }
 
@@ -54,7 +74,7 @@
   flex-direction: column;
   align-items: center;
   flex-shrink: 0;
-  width: 20px;
+  width: 22px;
   padding-top: 4px;
 }
 
@@ -62,19 +82,33 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--color-primary);
-  border: 3px solid var(--color-bg);
-  box-shadow: 0 0 0 2px var(--color-primary);
-  flex-shrink: 0;
+  border: 2px solid #8b5cf6;
+  background: var(--color-bg);
+  position: relative;
   z-index: 1;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+}
+
+.timeline__item:hover .timeline__dot {
+  border-color: #06b6d4;
+  background: rgba(6, 182, 212, 0.2);
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.5);
+  transform: scale(1.2);
+}
+
+.timeline__dot--active {
+  background: #8b5cf6;
+  border-color: #c4b5fd;
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.6);
 }
 
 .timeline__line {
-  width: 2px;
   flex: 1;
-  background: linear-gradient(to bottom, var(--color-violet-300), var(--color-border));
-  margin-top: var(--space-2);
-  min-height: var(--space-8);
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(139, 92, 246, 0.5), rgba(139, 92, 246, 0.05));
+  margin-top: 4px;
+  margin-bottom: 0;
 }
 
 .timeline__content {
@@ -82,245 +116,221 @@
   padding-bottom: var(--space-8);
 }
 
-.timeline__item--last .timeline__content {
-  padding-bottom: 0;
-}
-
-/* Edu card */
-.edu-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+.timeline__card {
+  background: rgba(14, 17, 30, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: var(--radius-xl);
-  padding: var(--space-6);
+  padding: var(--space-5) var(--space-6);
   transition: all var(--transition-base);
 }
 
-.edu-card:hover {
-  border-color: var(--color-violet-300);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+.timeline__card:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(139, 92, 246, 0.12);
+  transform: translateX(4px);
 }
 
-.edu-card__header {
+.timeline__card-header {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
+  justify-content: space-between;
   gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.timeline__title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+
+.timeline__status-badge {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-completed {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-active {
+  background: rgba(6, 182, 212, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  animation: pulse-ring 3s ease infinite;
+}
+
+.status-current {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.timeline__institution {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: #8b5cf6;
+  margin-bottom: var(--space-1);
+}
+
+.timeline__location,
+.timeline__dates {
+  font-size: var(--text-xs);
+  color: #475569;
+  font-family: var(--font-mono);
+  margin-bottom: 4px;
+}
+
+.timeline__score {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  margin-top: var(--space-2);
+}
+
+.timeline__role {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: #06b6d4;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
   margin-bottom: var(--space-2);
 }
 
-.edu-card__degree {
-  font-size: var(--text-base);
-  font-weight: var(--font-bold);
-  color: var(--color-text);
-  line-height: 1.4;
-}
-
-.edu-card__institution {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  margin-top: var(--space-1);
-}
-
-.edu-card__badges {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  flex-wrap: wrap;
-}
-
-.edu-score-badge {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--color-primary);
-  background: var(--color-primary-subtle);
-  border: 1px solid rgba(124, 58, 237, 0.25);
-  padding: 3px 8px;
-  border-radius: var(--radius-full);
-  white-space: nowrap;
-}
-
-.edu-status {
+.timeline__summary {
   font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
-  padding: 3px 8px;
-  border-radius: var(--radius-full);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.edu-status--current {
-  background: var(--color-violet-50);
-  color: var(--color-violet-700);
-  border: 1px solid var(--color-violet-200);
-}
-
-.edu-status--done {
-  background: #ecfdf5;
-  color: #059669;
-  border: 1px solid #a7f3d0;
-}
-
-.edu-status--exp {
-  background: #fffbeb;
-  color: #92400e;
-  border: 1px solid #fde68a;
-}
-
-.edu-card__years {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-3);
-}
-
-.edu-card__desc {
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
+  color: #64748b;
   line-height: var(--leading-relaxed);
-  margin-bottom: var(--space-3);
-}
-
-.edu-card__highlights {
-  padding-left: var(--space-4);
-  margin: var(--space-2) 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.edu-card__highlights li {
-  list-style: disc;
-  font-size: var(--text-xs);
-  color: var(--color-text-secondary);
-  line-height: 1.5;
-}
-
-.edu-card__relevant {
-  margin-top: var(--space-4);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.edu-card__relevant-label {
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-family: var(--font-mono);
-}
-
-.edu-card__relevant-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-/* ─── CERTIFICATIONS GRID ────────────────────────────────────── */
-
-.cert-section {
-  padding-top: var(--space-8);
-  border-top: 1px solid var(--color-border);
-}
-
-.cert-section__header {
-  margin-bottom: var(--space-8);
-}
-
-.cert-section__title {
-  font-size: var(--text-3xl);
-  font-weight: 700;
-  color: var(--color-text);
-  margin-top: var(--space-1);
-}
-
-.cert-section__sub {
-  font-size: var(--text-base);
-  color: var(--color-text-secondary);
-  max-width: 680px;
   margin-top: var(--space-2);
-  line-height: var(--leading-relaxed);
 }
 
-.cert__grid {
+/* Relevant courses */
+.timeline__relevant {
+  margin-top: var(--space-3);
+}
+
+.timeline__relevant-label {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+  display: block;
+}
+
+.timeline__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.timeline__tag {
+  font-size: 11px;
+  padding: 3px 9px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #475569;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+/* Certifications */
+.certifications {
+  margin-top: var(--space-12);
+}
+
+.cert-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-4);
 }
 
 .cert-card {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-4);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: rgba(14, 17, 30, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: var(--radius-xl);
   padding: var(--space-5);
   transition: all var(--transition-base);
 }
 
 .cert-card:hover {
-  border-color: var(--color-primary-light);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.cert-card--achieve {
-  border-color: rgba(245, 158, 11, 0.3);
-  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(254, 243, 199, 0.15) 100%);
+  border-color: rgba(139, 92, 246, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 18px rgba(139, 92, 246, 0.12);
 }
 
 .cert-card__icon {
-  font-size: var(--text-2xl);
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-lg);
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  font-size: 28px;
+  margin-bottom: var(--space-3);
 }
 
-.cert-card__content {
-  flex: 1;
-}
-
-.cert-card__category {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--color-primary);
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  display: block;
-  margin-bottom: 2px;
-}
-
-.cert-card--achieve .cert-card__category {
-  color: #d97706;
-}
-
-.cert-card__title {
-  font-size: var(--text-base);
+.cert-card__name {
+  font-size: var(--text-sm);
   font-weight: 700;
-  color: var(--color-text);
+  color: #f1f5f9;
+  letter-spacing: -0.01em;
   margin-bottom: 4px;
 }
 
 .cert-card__issuer {
   font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  line-height: var(--leading-normal);
+  color: #8b5cf6;
+  font-weight: 600;
 }
 
-@media (max-width: 900px) {
-  .education__layout {
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
+.cert-card__date {
+  font-size: 11px;
+  color: #475569;
+  font-family: var(--font-mono);
+  margin-top: 4px;
+}
+
+.cert-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: var(--space-3);
+  font-size: 11px;
+  font-weight: 600;
+  color: #06b6d4;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  transition: all var(--transition-fast);
+}
+
+.cert-card__link:hover {
+  color: #38bdf8;
+}
+
+@media (max-width: 600px) {
+  .cert-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

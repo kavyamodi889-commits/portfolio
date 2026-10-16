@@ -2,6 +2,14 @@ import { useState } from 'react'
 import { skills, projects } from '../../data/portfolioData'
 import './Skills.css'
 
+const CATEGORY_ICONS = {
+  'Languages & Frameworks': '⚡',
+  'Styling & UI': '🎨',
+  'Databases & Storage': '🗄️',
+  'Tools & DevOps': '🛠️',
+  'Professional Skills': '🧠',
+}
+
 export default function Skills() {
   const [selectedSkill, setSelectedSkill] = useState(null)
 
@@ -20,7 +28,7 @@ export default function Skills() {
           <span className="section-label">Technical Profile</span>
           <h2 className="section-title" id="skills-heading">Skills &amp; Technologies</h2>
           <p className="section-subtitle">
-            A curated set of technologies I use to build real-world applications. Click any skill to inspect related projects and system usage.
+            A curated set of technologies I use to build real-world applications. Click any skill to inspect related projects.
           </p>
         </header>
 
@@ -29,8 +37,8 @@ export default function Skills() {
           <div className="skills__selected-banner animate-fade-in" role="region" aria-live="polite">
             <div className="skills__selected-header">
               <div>
-                <span className="skills__selected-label">Selected Technology:</span>
-                <span className="skills__selected-name">{selectedSkill}</span>
+                <span className="skills__selected-label">Selected:</span>
+                <span className="skills__selected-name"> {selectedSkill}</span>
               </div>
               <button
                 type="button"
@@ -38,13 +46,13 @@ export default function Skills() {
                 onClick={() => setSelectedSkill(null)}
                 aria-label="Clear selected skill"
               >
-                Clear selection &times;
+                Clear ×
               </button>
             </div>
 
             {relatedProjects.length > 0 ? (
               <div className="skills__selected-projects">
-                <span className="skills__selected-sub">Featured in projects:</span>
+                <span className="skills__selected-sub">Featured in:</span>
                 <div className="skills__selected-list">
                   {relatedProjects.map((p) => (
                     <a
@@ -53,44 +61,53 @@ export default function Skills() {
                       className="skills__project-link"
                       onClick={(e) => {
                         e.preventDefault()
-                        const el = document.getElementById(`project-title-${p.id}`)
+                        const el = document.getElementById(p.id)
                         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
                       }}
                     >
-                      {p.title} &rarr;
+                      {p.title} →
                     </a>
                   ))}
                 </div>
               </div>
             ) : (
-              <p className="skills__selected-note">
-                Used in academic coursework, foundational computer science exercises, and continuous learning modules.
+              <p className="skills__selected-note" style={{ fontSize: 'var(--text-xs)', color: '#64748b', marginTop: '0.5rem' }}>
+                Used in academic coursework and continuous learning.
               </p>
             )}
           </div>
         )}
 
+        {/* Skills Grid */}
         <div className="skills__grid">
           {skills.map((group, i) => (
             <div
               key={group.category}
-              className={`skills__group animate-fade-in delay-${i + 1}`}
+              className={`skill-category animate-fade-in delay-${Math.min(i + 1, 6)}`}
               role="group"
               aria-labelledby={`skill-cat-${i}`}
+              style={{ animationDelay: `${i * 80}ms` }}
             >
-              <h3 className="skills__category" id={`skill-cat-${i}`}>
-                {group.category}
-              </h3>
-              <div className="skills__items" role="list">
+              <div className="skill-category__header">
+                <span className="skill-category__icon" aria-hidden="true">
+                  {CATEGORY_ICONS[group.category] || '💡'}
+                </span>
+                <h3 className="skill-category__title" id={`skill-cat-${i}`}>
+                  {group.category}
+                </h3>
+                <span className="skill-category__count">{group.items.length}</span>
+              </div>
+
+              <div className="skill-category__items" role="list">
                 {group.items.map((item) => {
-                  const isSelected = selectedSkill === item
+                  const isActive = selectedSkill === item
                   return (
                     <button
                       key={item}
                       type="button"
-                      className={`skills__item ${isSelected ? 'skills__item--active' : ''}`}
+                      className={`skill-badge-pill ${isActive ? 'skill-badge-pill--active' : ''}`}
                       onClick={() => handleSkillClick(item)}
-                      aria-pressed={isSelected}
+                      aria-pressed={isActive}
                       role="listitem"
                     >
                       {item}
@@ -100,6 +117,26 @@ export default function Skills() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Summary Stats */}
+        <div className="skills__summary">
+          <div className="skills__summary-card">
+            <span className="skills__summary-val">30+</span>
+            <span className="skills__summary-lbl">Technologies</span>
+          </div>
+          <div className="skills__summary-card">
+            <span className="skills__summary-val">7+</span>
+            <span className="skills__summary-lbl">Live Projects</span>
+          </div>
+          <div className="skills__summary-card">
+            <span className="skills__summary-val">3</span>
+            <span className="skills__summary-lbl">Years Learning</span>
+          </div>
+          <div className="skills__summary-card">
+            <span className="skills__summary-val">9.55</span>
+            <span className="skills__summary-lbl">CGPA Score</span>
+          </div>
         </div>
       </div>
     </section>
