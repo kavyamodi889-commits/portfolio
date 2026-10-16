@@ -1,12 +1,11 @@
 import Canvas3D from '../Common/Canvas3D'
 import AnimatedCounter from '../Common/AnimatedCounter'
 import MagneticButton from '../Common/MagneticButton'
-import TiltCard from '../Common/TiltCard'
 import Neural3DStage from './Neural3DStage'
 import './Hero.css'
 
 const TECH_MARQUEE = [
-  'React', 'Python', 'PHP', 'MySQL', 'JavaScript', 'Node.js',
+  'React 19', 'Python', 'PHP', 'MySQL', 'JavaScript', 'Node.js',
   'TypeScript', 'Tailwind CSS', 'Vite', 'FastAPI', 'MongoDB',
   'Git & GitHub', 'REST APIs', 'Vercel', 'Netlify', 'Windows Forms'
 ]
@@ -19,13 +18,11 @@ export default function Hero() {
 
   return (
     <section className="hero" id="hero" aria-label="Introduction">
-      {/* RedSun Solar Ambient Glowing Orbs */}
+      {/* ── AMBIENT SOLAR AURA & VOLUMETRIC GLOW ── */}
       <div className="hero__bg" aria-hidden="true">
         <div className="hero__solar-orb hero__solar-orb--main" />
         <div className="hero__solar-orb hero__solar-orb--secondary" />
-        <div className="hero__solar-orb hero__solar-orb--tertiary" />
         <div className="hero__grid-overlay" />
-        {/* 3D Interactive Particle Sphere */}
         <Canvas3D className="hero__canvas3d" />
       </div>
 
@@ -46,7 +43,7 @@ export default function Hero() {
             <span className="hero__title-gradient">Into Intelligent Web Products.</span>
           </h1>
           <p className="hero__subtitle">
-            Full-Stack Web Developer &amp; Software Engineer. Operating Executive at <strong>Pattern LLC</strong> (2026 – Present). BCA graduate from Semcom, CVM University with <strong>9.55 CGPA</strong>. Architecting high-concurrency systems, dynamic PHP/Python backends, and responsive React experiences.
+            Full-Stack Web Developer &amp; Software Engineer. Operating Executive at <strong>Pattern LLC</strong> (2026 – Present). BCA graduate from Semcom, CVM University with <strong>9.55 CGPA (Rank 1)</strong>. Architecting high-concurrency systems, dynamic PHP/Python backends, and responsive React experiences.
           </p>
 
           {/* Action CTAs */}
@@ -93,46 +90,32 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── UNIFIED 3D TELEMETRY & SILICON STAGE ── */}
-        <div className="hero__showcase-wrapper">
-          <TiltCard className="hero__showcase-card" maxTilt={3} glareEnabled={false}>
-            {/* Top Bar with System Telemetry */}
-            <div className="hero__dash-header">
-              <div className="hero__dash-dots">
-                <span className="dot dot--red" />
-                <span className="dot dot--yellow" />
-                <span className="dot dot--green" />
-              </div>
-              <div className="hero__dash-status">
-                <span className="hero__dash-live-dot" />
-                <span>kavyamodi.vercel.app · System Online</span>
-              </div>
-              <div className="hero__dash-badge">Kavya Modi v2026</div>
-            </div>
+        {/* ── INTEGRATED HIGH-TECH TELEMETRY HUD BAR ── */}
+        <div className="hero__hud-bar" aria-label="System Quick Metrics">
+          <div className="hero__hud-item">
+            <span className="hero__hud-val"><AnimatedCounter end={9.55} decimals={2} duration={2000} /></span>
+            <span className="hero__hud-lbl">CGPA DISTINCTION (RANK 1)</span>
+          </div>
+          <div className="hero__hud-sep" />
+          <div className="hero__hud-item">
+            <span className="hero__hud-val">Pattern LLC</span>
+            <span className="hero__hud-lbl">OPERATING EXECUTIVE (2026)</span>
+          </div>
+          <div className="hero__hud-sep" />
+          <div className="hero__hud-item">
+            <span className="hero__hud-val"><AnimatedCounter end={7} suffix="+" duration={1800} /></span>
+            <span className="hero__hud-lbl">SHIPPED SYSTEMS</span>
+          </div>
+          <div className="hero__hud-sep" />
+          <div className="hero__hud-item">
+            <span className="hero__hud-val">Full-Stack</span>
+            <span className="hero__hud-lbl">REACT · PYTHON · PHP · DB</span>
+          </div>
+        </div>
 
-            {/* Quick Metrics Bar */}
-            <div className="hero__quick-metrics">
-              <div className="hero__qm-item">
-                <span className="hero__qm-val"><AnimatedCounter end={9.55} decimals={2} duration={2000} /></span>
-                <span className="hero__qm-lbl">CGPA Distinction (Rank 1)</span>
-              </div>
-              <div className="hero__qm-item">
-                <span className="hero__qm-val">Pattern LLC</span>
-                <span className="hero__qm-lbl">Operating Executive (2026)</span>
-              </div>
-              <div className="hero__qm-item">
-                <span className="hero__qm-val"><AnimatedCounter end={7} suffix="+" duration={1800} /></span>
-                <span className="hero__qm-lbl">Shipped Systems</span>
-              </div>
-              <div className="hero__qm-item">
-                <span className="hero__qm-val">Full-Stack</span>
-                <span className="hero__qm-lbl">React · PHP · Python · DB</span>
-              </div>
-            </div>
-
-            {/* Interactive 3D Silicon & Neural Circuit Stage */}
-            <Neural3DStage />
-          </TiltCard>
+        {/* ── THE 3D SILICON PROCESSOR & NEURAL CIRCUIT STAGE (Direct Hero Stage, as in reference video) ── */}
+        <div className="hero__stage-container">
+          <Neural3DStage />
         </div>
       </div>
 

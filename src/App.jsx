@@ -4,6 +4,7 @@ import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home'
 import ResumeStudio from './pages/ResumeStudio'
 import ScrollToTop from './components/Common/ScrollToTop'
+import IntroSequence from './components/Common/IntroSequence'
 import './index.css'
 
 function ScrollProgress() {
@@ -142,6 +143,7 @@ export default function App() {
       <ScrollProgress />
       <CursorFollower />
       <ScrollRevealListener />
+      <IntroSequence />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
