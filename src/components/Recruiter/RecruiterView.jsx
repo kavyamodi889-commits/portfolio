@@ -156,23 +156,23 @@ export default function RecruiterView() {
               </div>
 
               <div className="recruiter__actions">
-                <Link to="/resume" className="btn btn-primary btn-lg" id="recruiter-studio-link">
-                  Open Full Resume Studio &rarr;
-                </Link>
-                <button
-                  type="button"
-                  className="btn btn-secondary btn-lg"
-                  onClick={handleQuickDownload}
-                  disabled={downloading}
+                <a
+                  href="/Kavya-Modi-Resume.pdf"
+                  download={profile.resumeFilename ?? "Kavya-Modi-Resume.pdf"}
+                  className="btn btn-primary btn-lg"
                   id="recruiter-download-btn"
+                  style={{ textDecoration: 'none' }}
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
                     <polyline points="7 10 12 15 17 10"/>
                     <line x1="12" y1="15" x2="12" y2="3"/>
                   </svg>
-                  {downloading ? 'Preparing…' : 'Quick PDF Download'}
-                </button>
+                  <span>Download PDF CV</span>
+                </a>
+                <Link to="/resume" className="btn btn-secondary btn-lg" id="recruiter-studio-link">
+                  Open Resume Studio &rarr;
+                </Link>
               </div>
 
               {downloadMsg && (

@@ -275,22 +275,21 @@ export default function ResumeStudio() {
 
           {/* Actions */}
           <div className="studio-sidebar__section studio-actions">
-            <button
+            <a
+              href="/Kavya-Modi-Resume.pdf"
+              download={profile.resumeFilename ?? "Kavya-Modi-Resume.pdf"}
               className="btn btn-primary"
-              onClick={handleDownload}
-              disabled={downloading}
-              type="button"
               id="resume-download-btn"
               aria-label={`Download résumé as PDF — filename: ${profile.resumeFilename}`}
-              style={{ width: '100%', justifyContent: 'center' }}
+              style={{ width: '100%', justifyContent: 'center', textDecoration: 'none' }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
                 <polyline points="7 10 12 15 17 10"/>
                 <line x1="12" y1="15" x2="12" y2="3"/>
               </svg>
-              {downloading ? 'Preparing…' : `Download PDF`}
-            </button>
+              <span>Download PDF</span>
+            </a>
 
             <button
               className="btn btn-secondary"
@@ -298,7 +297,7 @@ export default function ResumeStudio() {
               disabled={printing}
               type="button"
               id="resume-print-btn"
-              aria-label="Print résumé"
+              aria-label="Print résumé or Save as PDF"
               style={{ width: '100%', justifyContent: 'center' }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -306,7 +305,7 @@ export default function ResumeStudio() {
                 <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
                 <rect x="6" y="14" width="12" height="8"/>
               </svg>
-              {printing ? 'Printing…' : 'Print Résumé'}
+              <span>{printing ? 'Opening Print…' : 'Print / Save Custom PDF'}</span>
             </button>
 
             {downloadMsg && (
