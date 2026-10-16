@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { projects } from '../../data/portfolioData'
+import TiltCard from '../Common/TiltCard'
 import './Projects.css'
 
 /* ── Icons ─────────────────────────────────────────── */

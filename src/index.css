@@ -392,13 +392,35 @@ body::before {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
 @keyframes scaleIn {
   from { opacity: 0; transform: scale(0.95); }
   to   { opacity: 1; transform: scale(1); }
 }
+@keyframes elasticScale {
+  0%   { transform: scale(0.7); opacity: 0; }
+  60%  { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); }
+}
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-10px); }
+}
+@keyframes floatRotate {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25%      { transform: translateY(-8px) rotate(1deg); }
+  75%      { transform: translateY(5px) rotate(-1deg); }
 }
 @keyframes pulse-ring {
   0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.8; }
@@ -418,11 +440,126 @@ body::before {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+@keyframes textShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes borderGlowPulse {
+  0%, 100% { border-color: rgba(255, 87, 34, 0.2); box-shadow: 0 0 15px rgba(255, 87, 34, 0.05); }
+  50%      { border-color: rgba(255, 87, 34, 0.45); box-shadow: 0 0 30px rgba(255, 87, 34, 0.15); }
+}
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes slideInFromBottom {
+  from { opacity: 0; transform: translateY(60px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
 
-.animate-fade-up  { animation: fadeUp var(--dur-slow) var(--ease-spring) both; }
-.animate-fade-in  { animation: fadeIn var(--dur-base) var(--ease-smooth) both; }
-.animate-scale-in { animation: scaleIn var(--dur-base) var(--ease-spring) both; }
-.animate-float    { animation: float 4s ease-in-out infinite; }
+/* ── Animation Utility Classes ─────────────────────────── */
+.animate-fade-up   { animation: fadeUp var(--dur-slow) var(--ease-spring) both; }
+.animate-fade-down { animation: fadeDown var(--dur-slow) var(--ease-spring) both; }
+.animate-fade-left { animation: fadeLeft var(--dur-slow) var(--ease-spring) both; }
+.animate-fade-right{ animation: fadeRight var(--dur-slow) var(--ease-spring) both; }
+.animate-fade-in   { animation: fadeIn var(--dur-base) var(--ease-smooth) both; }
+.animate-scale-in  { animation: scaleIn var(--dur-base) var(--ease-spring) both; }
+.animate-elastic   { animation: elasticScale 0.7s var(--ease-spring) both; }
+.animate-float     { animation: float 4s ease-in-out infinite; }
+.animate-float-rotate { animation: floatRotate 6s ease-in-out infinite; }
+
+/* Stagger delay utilities */
+.delay-1 { animation-delay: 0.05s !important; }
+.delay-2 { animation-delay: 0.1s !important; }
+.delay-3 { animation-delay: 0.15s !important; }
+.delay-4 { animation-delay: 0.2s !important; }
+.delay-5 { animation-delay: 0.25s !important; }
+.delay-6 { animation-delay: 0.3s !important; }
+.delay-7 { animation-delay: 0.35s !important; }
+.delay-8 { animation-delay: 0.4s !important; }
+
+/* Text shimmer effect — used on highlighted text */
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ff7828 25%,
+    #ffffff 50%,
+    #ff7828 75%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 4s linear infinite;
+}
+
+/* Border glow pulse effect */
+.border-glow-pulse {
+  animation: borderGlowPulse 3s ease-in-out infinite;
+}
+
+/* ── Enhanced Scroll Reveal Variants ─────────────────── */
+.reveal-on-scroll--left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll--left.is-revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-on-scroll--right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll--right.is-revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-on-scroll--scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll--scale.is-revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Utility: Glow Border Card Effect ────────────────── */
+.glow-card {
+  position: relative;
+}
+.glow-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 87, 34, 0.35), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+/* ── Smooth page transitions ─────────────────────────── */
+#root {
+  animation: fadeIn 0.4s ease both;
+}
 
 .sr-only {
   position: absolute; width: 1px; height: 1px;

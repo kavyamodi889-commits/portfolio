@@ -180,3 +180,87 @@
   color: #ffffff;
   box-shadow: 0 4px 14px rgba(255, 87, 34, 0.4);
 }
+
+/* ── Skill Badge Pills (interactive) ── */
+.skill-badge-pill {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all var(--dur-fast);
+}
+.skill-badge-pill:hover {
+  background: rgba(255, 87, 34, 0.15);
+  border-color: rgba(255, 87, 34, 0.35);
+  color: #ff7828;
+  transform: translateY(-2px);
+}
+.skill-badge-pill--active {
+  background: var(--grad-solar);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(255, 87, 34, 0.4);
+}
+
+/* ── Summary Stat Cards ── */
+.skills__summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-top: var(--space-12);
+}
+@media (max-width: 700px) {
+  .skills__summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.skills__summary-card {
+  background: rgba(14, 16, 25, 0.72);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-xl);
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  transition: all var(--dur-base) var(--ease-spring);
+}
+.skills__summary-card:hover {
+  border-color: rgba(255, 87, 34, 0.35);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 87, 34, 0.1);
+  transform: translateY(-4px);
+}
+.skills__summary-val {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 28px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+.skills__summary-lbl {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Skill Category Items (fix class name) ── */
+.skill-category__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.skill-category__title {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+}

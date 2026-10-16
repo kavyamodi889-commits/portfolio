@@ -261,51 +261,90 @@
 
 /* Print Styles */
 @media print {
+  /* Hide page chrome and navigation */
   .navbar,
+  .scroll-progress-line,
+  .ambient-cursor-glow,
+  .scroll-to-top,
   .resume-studio__sidebar,
-  .resume-studio__actions,
+  .studio-sidebar,
+  .studio-actions,
+  .studio-info,
   .no-print,
-  [class*="studio-"],
-  body > *:not(#root),
-  #root > *:not(.resume-studio-page),
-  .resume-studio-page > *:not(.resume-studio__preview),
-  .resume-studio__preview > *:not(#resume-print-area) {
+  #hero-download-cv-btn,
+  footer {
     display: none !important;
   }
 
   html, body {
-    margin: 0;
-    padding: 0;
-    background: #fff;
-    font-size: 12px;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    font-size: 11pt !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  #root {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
   }
 
   .resume-studio-page {
-    display: block;
+    display: block !important;
+    width: 100% !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
   }
 
   .resume-studio__preview {
-    display: block;
-    padding: 0;
-    overflow: visible;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
   }
 
   #resume-print-area {
-    max-width: none;
-    width: 100%;
-    box-shadow: none;
-    border-radius: 0;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
     page-break-after: avoid;
+    break-after: avoid;
   }
 
   @page {
-    size: A4;
-    margin: 15mm 20mm;
+    size: A4 portrait;
+    margin: 10mm 15mm;
   }
 
-  h1, h2, h3 { page-break-after: avoid; }
-  .resume-section { page-break-inside: avoid; }
-  .resume-entry { page-break-inside: avoid; }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  h1, h2, h3, h4, .resume-header {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  .resume-section, .mod-section, .mod-entry, .ats-section, .ats-item, .min-section, .min-entry {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
 }
 
 @media (max-width: 1024px) {

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { skills, projects } from '../../data/portfolioData'
+import AnimatedCounter from '../Common/AnimatedCounter'
 import './Skills.css'
 
 const CATEGORY_ICONS = {
@@ -122,19 +123,19 @@ export default function Skills() {
         {/* Summary Stats */}
         <div className="skills__summary">
           <div className="skills__summary-card">
-            <span className="skills__summary-val">30+</span>
+            <span className="skills__summary-val"><AnimatedCounter end={30} suffix="+" duration={2000} /></span>
             <span className="skills__summary-lbl">Technologies</span>
           </div>
           <div className="skills__summary-card">
-            <span className="skills__summary-val">7+</span>
+            <span className="skills__summary-val"><AnimatedCounter end={7} suffix="+" duration={1800} /></span>
             <span className="skills__summary-lbl">Live Projects</span>
           </div>
           <div className="skills__summary-card">
-            <span className="skills__summary-val">3</span>
+            <span className="skills__summary-val"><AnimatedCounter end={3} duration={1500} /></span>
             <span className="skills__summary-lbl">Years Learning</span>
           </div>
           <div className="skills__summary-card">
-            <span className="skills__summary-val">9.55</span>
+            <span className="skills__summary-val"><AnimatedCounter end={9.55} decimals={2} duration={2200} /></span>
             <span className="skills__summary-lbl">CGPA Score</span>
           </div>
         </div>

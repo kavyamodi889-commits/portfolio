@@ -1,4 +1,8 @@
 import Canvas3D from '../Common/Canvas3D'
+import AnimatedCounter from '../Common/AnimatedCounter'
+import MagneticButton from '../Common/MagneticButton'
+import TiltCard from '../Common/TiltCard'
+import Neural3DStage from './Neural3DStage'
 import './Hero.css'
 
 const TECH_MARQUEE = [
@@ -14,6 +18,7 @@ export default function Hero() {
       <div className="hero__bg" aria-hidden="true">
         <div className="hero__solar-orb hero__solar-orb--main" />
         <div className="hero__solar-orb hero__solar-orb--secondary" />
+        <div className="hero__solar-orb hero__solar-orb--tertiary" />
         <div className="hero__grid-overlay" />
         {/* 3D Interactive Particle Sphere */}
         <Canvas3D className="hero__canvas3d" />
@@ -22,7 +27,7 @@ export default function Hero() {
       <div className="container">
         {/* ── TOP: Announcement Badge ── */}
         <div className="hero__announcement">
-          <span className="hero__announcement-badge">
+          <span className="hero__announcement-badge border-glow-pulse">
             <span className="hero__pulse-dot" />
             <span>Open to Opportunities · Vadodara &amp; Remote</span>
             <span className="hero__announcement-arrow">↗</span>
@@ -39,11 +44,13 @@ export default function Hero() {
             Full-Stack Web Developer &amp; Software Engineer. Operating Executive at <strong>Pattern LLC</strong>. BCA graduate from Semcom, CVM University with <strong>9.55 CGPA</strong>. Engineering high-concurrency systems, dynamic PHP/Python backends, and responsive React experiences.
           </p>
 
-          {/* Action Buttons */}
+          {/* Action Buttons with Magnetic Effect */}
           <div className="hero__actions">
-            <a
+            <MagneticButton
+              as="a"
               href="#projects"
               className="btn btn-primary hero__btn-primary"
+              strength={0.25}
               onClick={(e) => {
                 e.preventDefault()
                 document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })
@@ -54,12 +61,14 @@ export default function Hero() {
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <polyline points="19 12 12 19 5 12"></polyline>
               </svg>
-            </a>
-            <a
+            </MagneticButton>
+            <MagneticButton
+              as="a"
               href="/Kavya-Modi-Resume.pdf"
               download="Kavya-Modi-Resume.pdf"
               className="btn btn-outline hero__btn-secondary"
               id="hero-download-cv-btn"
+              strength={0.2}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
@@ -68,17 +77,22 @@ export default function Hero() {
               </svg>
               <span>Download CV</span>
               <span className="hero__btn-badge">PDF</span>
-            </a>
-            <a href="/resume" className="btn btn-outline hero__btn-secondary">
+            </MagneticButton>
+            <MagneticButton
+              as="a"
+              href="/resume"
+              className="btn btn-outline hero__btn-secondary"
+              strength={0.2}
+            >
               <span>Resume Studio</span>
               <span className="hero__btn-badge">v2.0</span>
-            </a>
+            </MagneticButton>
           </div>
         </div>
 
         {/* ── REDSUN DASHBOARD TELEMETRY BENTO SHOWCASE ── */}
         <div className="hero__dashboard-wrapper">
-          <div className="hero__dashboard">
+          <TiltCard className="hero__dashboard" maxTilt={4} glareEnabled={true}>
             {/* Top Bar with Status */}
             <div className="hero__dash-header">
               <div className="hero__dash-dots">
@@ -102,7 +116,9 @@ export default function Hero() {
                   <span className="hero__dash-pill">Rank 1</span>
                 </div>
                 <div className="hero__dash-metric-row">
-                  <span className="hero__dash-metric-big">9.55</span>
+                  <span className="hero__dash-metric-big">
+                    <AnimatedCounter end={9.55} decimals={2} duration={2200} />
+                  </span>
                   <span className="hero__dash-metric-unit">CGPA</span>
                 </div>
                 <div className="hero__dash-metric-sub">BCA · Semcom, CVM University (2026)</div>
@@ -149,7 +165,9 @@ export default function Hero() {
                   <span className="hero__dash-pill hero__dash-pill--cyan">Shipped</span>
                 </div>
                 <div className="hero__dash-metric-row">
-                  <span className="hero__dash-metric-big">7+</span>
+                  <span className="hero__dash-metric-big">
+                    <AnimatedCounter end={7} suffix="+" duration={1800} />
+                  </span>
                   <span className="hero__dash-metric-unit">Systems</span>
                 </div>
                 <div className="hero__dash-metric-sub">React, PHP, Python, MySQL Solutions</div>
@@ -172,8 +190,11 @@ export default function Hero() {
                 </div>
               </div>
             </div>
-          </div>
+          </TiltCard>
         </div>
+
+        {/* ── 3D SILICON & NEURAL ARCHITECTURE STAGE (GCORE / REDSUN) ── */}
+        <Neural3DStage />
       </div>
 
       {/* ── REDSUN INFINITE LOGO / TECH MARQUEE TICKER ── */}
