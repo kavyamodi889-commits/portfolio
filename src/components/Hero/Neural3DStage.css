@@ -1,65 +1,110 @@
-/* ─── 3D NEURAL SILICON STAGE (GCORE / REDSUN INFERENCE STAGE) ─── */
+/* ════════════════════════════════════════════════════════════════
+   3D NEURAL SILICON PROCESSOR STAGE — GCORE / REDSUN REPLICA
+   ════════════════════════════════════════════════════════════════ */
 
 .neural-stage {
   position: relative;
   width: 100%;
-  height: 480px;
+  height: 490px;
   margin: 0;
-  background: radial-gradient(ellipse at 50% 100%, rgba(255, 87, 34, 0.08) 0%, rgba(12, 14, 21, 0.6) 60%, transparent 100%);
+  background: radial-gradient(ellipse at 50% 90%, rgba(255, 87, 34, 0.08) 0%, rgba(10, 12, 18, 0.8) 55%, transparent 100%);
   overflow: hidden;
   perspective: 1200px;
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
 }
 
-/* Volumetric Solar Light Beam extending diagonally from top right */
-.neural-stage__light-beam {
+/* ── 1. The Signature Volumetric Diagonal Solar Beam ── */
+/* Directly inspired by Gcore "Inference at the Edge" upper-right light beam */
+.neural-stage__sunbeam {
   position: absolute;
-  top: -100px;
-  right: -60px;
-  width: 550px;
-  height: 600px;
-  background: linear-gradient(215deg, rgba(255, 120, 40, 0.35) 0%, rgba(255, 87, 34, 0.1) 35%, transparent 70%);
-  transform: rotate(-18deg) skewX(-20deg);
-  filter: blur(40px);
+  top: -120px;
+  right: -80px;
+  width: 620px;
+  height: 650px;
+  background: linear-gradient(
+    220deg,
+    rgba(255, 120, 30, 0.45) 0%,
+    rgba(255, 87, 34, 0.22) 28%,
+    rgba(234, 88, 12, 0.08) 55%,
+    transparent 75%
+  );
+  transform: rotate(-22deg) skewX(-20deg);
+  filter: blur(48px);
   pointer-events: none;
   z-index: 1;
-  opacity: 0.8;
-  animation: beamPulse 8s ease-in-out infinite alternate;
+  opacity: 0.85;
+  animation: sunbeamBreathe 7s ease-in-out infinite alternate;
 }
 
-@keyframes beamPulse {
-  0% { opacity: 0.65; transform: rotate(-18deg) skewX(-20deg) scale(0.98); }
-  100% { opacity: 0.9; transform: rotate(-17deg) skewX(-22deg) scale(1.03); }
+@keyframes sunbeamBreathe {
+  0% {
+    opacity: 0.7;
+    transform: rotate(-22deg) skewX(-20deg) scale(0.97);
+  }
+  100% {
+    opacity: 0.95;
+    transform: rotate(-20deg) skewX(-22deg) scale(1.04);
+  }
 }
 
-/* Bright Solar Lens Flare */
-.neural-stage__flare {
+/* High-intensity solar lens flare core */
+.neural-stage__sunflare {
   position: absolute;
-  top: 15px;
-  right: 50px;
-  width: 110px;
-  height: 110px;
+  top: 10px;
+  right: 60px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
-  background: radial-gradient(circle, #ffffff 0%, rgba(255, 170, 70, 0.85) 25%, rgba(255, 87, 34, 0.35) 55%, transparent 75%);
-  filter: blur(14px);
+  background: radial-gradient(
+    circle,
+    #ffffff 0%,
+    rgba(255, 200, 100, 0.9) 20%,
+    rgba(255, 87, 34, 0.45) 50%,
+    transparent 75%
+  );
+  filter: blur(16px);
   pointer-events: none;
   z-index: 2;
-  box-shadow: 0 0 50px rgba(255, 100, 30, 0.7);
+  box-shadow: 0 0 60px rgba(255, 100, 30, 0.8);
 }
 
-/* 3D Perspective Plane */
+/* Outer vignette back-glow */
+.neural-stage__vignette-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(5, 7, 12, 0.8) 100%);
+  z-index: 2;
+}
+
+/* ── 2. 3D Perspective Plane ── */
 .neural-stage__plane {
   position: relative;
-  width: 860px;
-  height: 380px;
+  width: 880px;
+  height: 400px;
   transform-style: preserve-3d;
   transition: transform 0.15s ease-out;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 3;
+}
+
+/* Substrate PCB grid texture */
+.neural-stage__substrate {
+  position: absolute;
+  inset: -40px;
+  background-image: 
+    linear-gradient(rgba(255, 120, 40, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 120, 40, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  opacity: 0.7;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
 }
 
 .neural-stage__canvas {
@@ -71,227 +116,300 @@
   pointer-events: none;
 }
 
-/* Central Silicon Processor Chip */
-.neural-chip--core {
+/* ── 3. Central Silicon Processor Chip (The Core Engine) ── */
+.neural-core-chip {
   position: absolute;
-  width: 120px;
-  height: 120px;
-  background: linear-gradient(145deg, #181922, #0d0e14);
+  width: 114px;
+  height: 114px;
+  background: linear-gradient(135deg, #1c1d27 0%, #0d0f16 100%);
   border: 1.5px solid rgba(255, 120, 40, 0.75);
   border-radius: 14px;
-  box-shadow: 0 0 35px rgba(255, 87, 34, 0.35), inset 0 0 18px rgba(255, 87, 34, 0.15);
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.8),
+    0 0 35px rgba(255, 87, 34, 0.35),
+    inset 0 0 20px rgba(255, 87, 34, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
-  transform: translateZ(30px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: translateZ(35px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
-.neural-chip--core:hover {
-  transform: translateZ(40px) scale(1.05);
-  box-shadow: 0 0 50px rgba(255, 87, 34, 0.65), inset 0 0 25px rgba(255, 87, 34, 0.3);
+.neural-core-chip:hover {
+  transform: translateZ(50px) scale(1.06);
+  border-color: rgba(255, 150, 60, 0.95);
+  box-shadow: 
+    0 22px 55px rgba(0, 0, 0, 0.9),
+    0 0 55px rgba(255, 87, 34, 0.6),
+    inset 0 0 25px rgba(255, 87, 34, 0.35);
 }
 
-.neural-chip__inner {
+.core-chip__body {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 2px;
   padding: 6px;
+  position: relative;
+  z-index: 2;
 }
 
-.neural-chip__logo {
+.core-chip__monogram {
   font-family: var(--font-mono);
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 900;
-  letter-spacing: 0.05em;
-  background: linear-gradient(135deg, #ffffff 30%, #ff8c42 100%);
+  letter-spacing: 0.06em;
+  background: linear-gradient(135deg, #ffffff 40%, #ff8c42 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1;
 }
 
-.neural-chip__title {
+.core-chip__label {
   font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
   color: #ff9d5c;
   text-transform: uppercase;
+  margin-top: 4px;
 }
 
-.neural-chip__clock {
+.core-chip__specs {
   font-family: var(--font-mono);
   font-size: 7.5px;
-  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
   letter-spacing: 0.04em;
 }
 
-/* Chip Metallic Pins */
-.neural-chip__pins-top,
-.neural-chip__pins-bottom {
+.core-chip__pulse-halo {
   position: absolute;
-  left: 15%;
-  right: 15%;
-  height: 5px;
-  background: repeating-linear-gradient(90deg, #d4a373 0, #d4a373 3px, transparent 3px, transparent 8px);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 87, 34, 0.4) 0%, transparent 70%);
+  animation: haloPulse 2.4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
 }
-.neural-chip__pins-top { top: -5px; }
-.neural-chip__pins-bottom { bottom: -5px; }
 
-.neural-chip__pins-left,
-.neural-chip__pins-right {
+@keyframes haloPulse {
+  0% { transform: scale(0.8); opacity: 0.4; }
+  50% { transform: scale(1.6); opacity: 0.85; }
+  100% { transform: scale(0.8); opacity: 0.4; }
+}
+
+/* Gold Metallic IC Connector Pins */
+.core-chip__pins-t,
+.core-chip__pins-b {
   position: absolute;
-  top: 15%;
-  bottom: 15%;
-  width: 5px;
-  background: repeating-linear-gradient(180deg, #d4a373 0, #d4a373 3px, transparent 3px, transparent 8px);
+  left: 14%;
+  right: 14%;
+  height: 6px;
+  background: repeating-linear-gradient(90deg, #d4a373 0, #d4a373 3px, transparent 3px, transparent 7px);
 }
-.neural-chip__pins-left { left: -5px; }
-.neural-chip__pins-right { right: -5px; }
+.core-chip__pins-t { top: -6px; }
+.core-chip__pins-b { bottom: -6px; }
 
-/* Floating 3D Node Chips */
-.neural-node {
+.core-chip__pins-l,
+.core-chip__pins-r {
+  position: absolute;
+  top: 14%;
+  bottom: 14%;
+  width: 6px;
+  background: repeating-linear-gradient(180deg, #d4a373 0, #d4a373 3px, transparent 3px, transparent 7px);
+}
+.core-chip__pins-l { left: -6px; }
+.core-chip__pins-r { right: -6px; }
+
+/* ── 4. Frosted Satellite Pods ── */
+.neural-pod {
   position: absolute;
   top: 50%;
   left: 50%;
   margin-top: -26px;
-  margin-left: -65px;
-  width: 130px;
+  margin-left: -70px;
+  width: 142px;
   padding: 8px 12px;
-  background: rgba(18, 20, 28, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(16, 18, 26, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 11px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   transform-style: preserve-3d;
-  z-index: 5;
+  z-index: 6;
+  outline: none;
 }
 
-.neural-node:hover,
-.neural-node--active {
-  background: rgba(26, 22, 30, 0.96);
-  border-color: rgba(255, 120, 40, 0.8);
-  box-shadow: 0 12px 35px rgba(255, 87, 34, 0.35);
-  transform: translateZ(45px) scale(1.08) !important;
+.neural-pod:hover,
+.neural-pod--active {
+  background: rgba(24, 22, 32, 0.96);
+  border-color: rgba(255, 120, 40, 0.85);
+  box-shadow: 
+    0 14px 40px rgba(0, 0, 0, 0.75),
+    0 0 35px rgba(255, 87, 34, 0.45);
+  transform: translateZ(55px) scale(1.1) !important;
 }
 
-.neural-node__icon {
-  font-size: 17px;
+.neural-pod__icon-box {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
+  transition: all 0.25s ease;
 }
 
-.neural-node__text {
+.neural-pod:hover .neural-pod__icon-box,
+.neural-pod--active .neural-pod__icon-box {
+  background: rgba(255, 87, 34, 0.2);
+  border-color: rgba(255, 120, 40, 0.5);
+}
+
+.neural-pod__icon {
+  font-size: 16px;
+}
+
+.neural-pod__content {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  text-align: left;
 }
 
-.neural-node__label {
-  font-size: 11.5px;
+.neural-pod__title {
+  font-family: var(--font-sans);
+  font-size: 12px;
   font-weight: 700;
   color: #ffffff;
   white-space: nowrap;
 }
 
-.neural-node__tag {
+.neural-pod__sub {
   font-family: var(--font-mono);
   font-size: 9px;
+  font-weight: 600;
   color: #ff9d5c;
   white-space: nowrap;
 }
 
-/* Bottom Stack Telemetry Bar */
-.neural-stage__bottom-bar {
+/* Floating Telemetry Tooltip */
+.neural-pod__telemetry {
   position: absolute;
-  bottom: 12px;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(15, 17, 24, 0.95);
+  border: 1px solid rgba(255, 120, 40, 0.4);
+  border-radius: var(--r-full);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: tooltipFloat 0.25s var(--ease-spring) both;
+  z-index: 20;
+}
+
+@keyframes tooltipFloat {
+  from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.neural-pod__tel-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+
+/* ── 5. Bottom Hardware Telemetry Strip ── */
+.neural-stage__telemetry-strip {
+  position: absolute;
+  bottom: 14px;
   left: 20px;
   right: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
   z-index: 4;
 }
 
-.neural-stage__bottom-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #64748b;
-}
-
-.neural-stage__bottom-tags {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.neural-stage__tag-pill {
+.telemetry-item {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 3px 9px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--r-full);
+  gap: 6px;
   font-family: var(--font-mono);
   font-size: 10px;
-  color: #94a3b8;
-  transition: all var(--dur-fast);
 }
 
-.neural-stage__tag-pill:hover {
-  background: rgba(255, 87, 34, 0.12);
-  border-color: rgba(255, 87, 34, 0.3);
-  color: #ff8c42;
-}
-
-.neural-stage__tag-dot {
-  width: 4px;
-  height: 4px;
+.telemetry-dot--active {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #ff7828;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulse-dot 2s infinite;
 }
 
-/* Responsive adjustments */
+.telemetry-label {
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.telemetry-val {
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+.telemetry-sep {
+  color: #334155;
+  font-weight: bold;
+}
+
+/* ── Responsive ── */
 @media (max-width: 900px) {
   .neural-stage {
-    height: 400px;
+    height: 420px;
   }
   .neural-stage__plane {
-    transform: perspective(800px) rotateX(40deg) scale(0.78) !important;
+    transform: perspective(850px) rotateX(38deg) scale(0.8) !important;
   }
 }
 
 @media (max-width: 640px) {
   .neural-stage {
-    height: 350px;
+    height: 360px;
   }
   .neural-stage__plane {
-    transform: perspective(600px) rotateX(30deg) scale(0.62) !important;
+    transform: perspective(650px) rotateX(28deg) scale(0.65) !important;
   }
-  .neural-stage__bottom-bar {
+  .neural-stage__telemetry-strip {
     display: none;
   }
 }

@@ -1,0 +1,344 @@
+/* ════════════════════════════════════════════════════════════════
+   SYSTEM POTENTIAL & BENTO GRID SECTION (Gcore Reference Frame 12s & 18s)
+   ════════════════════════════════════════════════════════════════ */
+
+.sys-potential {
+  position: relative;
+  padding: 100px 0 60px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.sys-potential__glow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 87, 34, 0.08) 0%, transparent 70%);
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.sys-potential__container {
+  position: relative;
+  z-index: 2;
+}
+
+.sys-potential__header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 50px;
+}
+
+.sys-potential__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 16px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 120, 40, 0.25);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #ff9d5c;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.sys-potential__badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff5722;
+  box-shadow: 0 0 8px #ff5722;
+}
+
+.sys-potential__title {
+  font-family: var(--font-sans);
+  font-size: clamp(2.2rem, 4.8vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.sys-potential__cycler {
+  display: inline-block;
+  padding: 2px 14px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(255, 87, 34, 0.2) 0%, rgba(234, 88, 12, 0.08) 100%);
+  border: 1px solid rgba(255, 120, 40, 0.4);
+  box-shadow: 0 0 25px rgba(255, 87, 34, 0.25);
+  vertical-align: middle;
+}
+
+.sys-potential__word {
+  display: inline-block;
+  background: linear-gradient(135deg, #ffffff 30%, #ff8c42 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: wordFlip 0.4s var(--ease-spring) both;
+}
+
+@keyframes wordFlip {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.sys-potential__subtitle {
+  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  color: #94a3b8;
+  line-height: 1.7;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.sys-potential__subtitle strong {
+  color: #ffffff;
+}
+
+/* ── Bento Grid ── */
+.sys-potential__bento {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 24px;
+}
+
+.bento-card {
+  background: rgba(14, 16, 25, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-2xl);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.bento-card:hover {
+  border-color: rgba(255, 120, 40, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(255, 87, 34, 0.15);
+  transform: translateY(-3px);
+}
+
+.bento-card--large {
+  grid-row: span 2;
+}
+
+.bento-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.bento-card__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+}
+
+.bento-card__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff5722;
+}
+
+.bento-card__status {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 3px 8px;
+  border-radius: var(--r-full);
+}
+
+.bento-card__status--amber {
+  color: #ff9d5c;
+  background: rgba(255, 120, 40, 0.12);
+  border-color: rgba(255, 120, 40, 0.3);
+}
+
+.bento-card__title {
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.bento-card__desc {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+/* PCB Visual Simulation */
+.bento-pcb-visual {
+  position: relative;
+  height: 90px;
+  background: rgba(10, 12, 18, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bento-pcb-track {
+  position: absolute;
+  height: 2px;
+  background: rgba(255, 120, 40, 0.2);
+  left: 0;
+  right: 0;
+}
+.bento-pcb-track--1 { top: 30%; }
+.bento-pcb-track--2 { bottom: 30%; }
+
+.bento-pcb-pulse {
+  position: absolute;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffffff, #ff5722, transparent);
+  box-shadow: 0 0 10px #ff5722;
+  animation: pcbRun 3s linear infinite;
+}
+.bento-pcb-pulse--1 { top: 30%; animation-delay: 0s; }
+.bento-pcb-pulse--2 { bottom: 30%; animation-delay: 1.5s; animation-direction: reverse; }
+
+@keyframes pcbRun {
+  0% { left: -50px; }
+  100% { left: 100%; }
+}
+
+.bento-chip-badge {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(18, 20, 30, 0.95);
+  border: 1.5px solid rgba(255, 120, 40, 0.5);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: #ffffff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 87, 34, 0.2);
+}
+
+.bento-chip-icon {
+  font-size: 14px;
+}
+
+.bento-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bento-metric {
+  display: flex;
+  flex-direction: column;
+}
+
+.bento-metric__val {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.bento-metric__lbl {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* Badges for Pattern LLC and Academic Distinction */
+.bento-corp-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  margin-top: auto;
+}
+
+.bento-corp-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255, 120, 40, 0.15);
+  border: 1px solid rgba(255, 120, 40, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #ff8c42;
+  flex-shrink: 0;
+}
+
+.bento-corp-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.bento-corp-role {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.bento-corp-name {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #ff9d5c;
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .sys-potential__bento {
+    grid-template-columns: 1fr;
+  }
+  .bento-card--large {
+    grid-row: auto;
+  }
+}

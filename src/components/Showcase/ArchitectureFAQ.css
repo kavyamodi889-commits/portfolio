@@ -1,0 +1,133 @@
+/* ════════════════════════════════════════════════════════════════
+   ARCHITECTURE FAQ ACCORDION (Gcore Reference Frame 35s)
+   ════════════════════════════════════════════════════════════════ */
+
+.arch-faq {
+  padding: 80px 0 100px;
+  background: var(--bg);
+  position: relative;
+}
+
+.arch-faq__container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.arch-faq__header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.arch-faq__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 16px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 120, 40, 0.25);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #ff9d5c;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+.arch-faq__badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff5722;
+  box-shadow: 0 0 8px #ff5722;
+}
+
+.arch-faq__title {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  margin-bottom: 14px;
+}
+
+.arch-faq__subtitle {
+  font-size: 1rem;
+  color: #94a3b8;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.arch-faq__list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.arch-faq__item {
+  background: rgba(14, 16, 25, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 18px 24px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.arch-faq__item:hover {
+  background: rgba(20, 22, 34, 0.9);
+  border-color: rgba(255, 120, 40, 0.35);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 87, 34, 0.1);
+  transform: translateY(-2px);
+}
+
+.arch-faq__item--open {
+  background: rgba(22, 24, 36, 0.95);
+  border-color: rgba(255, 120, 40, 0.6);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 87, 34, 0.18);
+}
+
+.arch-faq__question {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.arch-faq__icon {
+  font-size: 15px;
+  color: #ff8c42;
+  transition: transform 0.2s ease;
+  user-select: none;
+}
+
+.arch-faq__q-text {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+.arch-faq__answer {
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  line-height: 1.7;
+  animation: faqOpen 0.25s ease-out both;
+}
+
+@keyframes faqOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
