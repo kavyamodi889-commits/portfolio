@@ -266,6 +266,26 @@ export const education = [
 // ─── EXPERIENCE ────────────────────────────────────────────────────────────────
 export const experience = [
   {
+    id: "pattern-llc",
+    role: "Operating Executive",
+    company: "Pattern LLC",
+    location: "Vadodara, Gujarat, India",
+    type: "Full-Time",
+    startDate: "2024",
+    endDate: "Present",
+    description:
+      "Pattern LLC is a Vadodara-based business solutions company providing operations management, consulting, and enterprise services. As an Operating Executive, responsible for overseeing day-to-day operational workflows, managing cross-functional teams, streamlining internal processes, and ensuring business targets are consistently met.",
+    tech: ["Operations Management", "Team Leadership", "Process Optimization", "Business Strategy", "Client Relations"],
+    highlights: [
+      "Supervised and coordinated daily operational activities across multiple departments",
+      "Streamlined internal processes to improve efficiency and reduce turnaround time",
+      "Managed client relationships and ensured delivery of high-quality business outcomes",
+      "Collaborated with leadership to align operational goals with strategic business objectives",
+      "Monitored KPIs and generated performance reports for executive review",
+    ],
+    website: "https://www.patternllc.in",
+  },
+  {
     id: "anugrah-internship",
     role: "Web Developer Intern",
     company: "Anugrah Accounting",

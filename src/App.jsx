@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home'
 import ResumeStudio from './pages/ResumeStudio'
@@ -47,6 +47,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/resume" element={<ResumeStudio />} />
         <Route path="/resume-studio" element={<ResumeStudio />} />
+        {/* Redirect all other unknown paths to Home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <ScrollToTop />
     </BrowserRouter>
