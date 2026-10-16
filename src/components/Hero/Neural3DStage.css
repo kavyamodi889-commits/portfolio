@@ -3,13 +3,9 @@
 .neural-stage {
   position: relative;
   width: 100%;
-  max-width: 1200px;
-  height: 520px;
-  margin: 32px auto 0;
-  border-radius: var(--radius-xl);
-  background: radial-gradient(ellipse at 50% 120%, rgba(255, 87, 34, 0.12) 0%, rgba(10, 10, 12, 0.95) 70%, #08080a 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  height: 480px;
+  margin: 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(255, 87, 34, 0.08) 0%, rgba(12, 14, 21, 0.6) 60%, transparent 100%);
   overflow: hidden;
   perspective: 1200px;
   display: flex;
@@ -20,44 +16,44 @@
 /* Volumetric Solar Light Beam extending diagonally from top right */
 .neural-stage__light-beam {
   position: absolute;
-  top: -120px;
-  right: -80px;
-  width: 650px;
-  height: 700px;
-  background: linear-gradient(215deg, rgba(255, 120, 40, 0.45) 0%, rgba(255, 87, 34, 0.15) 35%, transparent 70%);
+  top: -100px;
+  right: -60px;
+  width: 550px;
+  height: 600px;
+  background: linear-gradient(215deg, rgba(255, 120, 40, 0.35) 0%, rgba(255, 87, 34, 0.1) 35%, transparent 70%);
   transform: rotate(-18deg) skewX(-20deg);
-  filter: blur(45px);
+  filter: blur(40px);
   pointer-events: none;
   z-index: 1;
-  opacity: 0.85;
+  opacity: 0.8;
   animation: beamPulse 8s ease-in-out infinite alternate;
 }
 
 @keyframes beamPulse {
-  0% { opacity: 0.7; transform: rotate(-18deg) skewX(-20deg) scale(0.98); }
-  100% { opacity: 0.95; transform: rotate(-17deg) skewX(-22deg) scale(1.04); }
+  0% { opacity: 0.65; transform: rotate(-18deg) skewX(-20deg) scale(0.98); }
+  100% { opacity: 0.9; transform: rotate(-17deg) skewX(-22deg) scale(1.03); }
 }
 
 /* Bright Solar Lens Flare */
 .neural-stage__flare {
   position: absolute;
-  top: 10px;
-  right: 60px;
-  width: 140px;
-  height: 140px;
+  top: 15px;
+  right: 50px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
-  background: radial-gradient(circle, #ffffff 0%, rgba(255, 170, 70, 0.9) 25%, rgba(255, 87, 34, 0.4) 55%, transparent 75%);
-  filter: blur(16px);
+  background: radial-gradient(circle, #ffffff 0%, rgba(255, 170, 70, 0.85) 25%, rgba(255, 87, 34, 0.35) 55%, transparent 75%);
+  filter: blur(14px);
   pointer-events: none;
   z-index: 2;
-  box-shadow: 0 0 60px rgba(255, 100, 30, 0.8);
+  box-shadow: 0 0 50px rgba(255, 100, 30, 0.7);
 }
 
 /* 3D Perspective Plane */
 .neural-stage__plane {
   position: relative;
-  width: 900px;
-  height: 480px;
+  width: 860px;
+  height: 380px;
   transform-style: preserve-3d;
   transition: transform 0.15s ease-out;
   display: flex;
@@ -78,24 +74,24 @@
 /* Central Silicon Processor Chip */
 .neural-chip--core {
   position: absolute;
-  width: 130px;
-  height: 130px;
-  background: linear-gradient(145deg, #18181c, #0d0d10);
-  border: 1.5px solid rgba(255, 120, 40, 0.8);
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(145deg, #181922, #0d0e14);
+  border: 1.5px solid rgba(255, 120, 40, 0.75);
   border-radius: 14px;
-  box-shadow: 0 0 40px rgba(255, 87, 34, 0.4), inset 0 0 20px rgba(255, 87, 34, 0.15);
+  box-shadow: 0 0 35px rgba(255, 87, 34, 0.35), inset 0 0 18px rgba(255, 87, 34, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
-  transform: translateZ(35px);
+  transform: translateZ(30px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
 
 .neural-chip--core:hover {
-  transform: translateZ(45px) scale(1.05);
-  box-shadow: 0 0 55px rgba(255, 87, 34, 0.7), inset 0 0 25px rgba(255, 87, 34, 0.3);
+  transform: translateZ(40px) scale(1.05);
+  box-shadow: 0 0 50px rgba(255, 87, 34, 0.65), inset 0 0 25px rgba(255, 87, 34, 0.3);
 }
 
 .neural-chip__inner {
@@ -103,13 +99,13 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 3px;
-  padding: 8px;
+  gap: 2px;
+  padding: 6px;
 }
 
 .neural-chip__logo {
   font-family: var(--font-mono);
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 900;
   letter-spacing: 0.05em;
   background: linear-gradient(135deg, #ffffff 30%, #ff8c42 100%);
@@ -119,18 +115,18 @@
 
 .neural-chip__title {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   color: #ff9d5c;
   text-transform: uppercase;
 }
 
 .neural-chip__clock {
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 7.5px;
   color: rgba(255, 255, 255, 0.6);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 
 /* Chip Metallic Pins */
@@ -139,40 +135,41 @@
   position: absolute;
   left: 15%;
   right: 15%;
-  height: 6px;
-  background: repeating-linear-gradient(90deg, #d4a373 0, #d4a373 4px, transparent 4px, transparent 10px);
+  height: 5px;
+  background: repeating-linear-gradient(90deg, #d4a373 0, #d4a373 3px, transparent 3px, transparent 8px);
 }
-.neural-chip__pins-top { top: -6px; }
-.neural-chip__pins-bottom { bottom: -6px; }
+.neural-chip__pins-top { top: -5px; }
+.neural-chip__pins-bottom { bottom: -5px; }
 
 .neural-chip__pins-left,
 .neural-chip__pins-right {
   position: absolute;
   top: 15%;
   bottom: 15%;
-  width: 6px;
-  background: repeating-linear-gradient(180deg, #d4a373 0, #d4a373 4px, transparent 4px, transparent 10px);
+  width: 5px;
+  background: repeating-linear-gradient(180deg, #d4a373 0, #d4a373 3px, transparent 3px, transparent 8px);
 }
-.neural-chip__pins-left { left: -6px; }
-.neural-chip__pins-right { right: -6px; }
+.neural-chip__pins-left { left: -5px; }
+.neural-chip__pins-right { right: -5px; }
 
 /* Floating 3D Node Chips */
 .neural-node {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: -30px;
-  margin-left: -70px;
-  width: 140px;
-  padding: 10px 14px;
-  background: rgba(20, 20, 26, 0.85);
-  backdrop-filter: blur(12px);
+  margin-top: -26px;
+  margin-left: -65px;
+  width: 130px;
+  padding: 8px 12px;
+  background: rgba(18, 20, 28, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  border-radius: 11px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   transform-style: preserve-3d;
@@ -181,21 +178,21 @@
 
 .neural-node:hover,
 .neural-node--active {
-  background: rgba(30, 26, 32, 0.95);
+  background: rgba(26, 22, 30, 0.96);
   border-color: rgba(255, 120, 40, 0.8);
-  box-shadow: 0 14px 40px rgba(255, 87, 34, 0.35);
-  transform: translateZ(50px) scale(1.08) !important;
+  box-shadow: 0 12px 35px rgba(255, 87, 34, 0.35);
+  transform: translateZ(45px) scale(1.08) !important;
 }
 
 .neural-node__icon {
-  font-size: 20px;
+  font-size: 17px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
+  border-radius: 7px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
 }
@@ -207,7 +204,7 @@
 }
 
 .neural-node__label {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   color: #ffffff;
   white-space: nowrap;
@@ -215,26 +212,86 @@
 
 .neural-node__tag {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 9px;
   color: #ff9d5c;
   white-space: nowrap;
+}
+
+/* Bottom Stack Telemetry Bar */
+.neural-stage__bottom-bar {
+  position: absolute;
+  bottom: 12px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  z-index: 4;
+}
+
+.neural-stage__bottom-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.neural-stage__bottom-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.neural-stage__tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-full);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #94a3b8;
+  transition: all var(--dur-fast);
+}
+
+.neural-stage__tag-pill:hover {
+  background: rgba(255, 87, 34, 0.12);
+  border-color: rgba(255, 87, 34, 0.3);
+  color: #ff8c42;
+}
+
+.neural-stage__tag-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ff7828;
 }
 
 /* Responsive adjustments */
 @media (max-width: 900px) {
   .neural-stage {
-    height: 420px;
+    height: 400px;
   }
   .neural-stage__plane {
-    transform: perspective(800px) rotateX(40deg) scale(0.8) !important;
+    transform: perspective(800px) rotateX(40deg) scale(0.78) !important;
   }
 }
 
 @media (max-width: 640px) {
   .neural-stage {
-    height: 360px;
+    height: 350px;
   }
   .neural-stage__plane {
-    transform: perspective(600px) rotateX(30deg) scale(0.65) !important;
+    transform: perspective(600px) rotateX(30deg) scale(0.62) !important;
+  }
+  .neural-stage__bottom-bar {
+    display: none;
   }
 }

@@ -240,6 +240,19 @@ export default function Neural3DStage() {
           </div>
         ))}
       </div>
+
+      {/* Bottom Stack Telemetry Bar */}
+      <div className="neural-stage__bottom-bar">
+        <span className="neural-stage__bottom-label">Core Capabilities:</span>
+        <div className="neural-stage__bottom-tags">
+          {['React 19', 'Python', 'PHP', 'MySQL', 'Node.js', 'FastAPI', 'Tailwind', 'MongoDB'].map((t) => (
+            <span key={t} className="neural-stage__tag-pill">
+              <span className="neural-stage__tag-dot" />
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

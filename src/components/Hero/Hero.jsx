@@ -12,6 +12,11 @@ const TECH_MARQUEE = [
 ]
 
 export default function Hero() {
+  const handleScrollToProjects = (e) => {
+    e.preventDefault()
+    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <section className="hero" id="hero" aria-label="Introduction">
       {/* RedSun Solar Ambient Glowing Orbs */}
@@ -24,60 +29,58 @@ export default function Hero() {
         <Canvas3D className="hero__canvas3d" />
       </div>
 
-      <div className="container">
+      <div className="container hero__container">
         {/* ── TOP: Announcement Badge ── */}
         <div className="hero__announcement">
-          <span className="hero__announcement-badge border-glow-pulse">
+          <a href="#contact" className="hero__announcement-badge border-glow-pulse">
             <span className="hero__pulse-dot" />
             <span>Open to Opportunities · Vadodara &amp; Remote</span>
             <span className="hero__announcement-arrow">↗</span>
-          </span>
+          </a>
         </div>
 
-        {/* ── CENTER: Massive RedSun Headline ── */}
+        {/* ── CENTER: RedSun Headline & Value Proposition ── */}
         <div className="hero__heading-block">
           <h1 className="hero__title">
             Turning Complex Ideas
             <span className="hero__title-gradient">Into Intelligent Web Products.</span>
           </h1>
           <p className="hero__subtitle">
-            Full-Stack Web Developer &amp; Software Engineer. Operating Executive at <strong>Pattern LLC</strong>. BCA graduate from Semcom, CVM University with <strong>9.55 CGPA</strong>. Engineering high-concurrency systems, dynamic PHP/Python backends, and responsive React experiences.
+            Full-Stack Web Developer &amp; Software Engineer. Operating Executive at <strong>Pattern LLC</strong> (2026 – Present). BCA graduate from Semcom, CVM University with <strong>9.55 CGPA</strong>. Architecting high-concurrency systems, dynamic PHP/Python backends, and responsive React experiences.
           </p>
 
-          {/* Action Buttons with Magnetic Effect */}
+          {/* Action CTAs */}
           <div className="hero__actions">
             <MagneticButton
               as="a"
               href="#projects"
+              onClick={handleScrollToProjects}
               className="btn btn-primary hero__btn-primary"
               strength={0.25}
-              onClick={(e) => {
-                e.preventDefault()
-                document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })
-              }}
             >
               <span>Explore Featured Works</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <polyline points="19 12 12 19 5 12"></polyline>
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <polyline points="19 12 12 19 5 12"/>
               </svg>
             </MagneticButton>
-            <MagneticButton
-              as="a"
+
+            <a
               href="/Kavya-Modi-Resume.pdf"
               download="Kavya-Modi-Resume.pdf"
-              className="btn btn-outline hero__btn-secondary"
+              className="hero__cv-btn"
               id="hero-download-cv-btn"
-              strength={0.2}
+              aria-label="Download Kavya Modi CV as PDF"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
                 <polyline points="7 10 12 15 17 10"/>
                 <line x1="12" y1="15" x2="12" y2="3"/>
               </svg>
               <span>Download CV</span>
-              <span className="hero__btn-badge">PDF</span>
-            </MagneticButton>
+              <span className="hero__cv-badge">PDF</span>
+            </a>
+
             <MagneticButton
               as="a"
               href="/resume"
@@ -90,10 +93,10 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── REDSUN DASHBOARD TELEMETRY BENTO SHOWCASE ── */}
-        <div className="hero__dashboard-wrapper">
-          <TiltCard className="hero__dashboard" maxTilt={4} glareEnabled={true}>
-            {/* Top Bar with Status */}
+        {/* ── UNIFIED 3D TELEMETRY & SILICON STAGE ── */}
+        <div className="hero__showcase-wrapper">
+          <TiltCard className="hero__showcase-card" maxTilt={3} glareEnabled={false}>
+            {/* Top Bar with System Telemetry */}
             <div className="hero__dash-header">
               <div className="hero__dash-dots">
                 <span className="dot dot--red" />
@@ -107,97 +110,33 @@ export default function Hero() {
               <div className="hero__dash-badge">Kavya Modi v2026</div>
             </div>
 
-            {/* Dashboard Bento Content */}
-            <div className="hero__dash-grid">
-              {/* Metric 1: Academic Excellence */}
-              <div className="hero__dash-card hero__dash-card--metric">
-                <div className="hero__dash-card-header">
-                  <span className="hero__dash-card-label">Academic Distinction</span>
-                  <span className="hero__dash-pill">Rank 1</span>
-                </div>
-                <div className="hero__dash-metric-row">
-                  <span className="hero__dash-metric-big">
-                    <AnimatedCounter end={9.55} decimals={2} duration={2200} />
-                  </span>
-                  <span className="hero__dash-metric-unit">CGPA</span>
-                </div>
-                <div className="hero__dash-metric-sub">BCA · Semcom, CVM University (2026)</div>
-                {/* Visual SVG Sparkline */}
-                <div className="hero__sparkline" aria-hidden="true">
-                  <svg viewBox="0 0 100 24" fill="none" className="hero__spark-svg">
-                    <path
-                      d="M0 20 Q 25 14, 50 10 T 100 4"
-                      stroke="#ff7828"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M0 20 Q 25 14, 50 10 T 100 4 L 100 24 L 0 24 Z"
-                      fill="url(#sparkGrad)"
-                      opacity="0.25"
-                    />
-                    <defs>
-                      <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#ff7828" />
-                        <stop offset="100%" stopColor="#ff7828" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </div>
+            {/* Quick Metrics Bar */}
+            <div className="hero__quick-metrics">
+              <div className="hero__qm-item">
+                <span className="hero__qm-val"><AnimatedCounter end={9.55} decimals={2} duration={2000} /></span>
+                <span className="hero__qm-lbl">CGPA Distinction (Rank 1)</span>
               </div>
-
-              {/* Metric 2: Experience & Operations */}
-              <div className="hero__dash-card hero__dash-card--metric">
-                <div className="hero__dash-card-header">
-                  <span className="hero__dash-card-label">Industry Operations</span>
-                  <span className="hero__dash-pill hero__dash-pill--amber">Active</span>
-                </div>
-                <div className="hero__dash-metric-title">Operating Executive</div>
-                <div className="hero__dash-metric-company">Pattern LLC · Vadodara</div>
-                <div className="hero__dash-dates">2026 – Present · Full-Time</div>
-                <div className="hero__dash-meta-tag">International BPO/ITES Delivery</div>
+              <div className="hero__qm-item">
+                <span className="hero__qm-val">Pattern LLC</span>
+                <span className="hero__qm-lbl">Operating Executive (2026)</span>
               </div>
-
-              {/* Metric 3: Production Projects */}
-              <div className="hero__dash-card hero__dash-card--metric">
-                <div className="hero__dash-card-header">
-                  <span className="hero__dash-card-label">Engineering Output</span>
-                  <span className="hero__dash-pill hero__dash-pill--cyan">Shipped</span>
-                </div>
-                <div className="hero__dash-metric-row">
-                  <span className="hero__dash-metric-big">
-                    <AnimatedCounter end={7} suffix="+" duration={1800} />
-                  </span>
-                  <span className="hero__dash-metric-unit">Systems</span>
-                </div>
-                <div className="hero__dash-metric-sub">React, PHP, Python, MySQL Solutions</div>
-                <div className="hero__dash-client-count">100% Client Delivery Record</div>
+              <div className="hero__qm-item">
+                <span className="hero__qm-val"><AnimatedCounter end={7} suffix="+" duration={1800} /></span>
+                <span className="hero__qm-lbl">Shipped Systems</span>
               </div>
-
-              {/* Tech Stack Bar */}
-              <div className="hero__dash-card hero__dash-card--full">
-                <div className="hero__dash-tech-header">
-                  <span className="hero__dash-tech-label">Core Tech Stack</span>
-                  <span className="hero__dash-tech-sub">High-concurrency &amp; full-stack architecture</span>
-                </div>
-                <div className="hero__dash-pills">
-                  {['React', 'JavaScript', 'Python', 'PHP', 'MySQL', 'Node.js', 'FastAPI', 'Tailwind', 'Vite', 'MongoDB'].map((t) => (
-                    <span key={t} className="hero__tech-pill">
-                      <span className="hero__tech-dot" />
-                      {t}
-                    </span>
-                  ))}
-                </div>
+              <div className="hero__qm-item">
+                <span className="hero__qm-val">Full-Stack</span>
+                <span className="hero__qm-lbl">React · PHP · Python · DB</span>
               </div>
             </div>
+
+            {/* Interactive 3D Silicon & Neural Circuit Stage */}
+            <Neural3DStage />
           </TiltCard>
         </div>
-
-        {/* ── 3D SILICON & NEURAL ARCHITECTURE STAGE (GCORE / REDSUN) ── */}
-        <Neural3DStage />
       </div>
 
-      {/* ── REDSUN INFINITE LOGO / TECH MARQUEE TICKER ── */}
+      {/* ── REDSUN INFINITE TECH MARQUEE TICKER ── */}
       <div className="hero__marquee" aria-hidden="true">
         <div className="hero__marquee-track">
           {[...TECH_MARQUEE, ...TECH_MARQUEE, ...TECH_MARQUEE].map((tech, idx) => (
