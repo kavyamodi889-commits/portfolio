@@ -53,6 +53,29 @@
   opacity: 0.5;
 }
 
+/* 3D Particle Constellation */
+.hero__canvas3d {
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  width: 580px;
+  height: 580px;
+  pointer-events: auto;
+  z-index: 0;
+  opacity: 0.75;
+}
+
+@media (max-width: 900px) {
+  .hero__canvas3d {
+    width: 340px;
+    height: 340px;
+    right: 50%;
+    transform: translate(50%, -50%);
+    opacity: 0.4;
+  }
+}
+
 /* ── Layout ───────────────────────────── */
 .hero__layout {
   position: relative;

@@ -1,3 +1,4 @@
+import Canvas3D from '../Common/Canvas3D'
 import './Hero.css'
 
 const TECH = ['React', 'JavaScript', 'Python', 'PHP', 'MySQL', 'Node.js', 'Tailwind', 'Vite']
@@ -5,12 +6,13 @@ const TECH = ['React', 'JavaScript', 'Python', 'PHP', 'MySQL', 'Node.js', 'Tailw
 export default function Hero() {
   return (
     <section className="hero" id="hero" aria-label="Introduction">
-      {/* Animated background */}
+      {/* Animated background & 3D Interactive Constellation */}
       <div className="hero__bg" aria-hidden="true">
         <div className="hero__blob hero__blob--1" />
         <div className="hero__blob hero__blob--2" />
         <div className="hero__blob hero__blob--3" />
         <div className="hero__dots" />
+        <Canvas3D className="hero__canvas3d" />
       </div>
 
       <div className="container">

@@ -72,6 +72,47 @@
   --dur-fast:    0.2s;
   --dur-base:    0.35s;
   --dur-slow:    0.6s;
+
+  /* Component Aliases for Light Theme */
+  --color-bg:               #f9f8fc;
+  --color-bg-alt:           #f1effe;
+  --color-surface:          #ffffff;
+  --color-surface-raised:   #ffffff;
+  --color-border:           #e2e8f0;
+  --color-border-subtle:    rgba(0, 0, 0, 0.05);
+  --color-text:             #0f172a;
+  --color-text-secondary:   #334155;
+  --color-text-muted:       #64748b;
+  --color-text-placeholder: #94a3b8;
+  --color-primary:          #7c3aed;
+  --color-primary-light:    #a855f7;
+  --color-primary-subtle:   #ede9fe;
+  --color-accent:           #7c3aed;
+  --color-accent-light:     #ede9fe;
+  --color-accent-hover:     #6d28d9;
+  --color-violet-50:        #f5f3ff;
+  --color-violet-200:       #ddd6fe;
+  --color-violet-300:       #c4b5fd;
+  --nav-height:             72px;
+  --transition-fast:        0.15s ease;
+  --transition-normal:      0.25s ease;
+  --leading-relaxed:        1.65;
+  --leading-normal:         1.5;
+  --text-xs:                0.75rem;
+  --text-sm:                0.875rem;
+  --text-base:              1rem;
+  --text-lg:                1.125rem;
+  --text-xl:                1.25rem;
+  --text-2xl:               1.5rem;
+  --font-bold:              700;
+  --font-semibold:          600;
+  --font-medium:            500;
+  --radius-sm:              6px;
+  --radius-md:              10px;
+  --radius-lg:              14px;
+  --radius-xl:              18px;
+  --radius-2xl:             24px;
+  --radius-full:            9999px;
 }
 
 /* ── Reset & Base ──────────────────────────────────────────── */
@@ -272,9 +313,42 @@ body {
 }
 
 /* ── Animations ────────────────────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* ── Scroll Reveal Animations (Pinterest/Dribbble Fluid Motion) ── */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pc.reveal-on-scroll.is-revealed:hover,
+.skill-category.reveal-on-scroll.is-revealed:hover,
+.edu-card.reveal-on-scroll.is-revealed:hover,
+.cert-card.reveal-on-scroll.is-revealed:hover,
+.hero__card.reveal-on-scroll.is-revealed:hover {
+  transform: translateY(-5px);
+}
+
+/* Ambient Cursor Glow */
+.ambient-cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, rgba(6, 182, 212, 0.04) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 9998;
+  filter: blur(25px);
+  will-change: transform;
+  transform: translate3d(-300px, -300px, 0);
 }
 @keyframes fadeIn {
   from { opacity: 0; }

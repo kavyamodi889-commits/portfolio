@@ -29,6 +29,104 @@ function ScrollProgress() {
   )
 }
 
+function CursorFollower() {
+  useEffect(() => {
+    // Only enable on desktop pointer devices
+    if (window.matchMedia('(pointer: coarse)').matches) return
+
+    const cursor = document.getElementById('ambient-cursor-glow')
+    if (!cursor) return
+
+    let mouseX = -300
+    let mouseY = -300
+    let currentX = -300
+    let currentY = -300
+    let animId
+
+    const handleMouseMove = (e) => {
+      mouseX = e.clientX
+      mouseY = e.clientY
+    }
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+
+    const loop = () => {
+      currentX += (mouseX - currentX) * 0.12
+      currentY += (mouseY - currentY) * 0.12
+      cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`
+      animId = requestAnimationFrame(loop)
+    }
+    loop()
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      cancelAnimationFrame(animId)
+    }
+  }, [])
+
+  return (
+    <div
+      id="ambient-cursor-glow"
+      className="ambient-cursor-glow"
+      aria-hidden="true"
+    />
+  )
+}
+
+function ScrollRevealListener() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed')
+          }
+        })
+      },
+      {
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px',
+      }
+    )
+
+    const observeTargets = () => {
+      const selectors = [
+        '.section-header',
+        '.pc',
+        '.spotlight-card',
+        '.skill-category',
+        '.timeline__card',
+        '.edu-card',
+        '.cert-card',
+        '.arch__canvas',
+        '.terminal-window',
+        '.recruiter__card',
+        '.recruiter__preview-container',
+        '.contact__card',
+        '.contact__form-card',
+        '.hero__card',
+      ]
+      const elements = document.querySelectorAll(selectors.join(', '))
+      elements.forEach((el) => {
+        el.classList.add('reveal-on-scroll')
+        observer.observe(el)
+      })
+    }
+
+    observeTargets()
+    const timer = setTimeout(observeTargets, 400)
+
+    return () => {
+      clearTimeout(timer)
+      observer.disconnect()
+    }
+  }, [pathname])
+
+  return null
+}
+
 function PageScrollReset() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -42,6 +140,8 @@ export default function App() {
     <BrowserRouter>
       <PageScrollReset />
       <ScrollProgress />
+      <CursorFollower />
+      <ScrollRevealListener />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
