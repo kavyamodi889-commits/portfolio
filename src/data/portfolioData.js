@@ -40,7 +40,7 @@ export const profile = {
   email: "kavyamodi746@gmail.com",
   phone: "+91 7041116223",
   whatsapp: "https://wa.me/917041116223",
-  website: "https://kavyamodi19.lovable.app",
+  website: "https://kavyamodi.vercel.app",
   cgpa: "9.55",
   resumeFilename: "Kavya-Modi-Resume.pdf",
 };
@@ -271,7 +271,7 @@ export const experience = [
     company: "Pattern LLC",
     location: "Intivia Tower, Old Chhani Road, Vadodara, Gujarat – 390024, India",
     type: "Full-Time",
-    startDate: "2024",
+    startDate: "2026",
     endDate: "Present",
     description:
       "Pattern LLC (US-HQ: Claymont, Delaware | UK: Patterns ITES Ltd, London) is a global Business Process Outsourcing (BPO) and IT-Enabled Services provider with a major delivery centre in Vadodara, Gujarat. The company serves international clients across the US and UK in domains including staffing & recruitment, data processing, digital media, virtual assistance, and web development. As an Operating Executive at the Vadodara delivery centre, managed day-to-day offshore operations, coordinated cross-functional teams, and ensured seamless delivery of client commitments.",
@@ -401,7 +401,7 @@ export const contactLinks = [
   },
   {
     label: "Portfolio Website",
-    url: "https://kavyamodi19.lovable.app",
+    url: "https://kavyamodi.vercel.app",
     icon: "website",
     public: true,
   },
