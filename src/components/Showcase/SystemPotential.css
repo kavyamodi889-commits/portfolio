@@ -201,65 +201,106 @@
   margin-bottom: 24px;
 }
 
-/* PCB Visual Simulation */
-.bento-pcb-visual {
+/* ── Realistic Silicon PCB Motherboard Traces Graphic ── */
+.bento-pcb-board {
   position: relative;
-  height: 90px;
-  background: rgba(10, 12, 18, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
+  width: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(20, 24, 38, 0.95) 0%, rgba(8, 10, 16, 0.98) 100%);
+  border: 1px solid rgba(255, 120, 40, 0.2);
+  border-radius: 16px;
   margin-bottom: 24px;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.8), 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-.bento-pcb-track {
+.bento-pcb-board--active,
+.bento-card--large:hover .bento-pcb-board {
+  border-color: rgba(255, 120, 40, 0.5);
+  box-shadow: inset 0 2px 16px rgba(255, 87, 34, 0.15), 0 12px 32px rgba(255, 87, 34, 0.12);
+}
+
+.bento-pcb-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+}
+
+/* Base Traces & Transition on Hover */
+.pcb-copper-traces path {
+  transition: stroke 0.4s ease, stroke-width 0.4s ease;
+}
+
+.bento-pcb-board--active .pcb-copper-traces path,
+.bento-card--large:hover .pcb-copper-traces path {
+  stroke: rgba(255, 140, 50, 0.45);
+}
+
+/* Animated Live Electricity Comets */
+.pcb-comet {
+  stroke-dasharray: 45 320;
+  stroke-dashoffset: 365;
+}
+
+.pcb-comet--1 {
+  animation: pcbLaserComet 2.6s linear infinite;
+}
+
+.pcb-comet--2 {
+  animation: pcbLaserComet 3.4s linear infinite 0.7s;
+}
+
+.pcb-comet--3 {
+  animation: pcbLaserComet 2.9s linear infinite 1.3s;
+}
+
+.pcb-comet--4 {
+  animation: pcbLaserComet 3.8s linear infinite 0.4s;
+}
+
+@keyframes pcbLaserComet {
+  0% {
+    stroke-dashoffset: 365;
+  }
+  100% {
+    stroke-dashoffset: -365;
+  }
+}
+
+/* PCB Live Status Pill */
+.pcb-live-badge {
   position: absolute;
-  height: 2px;
-  background: rgba(255, 120, 40, 0.2);
-  left: 0;
-  right: 0;
-}
-.bento-pcb-track--1 { top: 30%; }
-.bento-pcb-track--2 { bottom: 30%; }
-
-.bento-pcb-pulse {
-  position: absolute;
-  width: 40px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #ffffff, #ff5722, transparent);
-  box-shadow: 0 0 10px #ff5722;
-  animation: pcbRun 3s linear infinite;
-}
-.bento-pcb-pulse--1 { top: 30%; animation-delay: 0s; }
-.bento-pcb-pulse--2 { bottom: 30%; animation-delay: 1.5s; animation-direction: reverse; }
-
-@keyframes pcbRun {
-  0% { left: -50px; }
-  100% { left: 100%; }
-}
-
-.bento-chip-badge {
-  position: relative;
-  z-index: 2;
+  bottom: 10px;
+  right: 12px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  background: rgba(18, 20, 30, 0.95);
-  border: 1.5px solid rgba(255, 120, 40, 0.5);
-  border-radius: 8px;
+  gap: 7px;
+  padding: 4px 10px;
+  background: rgba(10, 12, 18, 0.9);
+  border: 1px solid rgba(255, 120, 40, 0.3);
+  border-radius: var(--r-full);
   font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 800;
-  color: #ffffff;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 87, 34, 0.2);
+  font-size: 9px;
+  font-weight: 700;
+  color: #ff9d5c;
+  letter-spacing: 0.06em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
 }
 
-.bento-chip-icon {
-  font-size: 14px;
+.pcb-live-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pcbLiveDot 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes pcbLiveDot {
+  0%   { opacity: 0.5; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1.2); }
 }
 
 .bento-metrics-row {
@@ -289,6 +330,234 @@
   margin-top: 2px;
 }
 
+/* ── Reference Frame 18s: Hardware Showcase (Silicon Die + Terminal) ── */
+.hardware-showcase {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 14px;
+  align-items: center;
+  background: rgba(8, 10, 16, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 20px;
+}
+
+/* 3D Glass Silicon Die Package */
+.silicon-die-package {
+  position: relative;
+  width: 86px;
+  height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.silicon-die-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 16px;
+  background: radial-gradient(circle, rgba(255, 87, 34, 0.4) 0%, transparent 70%);
+  filter: blur(10px);
+  animation: dieGlowPulse 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes dieGlowPulse {
+  0%   { opacity: 0.6; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1.08); }
+}
+
+.silicon-die-substrate {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  background: linear-gradient(135deg, #1e2230 0%, #0d1017 100%);
+  border: 1.5px solid rgba(255, 120, 40, 0.45);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), inset 0 1px 3px rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.hardware-showcase:hover .silicon-die-substrate {
+  transform: scale(1.04) rotate(1deg);
+}
+
+.silicon-die-core {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #ff5722 0%, #ea580c 50%, #9a3412 100%);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 18px rgba(255, 87, 34, 0.5), inset 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.silicon-die-emblem {
+  font-size: 18px;
+  color: #ffffff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.silicon-die-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.12em;
+  margin-top: 1px;
+}
+
+/* Hardware Terminal */
+.hardware-terminal {
+  background: rgba(10, 12, 18, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 10px 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hardware-terminal__bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hw-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.hw-dot--red    { background: #ef4444; }
+.hw-dot--yellow { background: #f59e0b; }
+.hw-dot--green  { background: #10b981; }
+
+.hw-terminal__title {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: #64748b;
+  margin-left: 4px;
+}
+
+.hardware-terminal__code {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.5;
+  color: #cbd5e1;
+  overflow-x: auto;
+}
+
+.code-kw { color: #ff7043; font-weight: 700; }
+.code-fn { color: #60a5fa; }
+.code-str { color: #34d399; }
+.code-num { color: #fbbf24; }
+
+.hardware-terminal__footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.06);
+}
+
+.hw-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+
+.hw-status-text {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+/* ── Card 3: Academic Excellence Progress Box ── */
+.academic-meter-box {
+  background: rgba(8, 10, 16, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 20px;
+}
+
+.academic-meter__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.academic-meter__label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.06em;
+}
+
+.academic-meter__score {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 900;
+  color: #fbbf24;
+}
+
+.academic-meter__track {
+  width: 100%;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.academic-meter__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 60%, #fef08a 100%);
+  border-radius: 99px;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+  animation: meterFillIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes meterFillIn {
+  from { width: 0 !important; }
+}
+
+.academic-meter__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.academic-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  color: #fcd34d;
+}
+
 /* Badges for Pattern LLC and Academic Distinction */
 .bento-corp-badge {
   display: flex;
@@ -313,6 +582,18 @@
   font-size: 18px;
   color: #ff8c42;
   flex-shrink: 0;
+}
+
+.bento-corp-icon--gold {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+}
+
+.bento-card__status--gold {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.35);
 }
 
 .bento-corp-details {
@@ -341,4 +622,9 @@
   .bento-card--large {
     grid-row: auto;
   }
+  .hardware-showcase {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
 }
+

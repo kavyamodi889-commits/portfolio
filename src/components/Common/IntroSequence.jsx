@@ -122,19 +122,38 @@ export default function IntroSequence({ onComplete }) {
           </div>
         </div>
 
-        {/* Horizontal Typography Unfold (Mounted only in phase !== 'mark-in') */}
+        {/* Horizontal Typography Unfold with Letter Stagger & Optical Sheen */}
         {phase !== 'mark-in' && (
           <div className="intro-screen__text-wrapper">
             <div className="intro-screen__title-row">
-              <span className="intro-screen__title-text">KAVYA MODI</span>
+              <span className="intro-screen__title-text">
+                {'KAVYA MODI'.split('').map((char, i) => (
+                  <span
+                    key={i}
+                    className="intro-screen__title-char"
+                    style={{ animationDelay: `${0.04 * i}s` }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </span>
+                ))}
+              </span>
               <span className="intro-screen__title-badge">PRO</span>
             </div>
             <div className="intro-screen__sub-row">
               <span className="intro-screen__status-dot" />
               <span className="intro-screen__sub-text">FULL-STACK WEB ARCHITECT</span>
+              <span className="intro-screen__init-tag">INIT // 100%</span>
             </div>
           </div>
         )}
+      </div>
+
+      {/* Floating Micro-Light Dust Particles */}
+      <div className="intro-screen__particles" aria-hidden="true">
+        <span className="intro-particle intro-particle--1" />
+        <span className="intro-particle intro-particle--2" />
+        <span className="intro-particle intro-particle--3" />
+        <span className="intro-particle intro-particle--4" />
       </div>
 
       {/* Clean Skip Action */}

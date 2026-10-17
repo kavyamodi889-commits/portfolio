@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import Canvas3D from '../Common/Canvas3D'
 import AnimatedCounter from '../Common/AnimatedCounter'
 import MagneticButton from '../Common/MagneticButton'
@@ -10,7 +11,25 @@ const TECH_MARQUEE = [
   'Git & GitHub', 'REST APIs', 'Vercel', 'Netlify', 'Windows Forms'
 ]
 
+const STATUS_ITEMS = [
+  { tag: 'STATUS', text: 'Open to Opportunities', sub: 'Vadodara & Remote', dot: '#10b981' },
+  { tag: 'ROLE', text: 'Operating Executive', sub: 'Pattern LLC (2026–Present)', dot: '#ff7828' },
+  { tag: 'MERIT', text: 'Semcom BCA Rank 1', sub: '9.55 CGPA Distinction', dot: '#f59e0b' },
+  { tag: 'STACK', text: 'Full-Stack Architecture', sub: 'React · Python · MySQL · PHP', dot: '#38bdf8' },
+]
+
 export default function Hero() {
+  const [statusIdx, setStatusIdx] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setStatusIdx((prev) => (prev + 1) % STATUS_ITEMS.length)
+    }, 3200)
+    return () => clearInterval(timer)
+  }, [])
+
+  const currentStatus = STATUS_ITEMS[statusIdx]
+
   const handleScrollToProjects = (e) => {
     e.preventDefault()
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
@@ -38,11 +57,20 @@ export default function Hero() {
         {/* LEFT CONTENT COLUMN */}
         <div className="hero__content">
 
-          {/* Status badge */}
+          {/* Dynamic Status badge */}
           <div className="hero__announcement">
-            <a href="#contact" className="hero__announcement-badge border-glow-pulse">
-              <span className="hero__pulse-dot" />
-              <span>Open to Opportunities · Vadodara &amp; Remote</span>
+            <a href="#contact" className="hero__announcement-badge hero__status-cycler" aria-label="Current status details">
+              <span className="hero__laser-border" aria-hidden="true" />
+              <span
+                className="hero__pulse-dot"
+                style={{ background: currentStatus.dot, boxShadow: `0 0 10px ${currentStatus.dot}` }}
+              />
+              <span className="hero__status-tag">{currentStatus.tag}</span>
+              <span className="hero__status-sep">·</span>
+              <span className="hero__status-slider" key={statusIdx}>
+                <span className="hero__status-main">{currentStatus.text}</span>
+                <span className="hero__status-sub">({currentStatus.sub})</span>
+              </span>
               <span className="hero__announcement-arrow">↗</span>
             </a>
           </div>

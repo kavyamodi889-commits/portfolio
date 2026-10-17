@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { profile, contactLinks } from '../../data/portfolioData'
 import './Contact.css'
@@ -87,6 +87,26 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
   const [copiedLink, setCopiedLink] = useState(null)
 
+  const [currentTime, setCurrentTime] = useState('')
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date()
+      setCurrentTime(
+        now.toLocaleTimeString('en-US', {
+          timeZone: 'Asia/Kolkata',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+        })
+      )
+    }
+    updateTime()
+    const timer = setInterval(updateTime, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
   const validate = () => {
     const errs = {}
     if (!formData.name.trim()) {
@@ -140,24 +160,66 @@ export default function Contact() {
         </header>
 
         <div className="contact__layout">
-          {/* Left: Contact Info & Status */}
+          {/* Left: Operational Telemetry & Verified Status HUD */}
           <div className="contact__info">
-            <div className="contact__card">
-              <div className="contact__availability">
-                <div className="contact__avail-dot" aria-hidden="true" />
-                <div>
-                  <div className="contact__avail-label">Current Status</div>
-                  <div className="contact__avail-status">Available for Opportunities</div>
+            <div className="contact__card telemetry-hud">
+              {/* Corner brackets */}
+              <span className="telemetry-hud__corner telemetry-hud__corner--tl" aria-hidden="true" />
+              <span className="telemetry-hud__corner telemetry-hud__corner--tr" aria-hidden="true" />
+              <span className="telemetry-hud__corner telemetry-hud__corner--bl" aria-hidden="true" />
+              <span className="telemetry-hud__corner telemetry-hud__corner--br" aria-hidden="true" />
+
+              {/* Status Header with Concentric Radar Pulse */}
+              <div className="telemetry-hud__header">
+                <div className="telemetry-hud__radar" aria-hidden="true">
+                  <span className="telemetry-hud__radar-ring telemetry-hud__radar-ring--1" />
+                  <span className="telemetry-hud__radar-ring telemetry-hud__radar-ring--2" />
+                  <span className="telemetry-hud__radar-dot" />
+                </div>
+                <div className="telemetry-hud__title-col">
+                  <div className="telemetry-hud__tag">LIVE TELEMETRY · CURRENT STATUS</div>
+                  <div className="telemetry-hud__headline">Actively Open to Opportunities</div>
                 </div>
               </div>
 
+              {/* Metrics Grid */}
+              <div className="telemetry-hud__grid">
+                <div className="telemetry-metric">
+                  <span className="telemetry-metric__label">Current Role</span>
+                  <span className="telemetry-metric__value">Operating Executive</span>
+                  <span className="telemetry-metric__sub">Pattern LLC · US/UK Delivery (2026–Present)</span>
+                </div>
+
+                <div className="telemetry-metric">
+                  <span className="telemetry-metric__label">Academic Standing</span>
+                  <span className="telemetry-metric__value">Semcom Rank 1 · 9.55 CGPA</span>
+                  <span className="telemetry-metric__sub">Bachelor of Computer Applications</span>
+                </div>
+
+                <div className="telemetry-metric">
+                  <span className="telemetry-metric__label">Local Time (India)</span>
+                  <span className="telemetry-metric__value font-mono">{currentTime || '05:30:00 PM'} IST</span>
+                  <span className="telemetry-metric__sub">UTC+5:30 · Active Working Hours</span>
+                </div>
+
+                <div className="telemetry-metric">
+                  <span className="telemetry-metric__label">Response Latency</span>
+                  <span className="telemetry-metric__value text-emerald">&lt; 2 Hours</span>
+                  <span className="telemetry-metric__sub">Direct Channel Guaranteed</span>
+                </div>
+              </div>
+
+              {/* Verified Professional Summary */}
               <p className="contact__card-text">
-                MCA student with verified hands-on engineering experience in PHP, MySQL, VB.NET, and modern web application development. Open to internships, junior developer roles, and engineering collaborations.
+                Operating Executive at <strong>Pattern LLC</strong> coordinating daily operations for Western markets, and <strong>Semcom BCA Rank 1</strong> graduate with <strong>9.55 CGPA</strong>. Deep engineering expertise across React 19, Python, PHP, enterprise MySQL, and high-concurrency systems. Available for full-stack engineering, technical architecture, and global remote collaborations.
               </p>
 
-              <div className="contact__meta-row">
-                <span className="contact__meta-label">Location:</span>
-                <span className="contact__meta-val">{profile.location}</span>
+              {/* Scope Badges */}
+              <div className="telemetry-hud__pills">
+                <span className="telemetry-pill">⚡ High-Concurrency Systems</span>
+                <span className="telemetry-pill">⚛️ React 19 Architecture</span>
+                <span className="telemetry-pill">🗄️ Relational DB Optimization</span>
+                <span className="telemetry-pill">🌍 Global Remote / Vadodara</span>
               </div>
 
               {/* Verified Links */}
@@ -211,7 +273,7 @@ export default function Contact() {
                 </p>
                 <div className="contact__success-actions">
                   <a
-                    href={`mailto:kavyamodi889@gmail.com?subject=${encodeURIComponent(
+                    href={`mailto:${profile.email}?subject=${encodeURIComponent(
                       `[${formData.inquiryType}] From ${formData.name}`
                     )}&body=${encodeURIComponent(
                       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
