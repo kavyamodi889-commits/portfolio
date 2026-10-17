@@ -61,8 +61,6 @@ export default function ResumeStudio() {
   const [activeTemplate, setActiveTemplate] = useState('modern')
   const [sectionVisibility, setSectionVisibility] = useState({ ...resumeSections })
   const [printing, setPrinting] = useState(false)
-  const [downloading, setDownloading] = useState(false)
-  const [downloadMsg, setDownloadMsg] = useState('')
   const previewRef = useRef(null)
 
   const ActiveComponent = TEMPLATES.find((t) => t.id === activeTemplate)?.component ?? ResumeModern
@@ -78,108 +76,6 @@ export default function ResumeStudio() {
       window.print()
       setPrinting(false)
     }, 200)
-  }
-
-  const handleDownload = async () => {
-    setDownloading(true)
-    setDownloadMsg('')
-
-    // Strategy: use browser print-to-PDF via a dedicated print window
-    // This keeps the PDF text selectable and no external libraries needed
-    try {
-      const printWindow = window.open('', '_blank', 'width=900,height=1200')
-      if (!printWindow) {
-        setDownloadMsg('Please allow popups to download the PDF, then click Download again.')
-        setDownloading(false)
-        return
-      }
-
-      // Get the resume HTML content
-      const resumeEl = document.getElementById('resume-print-area')
-      if (!resumeEl) {
-        setDownloadMsg('Resume content not found. Please try again.')
-        setDownloading(false)
-        return
-      }
-
-      // Get all stylesheets
-      const styles = Array.from(document.styleSheets)
-        .map((sheet) => {
-          try {
-            return Array.from(sheet.cssRules).map((r) => r.cssText).join('\n')
-          } catch {
-            return sheet.href ? `@import url('${sheet.href}');` : ''
-          }
-        })
-        .join('\n')
-
-      printWindow.document.write(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>${profile.resumeFilename ?? 'Kavya-Modi-Resume'}</title>
-          <link rel="preconnect" href="https://fonts.googleapis.com">
-          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-          <style>
-            ${styles}
-
-            @page {
-              size: A4;
-              margin: 0;
-            }
-
-            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
-            body {
-              margin: 0;
-              padding: 0;
-              background: #fff;
-            }
-
-            .resume-studio-page,
-            .resume-studio__sidebar,
-            .resume-studio__controls,
-            .resume-studio__template-bar,
-            .resume-studio__actions,
-            .navbar,
-            [aria-label="Main navigation"],
-            .no-print {
-              display: none !important;
-            }
-
-            #resume-print-area {
-              display: block !important;
-              width: 210mm;
-              min-height: 297mm;
-              margin: 0;
-              padding: 0;
-            }
-          </style>
-        </head>
-        <body>
-          ${resumeEl.outerHTML}
-          <script>
-            window.onload = function() {
-              setTimeout(function() {
-                window.print();
-                window.close();
-              }, 800);
-            };
-          </script>
-        </body>
-        </html>
-      `)
-      printWindow.document.close()
-
-      setDownloadMsg(`✓ PDF export window opened. Use "Save as PDF" in the print dialog. Filename: ${profile.resumeFilename}`)
-    } catch (err) {
-      setDownloadMsg('Export failed. Please use the Print button and choose "Save as PDF".')
-      console.error('PDF export error:', err)
-    } finally {
-      setDownloading(false)
-    }
   }
 
   const resumeData = {
@@ -307,10 +203,6 @@ export default function ResumeStudio() {
               </svg>
               <span>{printing ? 'Opening Print…' : 'Print / Save Custom PDF'}</span>
             </button>
-
-            {downloadMsg && (
-              <p className="studio-download-msg" role="alert" aria-live="polite">{downloadMsg}</p>
-            )}
           </div>
 
           {/* Update instructions */}

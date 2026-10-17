@@ -13,9 +13,8 @@ export default function IntroSequence({ onComplete }) {
     timersRef.current = []
   }
 
-  const runSequence = useCallback(() => {
+  const startTimers = useCallback(() => {
     clearAllTimers()
-    setPhase('mark-in')
 
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual'
@@ -56,12 +55,20 @@ export default function IntroSequence({ onComplete }) {
     timersRef.current = [t1, t2, t3]
   }, [onComplete])
 
+  const skipIntro = useCallback(() => {
+    clearAllTimers()
+    setPhase('done')
+    document.body.classList.remove('intro-active')
+    onComplete?.()
+  }, [onComplete])
+
   useEffect(() => {
-    runSequence()
+    startTimers()
 
     // Listen for replay requests (e.g. from clicking navbar logo)
     const handleReplay = () => {
-      runSequence()
+      setPhase('mark-in')
+      startTimers()
     }
     window.addEventListener('km:replay-intro', handleReplay)
 
@@ -79,14 +86,7 @@ export default function IntroSequence({ onComplete }) {
       window.removeEventListener('km:replay-intro', handleReplay)
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [runSequence])
-
-  const skipIntro = () => {
-    clearAllTimers()
-    setPhase('done')
-    document.body.classList.remove('intro-active')
-    onComplete?.()
-  }
+  }, [startTimers, skipIntro])
 
   if (phase === 'done') return null
 

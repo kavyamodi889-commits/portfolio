@@ -17,8 +17,6 @@ const TEMPLATES = [
 
 export default function RecruiterView() {
   const [activeTemplate, setActiveTemplate] = useState('modern')
-  const [downloading, setDownloading] = useState(false)
-  const [downloadMsg, setDownloadMsg] = useState('')
 
   const ActiveComponent = TEMPLATES.find((t) => t.id === activeTemplate)?.component ?? ResumeModern
 
@@ -33,80 +31,6 @@ export default function RecruiterView() {
     languages,
     contactLinks,
     sectionVisibility: resumeSections,
-  }
-
-  const handleQuickDownload = () => {
-    setDownloading(true)
-    setDownloadMsg('')
-
-    try {
-      const printWindow = window.open('', '_blank', 'width=900,height=1200')
-      if (!printWindow) {
-        setDownloadMsg('Please allow popups to export the PDF directly, or open the full Resume Studio.')
-        setDownloading(false)
-        return
-      }
-
-      const resumeEl = document.getElementById('recruiter-resume-embed')
-      if (!resumeEl) {
-        setDownloadMsg('Resume content not ready. Try opening Resume Studio.')
-        setDownloading(false)
-        return
-      }
-
-      const styles = Array.from(document.styleSheets)
-        .map((sheet) => {
-          try {
-            return Array.from(sheet.cssRules).map((r) => r.cssText).join('\n')
-          } catch {
-            return sheet.href ? `@import url('${sheet.href}');` : ''
-          }
-        })
-        .join('\n')
-
-      printWindow.document.write(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <title>${profile.resumeFilename ?? 'Kavya-Modi-Resume'}</title>
-          <link rel="preconnect" href="https://fonts.googleapis.com">
-          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-          <style>
-            ${styles}
-            @page { size: A4; margin: 0; }
-            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            body { margin: 0; padding: 0; background: #fff; }
-            #recruiter-resume-embed {
-              width: 210mm;
-              min-height: 297mm;
-              margin: 0;
-              padding: 0;
-              transform: none !important;
-            }
-          </style>
-        </head>
-        <body>
-          ${resumeEl.innerHTML}
-          <script>
-            window.onload = function() {
-              setTimeout(function() {
-                window.print();
-                window.close();
-              }, 700);
-            };
-          </script>
-        </body>
-        </html>
-      `)
-      printWindow.document.close()
-      setDownloadMsg(`✓ Export dialog initiated. Select "Save as PDF" (Target: ${profile.resumeFilename})`)
-    } catch (err) {
-      console.error(err)
-      setDownloadMsg('Export failed. Please use Resume Studio.')
-    } finally {
-      setDownloading(false)
-    }
   }
 
   return (
@@ -174,10 +98,6 @@ export default function RecruiterView() {
                   Open Resume Studio &rarr;
                 </Link>
               </div>
-
-              {downloadMsg && (
-                <p className="recruiter__download-msg" role="alert">{downloadMsg}</p>
-              )}
             </div>
           </div>
 

@@ -76,6 +76,15 @@
     ]
     </script>
     <title>Kavya Modi — Web Developer & Software Engineer | Official Portfolio</title>
+    <script>
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      if (window.location.pathname === '/' && window.location.hash) {
+        history.replaceState(null, '', window.location.pathname);
+      }
+      window.scrollTo(0, 0);
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Neural3DStage.css'
 
 // Satellite nodes placed in perspective around the central silicon processor
