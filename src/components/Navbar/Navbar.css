@@ -19,6 +19,28 @@
   transition: all var(--dur-base) var(--ease-spring);
 }
 
+/* Hide navbar during intro sequence so there is zero overlap with intro lockup */
+body.intro-active .navbar {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translate(-50%, -10px) !important;
+}
+
+body:not(.intro-active) .navbar {
+  animation: navReveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes navReveal {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -14px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
 .navbar--scrolled {
   background: rgba(9, 10, 16, 0.92);
   border-color: rgba(255, 87, 34, 0.25);

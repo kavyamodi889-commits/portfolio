@@ -5,13 +5,35 @@ export default function IntroSequence({ onComplete }) {
   // Phase sequence: 'mark-in' -> 'expand-text' -> 'morph-nav' -> 'done'
   const [phase, setPhase] = useState('mark-in')
   const [targetPos, setTargetPos] = useState({ x: 0, y: 0, scale: 0.52 })
+  const [chargeProgress, setChargeProgress] = useState(0)
   const lockupRef = useRef(null)
   const timersRef = useRef([])
+  const animFrameRef = useRef(null)
 
   const clearAllTimers = () => {
     timersRef.current.forEach((t) => clearTimeout(t))
     timersRef.current = []
+    if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current)
   }
+
+  // Rapid high-precision charge counter (0 -> 100% over 1.6s)
+  const startChargeCounter = useCallback(() => {
+    const startTime = performance.now()
+    const duration = 1600
+
+    const updateCounter = (now) => {
+      const elapsed = now - startTime
+      const rawProgress = Math.min(elapsed / duration, 1)
+      // Ease out cubic
+      const easeVal = 1 - Math.pow(1 - rawProgress, 3)
+      setChargeProgress(Math.floor(easeVal * 100))
+
+      if (rawProgress < 1) {
+        animFrameRef.current = requestAnimationFrame(updateCounter)
+      }
+    }
+    animFrameRef.current = requestAnimationFrame(updateCounter)
+  }, [])
 
   const startTimers = useCallback(() => {
     clearAllTimers()
@@ -22,24 +44,26 @@ export default function IntroSequence({ onComplete }) {
     window.scrollTo(0, 0)
     document.body.classList.add('intro-active')
 
-    // Phase 1 -> 2: Text unrolls beside mark (at 900ms)
+    startChargeCounter()
+
+    // Phase 1 -> 2: Text unrolls beside mark (at 850ms)
     const t1 = setTimeout(() => {
       setPhase('expand-text')
-    }, 900)
+    }, 850)
 
-    // Phase 2 -> 3: Morph & glide to Navbar logo position (at 2100ms)
+    // Phase 2 -> 3: Morph & glide to Navbar logo position + Curtain Shutter split (at 2100ms)
     const t2 = setTimeout(() => {
-      const navLogo = document.querySelector('.navbar__logo')
-      if (navLogo) {
-        const rect = navLogo.getBoundingClientRect()
+      const navLogoMark = document.querySelector('.navbar__logo-mark') || document.querySelector('.navbar__logo')
+      if (navLogoMark) {
+        const rect = navLogoMark.getBoundingClientRect()
         const destX = (rect.left + rect.width / 2) - window.innerWidth / 2
         const destY = (rect.top + rect.height / 2) - window.innerHeight / 2
-        setTargetPos({ x: destX, y: destY, scale: 0.52 })
+        setTargetPos({ x: destX, y: destY, scale: 0.62 })
       } else {
         setTargetPos({
           x: -(window.innerWidth * 0.35),
           y: -(window.innerHeight * 0.44),
-          scale: 0.52
+          scale: 0.62
         })
       }
       setPhase('morph-nav')
@@ -53,7 +77,7 @@ export default function IntroSequence({ onComplete }) {
     }, 2950)
 
     timersRef.current = [t1, t2, t3]
-  }, [onComplete])
+  }, [onComplete, startChargeCounter])
 
   const skipIntro = useCallback(() => {
     clearAllTimers()
@@ -68,6 +92,7 @@ export default function IntroSequence({ onComplete }) {
     // Listen for replay requests (e.g. from clicking navbar logo)
     const handleReplay = () => {
       setPhase('mark-in')
+      setChargeProgress(0)
       startTimers()
     }
     window.addEventListener('km:replay-intro', handleReplay)
@@ -96,12 +121,16 @@ export default function IntroSequence({ onComplete }) {
       aria-label="Loading animation"
       role="status"
     >
+      {/* ── Cinematic Dual-Curtain Shutter Split (Reference Frame 2.5s) ── */}
+      <div className="intro-curtain intro-curtain--top" aria-hidden="true" />
+      <div className="intro-curtain intro-curtain--bottom" aria-hidden="true" />
+
       {/* Reference video signature perimeter edge lighting */}
       <div className="intro-screen__edge-glow" />
       <div className="intro-screen__ambient" />
       <div className="intro-screen__scanlines" />
 
-      {/* Brand Lockup: Center Emblem ➔ Text Unfold ➔ Navbar Morph */}
+      {/* ── Brand Lockup: Center Emblem ➔ Typography Cascade ➔ Navbar Docking ── */}
       <div
         ref={lockupRef}
         className={`intro-screen__lockup intro-screen__lockup--${phase}`}
@@ -113,9 +142,12 @@ export default function IntroSequence({ onComplete }) {
             : undefined
         }
       >
-        {/* Emblem (KM Solar Sphere) */}
+        {/* Emblem (KM Solar Sphere with Shockwave Rings) */}
         <div className="intro-screen__mark-wrapper">
+          <div className="intro-screen__shockwave intro-screen__shockwave--1" />
+          <div className="intro-screen__shockwave intro-screen__shockwave--2" />
           <div className="intro-screen__mark-halo" />
+          
           <div className="intro-screen__mark">
             <span className="intro-screen__mark-letters">KM</span>
             <div className="intro-screen__mark-orbit" />
@@ -125,13 +157,16 @@ export default function IntroSequence({ onComplete }) {
         {/* Horizontal Typography Unfold with Letter Stagger & Optical Sheen */}
         {phase !== 'mark-in' && (
           <div className="intro-screen__text-wrapper">
+            {/* Anamorphic Lens Flare Beam Sweep */}
+            <div className="intro-screen__light-beam" aria-hidden="true" />
+
             <div className="intro-screen__title-row">
               <span className="intro-screen__title-text">
                 {'KAVYA MODI'.split('').map((char, i) => (
                   <span
                     key={i}
                     className="intro-screen__title-char"
-                    style={{ animationDelay: `${0.04 * i}s` }}
+                    style={{ animationDelay: `${0.035 * i}s` }}
                   >
                     {char === ' ' ? '\u00A0' : char}
                   </span>
@@ -139,21 +174,34 @@ export default function IntroSequence({ onComplete }) {
               </span>
               <span className="intro-screen__title-badge">PRO</span>
             </div>
+
             <div className="intro-screen__sub-row">
               <span className="intro-screen__status-dot" />
               <span className="intro-screen__sub-text">FULL-STACK WEB ARCHITECT</span>
-              <span className="intro-screen__init-tag">INIT // 100%</span>
+              <span className="intro-screen__init-tag">
+                {chargeProgress === 100 ? 'ONLINE 100%' : `INIT ${chargeProgress}%`}
+              </span>
+            </div>
+
+            {/* Micro Laser Progress Track */}
+            <div className="intro-screen__progress-bar">
+              <div
+                className="intro-screen__progress-fill"
+                style={{ width: `${chargeProgress}%` }}
+              />
             </div>
           </div>
         )}
       </div>
 
-      {/* Floating Micro-Light Dust Particles */}
+      {/* Floating Micro-Light Dust Constellation */}
       <div className="intro-screen__particles" aria-hidden="true">
         <span className="intro-particle intro-particle--1" />
         <span className="intro-particle intro-particle--2" />
         <span className="intro-particle intro-particle--3" />
         <span className="intro-particle intro-particle--4" />
+        <span className="intro-particle intro-particle--5" />
+        <span className="intro-particle intro-particle--6" />
       </div>
 
       {/* Clean Skip Action */}
@@ -168,3 +216,4 @@ export default function IntroSequence({ onComplete }) {
     </aside>
   )
 }
+
