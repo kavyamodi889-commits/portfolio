@@ -1,353 +1,271 @@
 /* ════════════════════════════════════════════════════════════════
-   CINEMATIC INTRO SEQUENCE — GCORE / REDSUN LUXURY STYLE
-   Full-screen dramatic curtain reveal with particles & shockwaves
+   EXACT GCORE SIGNATURE LOADING SEQUENCE
+   Perimeter Amber Glow ➔ Centered KM Sphere ➔ Horizontal Typography
+   Reveal ➔ Seamless Fly-Up Morph to Floating Navbar
    ════════════════════════════════════════════════════════════════ */
 
-.intro-seq {
+body.intro-active {
+  overflow: hidden !important;
+}
+
+.intro-screen {
   position: fixed;
   inset: 0;
-  z-index: 99999;
-  background: #05060a;
+  z-index: 10000;
+  background: #040508;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: all;
 }
 
-/* ── Fly-out phase ── */
-.intro-seq--fly {
+.intro-screen--morph-nav {
   opacity: 0;
-  transform: scale(1.05);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
+  transition-delay: 0.12s;
 }
 
-.intro-seq--done {
-  display: none;
+.intro-screen--done {
+  display: none !important;
 }
 
-/* ── CRT Scan Lines ── */
-.intro-seq__scanlines {
+/* ── 1. Reference Video Amber Perimeter Edge Lighting ── */
+.intro-screen__edge-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 140px 30px rgba(255, 87, 34, 0.28),
+              inset 0 0 260px 80px rgba(234, 88, 12, 0.14);
+  z-index: 1;
+}
+
+/* ── 2. Ambient Solar Radial Center Glow ── */
+.intro-screen__ambient {
+  position: absolute;
+  width: 750px;
+  height: 750px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 87, 34, 0.35) 0%,
+    rgba(234, 88, 12, 0.12) 42%,
+    rgba(4, 5, 8, 0) 70%
+  );
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 1;
+  animation: introAmbientBreath 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes introAmbientBreath {
+  0%   { transform: scale(0.85); opacity: 0.6; }
+  100% { transform: scale(1.15); opacity: 1; }
+}
+
+/* ── 3. Subtle CRT Scanline Texture ── */
+.intro-screen__scanlines {
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
     0deg,
     transparent,
     transparent 2px,
-    rgba(0, 0, 0, 0.15) 2px,
-    rgba(0, 0, 0, 0.15) 4px
+    rgba(0, 0, 0, 0.2) 2px,
+    rgba(0, 0, 0, 0.2) 4px
   );
-  z-index: 1;
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.28;
+  z-index: 2;
 }
 
-/* ── Ambient Solar Glow ── */
-.intro-seq__ambient {
-  position: absolute;
-  width: 800px;
-  height: 800px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 87, 34, 0.3) 0%,
-    rgba(234, 88, 12, 0.12) 40%,
-    transparent 70%
-  );
-  filter: blur(100px);
-  pointer-events: none;
-  z-index: 1;
-  animation: ambientBreath 3.5s ease-in-out infinite alternate;
-}
-
-@keyframes ambientBreath {
-  0%   { transform: scale(0.88); opacity: 0.7; }
-  100% { transform: scale(1.18); opacity: 1; }
-}
-
-/* ── Star Particles ── */
-.intro-seq__particles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.intro-seq__particle {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 180, 80, 0.85);
-  animation: particleTwinkle var(--dur, 4s) ease-in-out infinite alternate;
-}
-
-@keyframes particleTwinkle {
-  0%   { opacity: 0.1; transform: scale(0.6) translateY(0); }
-  50%  { opacity: 0.9; transform: scale(1.2) translateY(-4px); }
-  100% { opacity: 0.2; transform: scale(0.7) translateY(2px); }
-}
-
-/* ── Curtain Panels (split left/right on reveal) ── */
-.intro-seq__curtain {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  background: #05060a;
-  z-index: 8;
-  transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.intro-seq__curtain--left {
-  left: 0;
-  transform: translateX(0);
-}
-.intro-seq__curtain--right {
-  right: 0;
-  transform: translateX(0);
-}
-
-.intro-seq--reveal .intro-seq__curtain--left,
-.intro-seq--fly .intro-seq__curtain--left {
-  transform: translateX(-100%);
-}
-.intro-seq--reveal .intro-seq__curtain--right,
-.intro-seq--fly .intro-seq__curtain--right {
-  transform: translateX(100%);
-}
-
-/* ── Center Content ── */
-.intro-seq__center {
+/* ── 4. Pure Clean Brand Lockup (Centered in Viewport) ── */
+.intro-screen__lockup {
   position: relative;
   z-index: 10;
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
-  gap: 36px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transform-origin: center center;
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.6s ease;
 }
 
-/* ── Logo Core / Emblem Container ── */
-.intro-seq__logo-core {
+/* Initial mark entrance */
+.intro-screen__lockup--mark-in {
+  animation: introMarkBounce 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes introMarkBounce {
+  0%   { transform: scale(0.5); opacity: 0; }
+  60%  { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── 5. KM Solar Mark Emblem ── */
+.intro-screen__mark-wrapper {
   position: relative;
-  width: 140px;
-  height: 140px;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  flex-shrink: 0;
 }
 
-.intro-seq--fly .intro-seq__logo-core {
-  transform: translate(-45vw, -42vh) scale(0.3);
-  opacity: 0;
-}
-
-/* ── Orbit Rings ── */
-.intro-seq__ring {
+.intro-screen__mark-halo {
   position: absolute;
-  border-radius: 50%;
-  border-style: solid;
-  pointer-events: none;
-}
-
-.intro-seq__ring--1 {
   inset: -12px;
-  border-width: 1px;
-  border-color: rgba(255, 120, 40, 0.4);
-  animation: ringRotate 10s linear infinite;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 87, 34, 0.75) 0%, transparent 70%);
+  filter: blur(14px);
+  animation: introHaloPulse 2s ease-in-out infinite alternate;
 }
 
-.intro-seq__ring--2 {
-  inset: -26px;
-  border-width: 1px;
-  border-color: rgba(255, 87, 34, 0.2);
-  border-style: dashed;
-  animation: ringRotate 16s linear infinite reverse;
+@keyframes introHaloPulse {
+  0%   { transform: scale(0.9); opacity: 0.6; }
+  100% { transform: scale(1.25); opacity: 1; }
 }
 
-.intro-seq__ring--3 {
-  inset: -44px;
-  border-width: 1px;
-  border-color: rgba(255, 140, 50, 0.1);
-  animation: ringRotate 24s linear infinite;
+.intro-screen__mark {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff5722 0%, #ff8a50 50%, #ea580c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 28px rgba(255, 87, 34, 0.65), inset 0 0 12px rgba(255, 255, 255, 0.45);
 }
 
-@keyframes ringRotate {
+.intro-screen__mark-letters {
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  font-weight: 900;
+  font-size: 21px;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.intro-screen__mark-orbit {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(255, 140, 50, 0.6);
+  animation: introOrbitSpin 12s linear infinite;
+}
+
+@keyframes introOrbitSpin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
 
-/* ── Shockwave Rings on Ignite ── */
-.intro-seq__shockwave {
-  position: absolute;
-  inset: -10px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 140, 50, 0.9);
-  animation: shockwaveBlast 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  pointer-events: none;
-}
-
-.intro-seq__shockwave--2 {
-  animation-delay: 0.12s;
-  border-color: rgba(255, 87, 34, 0.7);
-}
-.intro-seq__shockwave--3 {
-  animation-delay: 0.24s;
-  border-color: rgba(255, 200, 80, 0.5);
-}
-
-@keyframes shockwaveBlast {
-  0%   { transform: scale(0.85); opacity: 1; }
-  100% { transform: scale(3.5); opacity: 0; }
-}
-
-/* ── KM Emblem ── */
-.intro-seq__emblem {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  border-radius: 26px;
-  background: linear-gradient(145deg, #1e2236 0%, #0c0e1a 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  animation: emblemFloat 4s ease-in-out infinite;
-}
-
-@keyframes emblemFloat {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-8px); }
-}
-
-.intro-seq__emblem-glow {
-  position: absolute;
-  inset: -8px;
-  border-radius: 32px;
-  background: radial-gradient(circle, rgba(255, 87, 34, 0.55) 0%, transparent 70%);
-  filter: blur(16px);
-  z-index: -1;
-  animation: glowPulse 2.5s ease-in-out infinite alternate;
-}
-
-@keyframes glowPulse {
-  0%   { opacity: 0.6; transform: scale(0.95); }
-  100% { opacity: 1; transform: scale(1.08); }
-}
-
-.intro-seq__monogram {
-  font-family: var(--font-mono);
-  font-size: 36px;
-  font-weight: 900;
-  letter-spacing: 0.05em;
-  background: linear-gradient(135deg, #ffffff 30%, #ff9d5c 65%, #ff5722 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  position: relative;
-  z-index: 1;
-}
-
-.intro-seq__emblem-border {
-  position: absolute;
-  inset: 0;
-  border-radius: 26px;
-  border: 1.5px solid rgba(255, 120, 40, 0.85);
-  box-shadow:
-    0 0 30px rgba(255, 87, 34, 0.5),
-    inset 0 0 20px rgba(255, 87, 34, 0.2);
-}
-
-/* ── Telemetry Status Bar ── */
-.intro-seq__telemetry {
+/* ── 6. Horizontal Typography Unfold (Gcore Reference Style) ── */
+.intro-screen__text-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  width: 320px;
-  transition: opacity 0.4s ease;
+  justify-content: center;
+  white-space: nowrap;
+  margin-left: 14px;
+  animation: introTextReveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.intro-seq--fly .intro-seq__telemetry {
-  opacity: 0;
+@keyframes introTextReveal {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(-16px);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateX(0);
+  }
 }
 
-.intro-seq__status-line {
+.intro-screen__title-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 11px;
+}
+
+.intro-screen__title-text {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  background: linear-gradient(90deg, #ffffff 0%, #ff9d5c 55%, #ff5722 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: introTitleShine 3s linear infinite;
+}
+
+@keyframes introTitleShine {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.intro-screen__title-badge {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
   font-weight: 700;
   color: #ff9d5c;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
-.intro-seq__status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 10px #10b981;
-  flex-shrink: 0;
-  animation: pulse-dot 1.2s infinite ease-in-out;
-}
-
-.intro-seq__progress-track {
-  width: 100%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.07);
+  letter-spacing: 0.16em;
+  padding: 2px 7px;
+  background: rgba(255, 87, 34, 0.14);
+  border: 1px solid rgba(255, 87, 34, 0.3);
   border-radius: 99px;
-  overflow: visible;
-  position: relative;
 }
 
-.intro-seq__progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #ff5722, #ff9d5c, #ffffffcc);
-  border-radius: 99px;
-  box-shadow: 0 0 10px #ff5722;
-  transition: width 0.04s linear;
-}
-
-.intro-seq__progress-glow {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #ff9d5c;
-  box-shadow: 0 0 14px 4px rgba(255, 140, 50, 0.8);
-  transition: left 0.04s linear;
-  pointer-events: none;
-}
-
-.intro-seq__bottom-line {
+.intro-screen__sub-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: #475569;
-  letter-spacing: 0.06em;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+.intro-screen__status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  flex-shrink: 0;
+  animation: introDotPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes introDotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.4); opacity: 0.6; }
+}
+
+.intro-screen__sub-text {
+  font-family: var(--font-mono, monospace);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
-.intro-seq__sep {
-  color: rgba(255, 120, 40, 0.5);
-}
-
-/* ── Skip button ── */
-.intro-seq__skip {
+/* ── 7. Skip Button ── */
+.intro-screen__skip {
   position: absolute;
-  bottom: 28px;
-  right: 32px;
-  padding: 8px 18px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  bottom: 26px;
+  right: 28px;
+  padding: 6px 15px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 99px;
-  font-family: var(--font-mono);
+  font-family: var(--font-mono, monospace);
   font-size: 11px;
   color: #64748b;
   cursor: pointer;
@@ -355,8 +273,25 @@
   transition: all 0.2s ease;
 }
 
-.intro-seq__skip:hover {
+.intro-screen__skip:hover {
   background: rgba(255, 87, 34, 0.15);
-  border-color: rgba(255, 120, 40, 0.4);
+  border-color: rgba(255, 87, 34, 0.4);
   color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .intro-screen__mark-wrapper {
+    width: 44px;
+    height: 44px;
+  }
+  .intro-screen__mark {
+    width: 42px;
+    height: 42px;
+  }
+  .intro-screen__mark-letters {
+    font-size: 17px;
+  }
+  .intro-screen__title-text {
+    font-size: 15px;
+  }
 }

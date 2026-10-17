@@ -39,8 +39,15 @@ export default function Terminal() {
   const outputEndRef = useRef(null)
   const inputRef = useRef(null)
 
+  const isFirstRender = useRef(true)
   useEffect(() => {
-    outputEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    if (outputEndRef.current && outputEndRef.current.parentElement) {
+      outputEndRef.current.parentElement.scrollTop = outputEndRef.current.parentElement.scrollHeight
+    }
   }, [history])
 
   const executeCommand = (cmdText) => {

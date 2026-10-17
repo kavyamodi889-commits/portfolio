@@ -1,159 +1,151 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import './IntroSequence.css'
 
-// Generate random particle positions
-const PARTICLES = Array.from({ length: 60 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 2.5 + 0.5,
-  delay: Math.random() * 3,
-  duration: Math.random() * 4 + 3,
-  opacity: Math.random() * 0.6 + 0.2,
-}))
-
 export default function IntroSequence({ onComplete }) {
-  const [phase, setPhase] = useState('charging') // 'charging' -> 'ignite' -> 'reveal' -> 'fly' -> 'done'
-  const [progress, setProgress] = useState(0)
-  const startRef = useRef(null)
+  // Phase sequence: 'mark-in' -> 'expand-text' -> 'morph-nav' -> 'done'
+  const [phase, setPhase] = useState('mark-in')
+  const [targetPos, setTargetPos] = useState({ x: 0, y: 0, scale: 0.52 })
+  const lockupRef = useRef(null)
+  const timersRef = useRef([])
+
+  const clearAllTimers = () => {
+    timersRef.current.forEach((t) => clearTimeout(t))
+    timersRef.current = []
+  }
+
+  const runSequence = useCallback(() => {
+    clearAllTimers()
+    setPhase('mark-in')
+
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+    window.scrollTo(0, 0)
+    document.body.classList.add('intro-active')
+
+    // Phase 1 -> 2: Text unrolls beside mark (at 900ms)
+    const t1 = setTimeout(() => {
+      setPhase('expand-text')
+    }, 900)
+
+    // Phase 2 -> 3: Morph & glide to Navbar logo position (at 2100ms)
+    const t2 = setTimeout(() => {
+      const navLogo = document.querySelector('.navbar__logo')
+      if (navLogo) {
+        const rect = navLogo.getBoundingClientRect()
+        const destX = (rect.left + rect.width / 2) - window.innerWidth / 2
+        const destY = (rect.top + rect.height / 2) - window.innerHeight / 2
+        setTargetPos({ x: destX, y: destY, scale: 0.52 })
+      } else {
+        setTargetPos({
+          x: -(window.innerWidth * 0.35),
+          y: -(window.innerHeight * 0.44),
+          scale: 0.52
+        })
+      }
+      setPhase('morph-nav')
+    }, 2100)
+
+    // Phase 3 -> Done: Unmount overlay and release page scroll (at 2950ms)
+    const t3 = setTimeout(() => {
+      setPhase('done')
+      document.body.classList.remove('intro-active')
+      onComplete?.()
+    }, 2950)
+
+    timersRef.current = [t1, t2, t3]
+  }, [onComplete])
 
   useEffect(() => {
-    const hasSeen = sessionStorage.getItem('km_intro_seen')
-    if (hasSeen) {
-      setPhase('done')
-      onComplete?.()
-      return
+    runSequence()
+
+    // Listen for replay requests (e.g. from clicking navbar logo)
+    const handleReplay = () => {
+      runSequence()
     }
+    window.addEventListener('km:replay-intro', handleReplay)
 
-    const duration = 1800
-    startRef.current = performance.now()
-
-    const updateProgress = (now) => {
-      const elapsed = now - startRef.current
-      const p = Math.min(100, Math.round((elapsed / duration) * 100))
-      setProgress(p)
-
-      if (elapsed < duration) {
-        requestAnimationFrame(updateProgress)
-      } else {
-        // Ignite phase — flash & shockwave
-        setPhase('ignite')
-        setTimeout(() => {
-          // Reveal phase — curtain splits
-          setPhase('reveal')
-          setTimeout(() => {
-            // Fly away
-            setPhase('fly')
-            setTimeout(() => {
-              setPhase('done')
-              sessionStorage.setItem('km_intro_seen', 'true')
-              onComplete?.()
-            }, 700)
-          }, 500)
-        }, 450)
+    // Allow Escape key to skip immediately
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        skipIntro()
       }
     }
+    window.addEventListener('keydown', handleKeyDown)
 
-    requestAnimationFrame(updateProgress)
-  }, [onComplete])
+    return () => {
+      clearAllTimers()
+      document.body.classList.remove('intro-active')
+      window.removeEventListener('km:replay-intro', handleReplay)
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [runSequence])
+
+  const skipIntro = () => {
+    clearAllTimers()
+    setPhase('done')
+    document.body.classList.remove('intro-active')
+    onComplete?.()
+  }
 
   if (phase === 'done') return null
 
   return (
-    <div className={`intro-seq intro-seq--${phase}`} aria-hidden="true">
+    <aside
+      className={`intro-screen intro-screen--${phase}`}
+      aria-label="Loading animation"
+      role="status"
+    >
+      {/* Reference video signature perimeter edge lighting */}
+      <div className="intro-screen__edge-glow" />
+      <div className="intro-screen__ambient" />
+      <div className="intro-screen__scanlines" />
 
-      {/* Scan lines overlay */}
-      <div className="intro-seq__scanlines" />
-
-      {/* Ambient radial glow */}
-      <div className="intro-seq__ambient" />
-
-      {/* Star particles */}
-      <div className="intro-seq__particles">
-        {PARTICLES.map(p => (
-          <div
-            key={p.id}
-            className="intro-seq__particle"
-            style={{
-              left: `${p.x}%`,
-              top: `${p.y}%`,
-              width: `${p.size}px`,
-              height: `${p.size}px`,
-              opacity: p.opacity,
-              animationDelay: `${p.delay}s`,
-              animationDuration: `${p.duration}s`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Curtain panels — split left and right on reveal */}
-      <div className="intro-seq__curtain intro-seq__curtain--left" />
-      <div className="intro-seq__curtain intro-seq__curtain--right" />
-
-      {/* Center monogram emblem */}
-      <div className="intro-seq__center">
-        <div className="intro-seq__logo-core">
-
-          {/* Orbit rings */}
-          <div className="intro-seq__ring intro-seq__ring--1" />
-          <div className="intro-seq__ring intro-seq__ring--2" />
-          <div className="intro-seq__ring intro-seq__ring--3" />
-
-          {/* Shockwaves on ignite */}
-          {(phase === 'ignite' || phase === 'reveal') && (
-            <>
-              <div className="intro-seq__shockwave intro-seq__shockwave--1" />
-              <div className="intro-seq__shockwave intro-seq__shockwave--2" />
-              <div className="intro-seq__shockwave intro-seq__shockwave--3" />
-            </>
-          )}
-
-          {/* KM Emblem */}
-          <div className="intro-seq__emblem">
-            <div className="intro-seq__emblem-glow" />
-            <span className="intro-seq__monogram">KM</span>
-            <div className="intro-seq__emblem-border" />
+      {/* Brand Lockup: Center Emblem ➔ Text Unfold ➔ Navbar Morph */}
+      <div
+        ref={lockupRef}
+        className={`intro-screen__lockup intro-screen__lockup--${phase}`}
+        style={
+          phase === 'morph-nav'
+            ? {
+                transform: `translate3d(${targetPos.x}px, ${targetPos.y}px, 0) scale(${targetPos.scale})`,
+              }
+            : undefined
+        }
+      >
+        {/* Emblem (KM Solar Sphere) */}
+        <div className="intro-screen__mark-wrapper">
+          <div className="intro-screen__mark-halo" />
+          <div className="intro-screen__mark">
+            <span className="intro-screen__mark-letters">KM</span>
+            <div className="intro-screen__mark-orbit" />
           </div>
         </div>
 
-        {/* Status telemetry */}
-        <div className="intro-seq__telemetry">
-          <div className="intro-seq__status-line">
-            <span className="intro-seq__status-dot" />
-            <span className="intro-seq__status-text">
-              {phase === 'charging' && `NEURAL ENGINE INITIALIZING · ${progress}%`}
-              {phase === 'ignite' && 'ALL SYSTEMS ONLINE · LAUNCHING'}
-              {(phase === 'reveal' || phase === 'fly') && 'KAVYA MODI · PORTFOLIO READY'}
-            </span>
+        {/* Horizontal Typography Unfold (Mounted only in phase !== 'mark-in') */}
+        {phase !== 'mark-in' && (
+          <div className="intro-screen__text-wrapper">
+            <div className="intro-screen__title-row">
+              <span className="intro-screen__title-text">KAVYA MODI</span>
+              <span className="intro-screen__title-badge">PRO</span>
+            </div>
+            <div className="intro-screen__sub-row">
+              <span className="intro-screen__status-dot" />
+              <span className="intro-screen__sub-text">FULL-STACK WEB ARCHITECT</span>
+            </div>
           </div>
-          <div className="intro-seq__progress-track">
-            <div
-              className="intro-seq__progress-fill"
-              style={{ width: `${phase === 'ignite' || phase === 'reveal' || phase === 'fly' ? 100 : progress}%` }}
-            />
-            <div className="intro-seq__progress-glow" style={{ left: `${phase === 'ignite' || phase === 'reveal' || phase === 'fly' ? 100 : progress}%` }} />
-          </div>
-          <div className="intro-seq__bottom-line">
-            <span>FULL-STACK WEB DEVELOPER</span>
-            <span className="intro-seq__sep">·</span>
-            <span>PATTERN LLC · SEMCOM 9.55 CGPA</span>
-          </div>
-        </div>
+        )}
       </div>
 
-      {/* Skip button */}
+      {/* Clean Skip Action */}
       <button
         type="button"
-        className="intro-seq__skip"
-        onClick={() => {
-          setPhase('done')
-          sessionStorage.setItem('km_intro_seen', 'true')
-          onComplete?.()
-        }}
+        className="intro-screen__skip"
+        onClick={skipIntro}
+        title="Skip intro animation (Esc)"
       >
-        Skip Intro ✕
+        Skip ✕
       </button>
-    </div>
+    </aside>
   )
 }

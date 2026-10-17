@@ -62,7 +62,18 @@ export default function Navbar() {
     >
       <div className="navbar__inner">
         {/* Logo */}
-        <a href="/" className="navbar__logo" aria-label="Kavya Modi — Home">
+        <a
+          href="/"
+          className="navbar__logo"
+          aria-label="Kavya Modi — Home (Click to replay intro)"
+          onClick={(e) => {
+            if (window.location.pathname === '/') {
+              e.preventDefault()
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+              window.dispatchEvent(new CustomEvent('km:replay-intro'))
+            }
+          }}
+        >
           <div className="navbar__logo-mark" aria-hidden="true">KM</div>
           <div className="navbar__logo-text">
             <span className="navbar__logo-name">Kavya Modi</span>
