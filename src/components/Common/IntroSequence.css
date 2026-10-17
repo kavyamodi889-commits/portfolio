@@ -17,15 +17,28 @@ body.intro-active {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-              visibility 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: background 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: all;
 }
 
 .intro-screen--morph-nav {
-  opacity: 0;
+  background: transparent !important;
   pointer-events: none;
-  transition-delay: 0.12s;
+}
+
+.intro-screen--morph-nav .intro-screen__edge-glow,
+.intro-screen--morph-nav .intro-screen__ambient,
+.intro-screen--morph-nav .intro-screen__scanlines,
+.intro-screen--morph-nav .intro-screen__particles,
+.intro-screen--morph-nav .intro-screen__skip {
+  opacity: 0;
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.intro-screen--morph-nav .intro-screen__text-wrapper {
+  opacity: 0;
+  transform: translateX(-16px) scale(0.92);
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 .intro-screen--done {

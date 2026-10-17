@@ -140,13 +140,33 @@
 
 .bento-card--large {
   grid-row: span 2;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.bento-card--large .bento-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.bento-card--large .bento-pcb-board {
+  flex: 1;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bento-card--large .bento-metrics-row {
+  margin-top: auto;
 }
 
 .bento-card__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 
 .bento-card__tag {

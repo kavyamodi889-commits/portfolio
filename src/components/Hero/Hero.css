@@ -111,11 +111,11 @@
   position: relative;
   z-index: 3;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   min-height: 100vh;
-  padding-top: 90px;
-  padding-bottom: 20px;
+  padding-top: clamp(120px, 15vh, 160px);
+  padding-bottom: 40px;
   max-width: 1440px;
   margin: 0 auto;
   padding-left: clamp(20px, 5vw, 100px);
@@ -125,7 +125,7 @@
 /* LEFT CONTENT COLUMN */
 .hero__content {
   flex: 0 0 auto;
-  width: min(520px, 48%);
+  width: min(540px, 50%);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -133,7 +133,7 @@
   position: relative;
   z-index: 5;
   /* Dark shim behind text for legibility against 3D stage bleed */
-  padding: 32px 36px 32px 0;
+  padding: 10px 36px 32px 0;
 }
 
 /* Right side spacer — occupied by 3D stage */
@@ -154,13 +154,13 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 16px;
+  padding: 6px 14px 6px 12px;
   border-radius: var(--r-full);
-  background: rgba(14, 16, 26, 0.75);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(14, 16, 26, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 120, 40, 0.35);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 87, 34, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 87, 34, 0.15);
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
@@ -173,9 +173,9 @@
 }
 
 .hero__announcement-badge:hover {
-  background: rgba(20, 22, 34, 0.9);
-  border-color: rgba(255, 87, 34, 0.65);
-  box-shadow: 0 0 30px rgba(255, 87, 34, 0.35);
+  background: rgba(20, 22, 34, 0.95);
+  border-color: rgba(255, 87, 34, 0.7);
+  box-shadow: 0 0 35px rgba(255, 87, 34, 0.35);
   transform: translateY(-2px);
   color: #ffffff;
 }
@@ -185,9 +185,9 @@
   inset: -1px;
   border-radius: var(--r-full);
   padding: 1px;
-  background: linear-gradient(90deg, transparent 20%, rgba(255, 140, 50, 0.8) 50%, transparent 80%);
+  background: linear-gradient(90deg, transparent 20%, rgba(255, 140, 50, 0.9) 50%, transparent 80%);
   background-size: 200% 100%;
-  animation: laserSweep 4s linear infinite;
+  animation: laserSweep 3.5s linear infinite;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -200,13 +200,37 @@
   100% { background-position: -200% 0; }
 }
 
-.hero__pulse-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
+/* ── Radar Pulse Beacon ── */
+.hero__beacon {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+}
+
+.hero__beacon-ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid #ff7828;
+  animation: beaconPulse 1.8s ease-out infinite;
+}
+
+@keyframes beaconPulse {
+  0%   { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.hero__beacon-core {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
   transition: background 0.3s ease, box-shadow 0.3s ease;
-  animation: pulse-dot 2s infinite ease-in-out;
 }
 
 .hero__status-tag {
@@ -215,16 +239,16 @@
   font-weight: 800;
   letter-spacing: 0.1em;
   color: #ff9d5c;
-  padding: 1px 6px;
+  padding: 2px 7px;
   border-radius: 4px;
   background: rgba(255, 87, 34, 0.12);
-  border: 1px solid rgba(255, 87, 34, 0.25);
+  border: 1px solid rgba(255, 87, 34, 0.28);
   text-transform: uppercase;
   flex-shrink: 0;
 }
 
 .hero__status-sep {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.3);
   font-size: 11px;
 }
 
@@ -233,6 +257,30 @@
   align-items: center;
   gap: 6px;
   animation: statusSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero__status-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--r-full);
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  font-weight: 700;
+  color: #ff9d5c;
+  letter-spacing: 0.08em;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.hero__announcement-badge:hover .hero__status-cta {
+  background: rgba(255, 87, 34, 0.22);
+  border-color: rgba(255, 87, 34, 0.5);
+  color: #ffffff;
 }
 
 @keyframes statusSlideUp {

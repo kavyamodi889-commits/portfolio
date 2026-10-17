@@ -12,10 +12,10 @@ const TECH_MARQUEE = [
 ]
 
 const STATUS_ITEMS = [
-  { tag: 'STATUS', text: 'Open to Opportunities', sub: 'Vadodara & Remote', dot: '#10b981' },
-  { tag: 'ROLE', text: 'Operating Executive', sub: 'Pattern LLC (2026–Present)', dot: '#ff7828' },
-  { tag: 'MERIT', text: 'Semcom BCA Rank 1', sub: '9.55 CGPA Distinction', dot: '#f59e0b' },
-  { tag: 'STACK', text: 'Full-Stack Architecture', sub: 'React · Python · MySQL · PHP', dot: '#38bdf8' },
+  { tag: 'CURRENT STATUS', text: 'Operating Executive', sub: 'Pattern LLC (2026–Present)', dot: '#ff7828' },
+  { tag: 'ACADEMIC MERIT', text: 'Semcom BCA Rank 1', sub: '9.55 CGPA Distinction', dot: '#fbbf24' },
+  { tag: 'AVAILABILITY', text: 'Open to High-Impact Roles', sub: 'Vadodara & Remote', dot: '#10b981' },
+  { tag: 'ENGINE CORE', text: 'Full-Stack Architecture', sub: 'React · Python · MySQL · PHP', dot: '#38bdf8' },
 ]
 
 export default function Hero() {
@@ -59,19 +59,30 @@ export default function Hero() {
 
           {/* Dynamic Status badge */}
           <div className="hero__announcement">
-            <a href="#contact" className="hero__announcement-badge hero__status-cycler" aria-label="Current status details">
+            <a href="#potential" className="hero__announcement-badge hero__status-cycler" aria-label="Current status details">
               <span className="hero__laser-border" aria-hidden="true" />
-              <span
-                className="hero__pulse-dot"
-                style={{ background: currentStatus.dot, boxShadow: `0 0 10px ${currentStatus.dot}` }}
-              />
+              
+              {/* Radar Pulse Beacon */}
+              <span className="hero__beacon" aria-hidden="true">
+                <span className="hero__beacon-ripple" style={{ borderColor: currentStatus.dot }} />
+                <span
+                  className="hero__beacon-core"
+                  style={{ background: currentStatus.dot, boxShadow: `0 0 10px ${currentStatus.dot}` }}
+                />
+              </span>
+
               <span className="hero__status-tag">{currentStatus.tag}</span>
               <span className="hero__status-sep">·</span>
+              
               <span className="hero__status-slider" key={statusIdx}>
                 <span className="hero__status-main">{currentStatus.text}</span>
                 <span className="hero__status-sub">({currentStatus.sub})</span>
               </span>
-              <span className="hero__announcement-arrow">↗</span>
+              
+              <span className="hero__status-cta">
+                <span className="hero__status-cta-text">LIVE HUD</span>
+                <span className="hero__announcement-arrow">↗</span>
+              </span>
             </a>
           </div>
 
