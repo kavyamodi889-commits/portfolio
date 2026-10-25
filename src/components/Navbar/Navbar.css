@@ -258,13 +258,31 @@ body:not(.intro-active) .navbar {
 
 @media (max-width: 860px) {
   .navbar {
-    width: calc(100% - 32px);
-    top: 14px;
+    width: calc(100% - 24px);
+    max-width: calc(100vw - 24px);
+    top: 12px;
   }
   .navbar__links {
     display: none;
   }
   .navbar__hamburger {
     display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    width: calc(100% - 18px);
+    max-width: calc(100vw - 18px);
+    top: 8px;
+  }
+  .navbar__inner {
+    padding: 6px 10px 6px 12px;
+  }
+  .navbar__logo-name {
+    font-size: 13px;
+  }
+  .navbar__logo-role {
+    font-size: 8.5px;
   }
 }

@@ -365,3 +365,18 @@
     padding: var(--space-6);
   }
 }
+
+@media (max-width: 768px) {
+  .studio-sidebar__inner {
+    grid-template-columns: 1fr;
+    padding: var(--space-4);
+  }
+  .resume-studio__preview {
+    padding: 16px 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  #resume-print-area {
+    min-width: 580px;
+  }
+}

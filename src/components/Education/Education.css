@@ -295,3 +295,19 @@
   font-family: var(--font-mono);
   margin-top: 3px;
 }
+
+@media (max-width: 640px) {
+  .education-section {
+    padding: 70px 0;
+  }
+  .timeline__item {
+    gap: 14px;
+  }
+  .edu-card {
+    padding: 18px 14px;
+  }
+  .cert-grid, .cert__grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

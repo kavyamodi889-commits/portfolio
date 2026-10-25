@@ -131,3 +131,24 @@
     transform: translateY(0);
   }
 }
+
+@media (max-width: 640px) {
+  .arch-faq {
+    padding: 60px 0 80px;
+  }
+  .arch-faq__header {
+    margin-bottom: 32px;
+  }
+  .arch-faq__title {
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+  }
+  .arch-faq__item {
+    padding: 14px 16px;
+  }
+  .arch-faq__q-text {
+    font-size: 0.95rem;
+  }
+  .arch-faq__answer {
+    font-size: 0.88rem;
+  }
+}

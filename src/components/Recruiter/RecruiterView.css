@@ -195,3 +195,22 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
   border-radius: var(--radius-sm);
 }
+
+@media (max-width: 640px) {
+  .recruiter__card {
+    padding: 20px 16px;
+    border-radius: 18px;
+    position: static;
+  }
+  .recruiter__actions {
+    flex-direction: column;
+  }
+  .recruiter__preview-viewport {
+    height: 480px;
+    padding: 8px;
+    overflow-x: auto;
+  }
+  .recruiter__preview-scale {
+    min-width: 480px;
+  }
+}

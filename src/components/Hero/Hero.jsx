@@ -247,6 +247,11 @@ export default function Hero() {
               <span className="hero__stat-val"><AnimatedCounter end={7} suffix="+" duration={1800} /></span>
               <span className="hero__stat-lbl">SHIPPED SYSTEMS</span>
             </div>
+            <div className="hero__stat-div" />
+            <div className="hero__stat">
+              <span className="hero__stat-val"><AnimatedCounter end={100} suffix="%" duration={2200} /></span>
+              <span className="hero__stat-lbl">DATA INTEGRITY</span>
+            </div>
           </div>
         </div>
 

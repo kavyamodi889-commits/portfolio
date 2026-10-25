@@ -459,3 +459,22 @@
 .contact__footer a:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 640px) {
+  .contact-section {
+    padding: 70px 0;
+  }
+  .contact__card,
+  .telemetry-hud {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+  .contact__form {
+    gap: 14px;
+  }
+  .contact__footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}

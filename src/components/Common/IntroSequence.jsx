@@ -1,11 +1,20 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import './IntroSequence.css'
 
+const BOOT_LOGS = [
+  'KERNEL // ARCHITECT PROTOCOL v2.6',
+  'CORE ENGINE // REACT 19 + FASTAPI + ACID TRANSACTIONS',
+  'CREDENTIALS // SEMCOM RANK 1 (9.55 CGPA) · GOLD MEDALIST',
+  'ENTERPRISE // PATTERN LLC EXEC PIPELINE ACTIVE',
+  'TELEMETRY // ALL QUANTUM NODES NOMINAL'
+]
+
 export default function IntroSequence({ onComplete }) {
   // Phase sequence: 'mark-in' -> 'expand-text' -> 'morph-nav' -> 'done'
   const [phase, setPhase] = useState('mark-in')
   const [targetPos, setTargetPos] = useState({ x: 0, y: 0, scale: 0.52 })
   const [chargeProgress, setChargeProgress] = useState(0)
+  const [logIndex, setLogIndex] = useState(0)
   const lockupRef = useRef(null)
   const timersRef = useRef([])
   const animFrameRef = useRef(null)
@@ -16,17 +25,22 @@ export default function IntroSequence({ onComplete }) {
     if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current)
   }
 
-  // Rapid high-precision charge counter (0 -> 100% over 1.6s)
+  // Rapid high-precision charge counter (0 -> 100% over 2.0s)
   const startChargeCounter = useCallback(() => {
     const startTime = performance.now()
-    const duration = 2200
+    const duration = 2100
 
     const updateCounter = (now) => {
       const elapsed = now - startTime
       const rawProgress = Math.min(elapsed / duration, 1)
       // Ease out cubic
       const easeVal = 1 - Math.pow(1 - rawProgress, 3)
-      setChargeProgress(Math.floor(easeVal * 100))
+      const currentPct = Math.floor(easeVal * 100)
+      setChargeProgress(currentPct)
+
+      // Cycle boot logs based on progress
+      const logIdx = Math.min(Math.floor((currentPct / 100) * BOOT_LOGS.length), BOOT_LOGS.length - 1)
+      setLogIndex(logIdx)
 
       if (rawProgress < 1) {
         animFrameRef.current = requestAnimationFrame(updateCounter)
@@ -46,35 +60,38 @@ export default function IntroSequence({ onComplete }) {
 
     startChargeCounter()
 
-    // Phase 1 → 2: Text unrolls beside mark (at 900ms)
+    // Phase 1 -> 2: Text unrolls & telemetry boots (at 750ms)
     const t1 = setTimeout(() => {
       setPhase('expand-text')
-    }, 900)
+    }, 750)
 
-    // Phase 2 → 3: Morph & glide to Navbar logo position + Curtain Shutter split (at 2600ms)
+    // Phase 2 -> 3: Morph & glide to Navbar logo position + Curtain Shutter split (at 2500ms)
     const t2 = setTimeout(() => {
+      const isMobile = window.innerWidth <= 860
       const navLogoMark = document.querySelector('.navbar__logo-mark') || document.querySelector('.navbar__logo')
-      if (navLogoMark) {
+      
+      if (navLogoMark && !isMobile) {
         const rect = navLogoMark.getBoundingClientRect()
         const destX = (rect.left + rect.width / 2) - window.innerWidth / 2
         const destY = (rect.top + rect.height / 2) - window.innerHeight / 2
         setTargetPos({ x: destX, y: destY, scale: 0.62 })
       } else {
+        // Smooth fade-up / exit on mobile
         setTargetPos({
-          x: -(window.innerWidth * 0.35),
-          y: -(window.innerHeight * 0.44),
-          scale: 0.62
+          x: 0,
+          y: -40,
+          scale: 0.8
         })
       }
       setPhase('morph-nav')
-    }, 2600)
+    }, 2500)
 
-    // Phase 3 → Done: Unmount overlay and release page scroll (at 3600ms)
+    // Phase 3 -> Done: Unmount overlay and release page scroll (at 3300ms)
     const t3 = setTimeout(() => {
       setPhase('done')
       document.body.classList.remove('intro-active')
       onComplete?.()
-    }, 3600)
+    }, 3300)
 
     timersRef.current = [t1, t2, t3]
   }, [onComplete, startChargeCounter])
@@ -133,10 +150,13 @@ export default function IntroSequence({ onComplete }) {
       <div className="intro-screen__ambient" aria-hidden="true" />
       <div className="intro-screen__scanlines" aria-hidden="true" />
 
-      {/* HUD Corner Marks */}
-      <div className="intro-screen__corner-marks" aria-hidden="true" />
+      {/* HUD Corner Tech Reticles */}
+      <div className="intro-screen__corner-reticle intro-screen__corner-reticle--tl" aria-hidden="true" />
+      <div className="intro-screen__corner-reticle intro-screen__corner-reticle--tr" aria-hidden="true" />
+      <div className="intro-screen__corner-reticle intro-screen__corner-reticle--bl" aria-hidden="true" />
+      <div className="intro-screen__corner-reticle intro-screen__corner-reticle--br" aria-hidden="true" />
 
-      {/* ── Brand Lockup: Center Emblem ➔ Typography Cascade ➔ Navbar Docking ── */}
+      {/* ── Brand Lockup: Center Emblem -> Typography Cascade -> Navbar Docking ── */}
       <div
         ref={lockupRef}
         className={`intro-screen__lockup intro-screen__lockup--${phase}`}
@@ -152,6 +172,7 @@ export default function IntroSequence({ onComplete }) {
         <div className="intro-screen__mark-wrapper">
           <div className="intro-screen__shockwave intro-screen__shockwave--1" />
           <div className="intro-screen__shockwave intro-screen__shockwave--2" />
+          <div className="intro-screen__shockwave intro-screen__shockwave--3" />
           <div className="intro-screen__mark-halo" />
           
           <div className="intro-screen__mark">
@@ -160,7 +181,7 @@ export default function IntroSequence({ onComplete }) {
           </div>
         </div>
 
-        {/* Horizontal Typography Unfold with Letter Stagger & Optical Sheen */}
+        {/* Horizontal & Centered Typography Unfold */}
         {phase !== 'mark-in' && (
           <div className="intro-screen__text-wrapper">
             {/* Anamorphic Lens Flare Beam Sweep */}
@@ -178,15 +199,36 @@ export default function IntroSequence({ onComplete }) {
                   </span>
                 ))}
               </span>
-              <span className="intro-screen__title-badge">PRO</span>
+              <span className="intro-screen__title-badge">ARCHITECT</span>
             </div>
 
             <div className="intro-screen__sub-row">
               <span className="intro-screen__status-dot" />
-              <span className="intro-screen__sub-text">FULL-STACK WEB ARCHITECT</span>
+              <span className="intro-screen__sub-text">FULL-STACK WEB & SYSTEMS</span>
               <span className="intro-screen__init-tag">
-                {chargeProgress === 100 ? 'ONLINE 100%' : `INIT ${chargeProgress}%`}
+                {chargeProgress === 100 ? 'ONLINE 100%' : `BOOT ${chargeProgress}%`}
               </span>
+            </div>
+
+            {/* Diagnostic Boot Telemetry Readout */}
+            <div className="intro-screen__boot-telemetry font-mono" aria-live="polite">
+              <span className="intro-screen__boot-prompt">&gt;</span>
+              <span className="intro-screen__boot-msg">{BOOT_LOGS[logIndex]}</span>
+              <span className="intro-screen__boot-cursor" />
+            </div>
+
+            {/* Audio / Spectrum Frequency Equalizer Visualizer */}
+            <div className="intro-screen__equalizer" aria-hidden="true">
+              {[0.4, 0.9, 0.6, 1.0, 0.7, 0.3, 0.85, 0.5, 0.95, 0.75, 0.45, 0.8].map((mult, idx) => (
+                <span
+                  key={idx}
+                  className="intro-screen__eq-bar"
+                  style={{
+                    animationDuration: `${0.45 + (idx % 4) * 0.15}s`,
+                    animationDelay: `${idx * 0.05}s`
+                  }}
+                />
+              ))}
             </div>
 
             {/* Micro Laser Progress Track */}
@@ -222,4 +264,5 @@ export default function IntroSequence({ onComplete }) {
     </aside>
   )
 }
+
 

@@ -272,3 +272,27 @@
   font-weight: 800;
   color: #ffffff;
 }
+
+@media (max-width: 640px) {
+  .skills-section {
+    padding: 70px 0;
+  }
+  .skills__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .skill-category {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+  .skills__summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .skills__summary-card {
+    padding: 16px 14px;
+  }
+  .skills__summary-val {
+    font-size: 26px;
+  }
+}

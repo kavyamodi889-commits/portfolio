@@ -430,7 +430,47 @@
 }
 
 @media (max-width: 768px) {
+  .projects-section {
+    padding: 70px 0;
+  }
+  .projects__filters {
+    margin-bottom: 32px;
+    padding: 4px;
+    gap: 4px;
+    width: 100%;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pf-tab {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
   .projects__grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .project-card {
+    padding: 22px 18px;
+  }
+  .project-card__title {
+    font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-card {
+    padding: 18px 14px;
+    border-radius: 18px;
+  }
+  .project-card__title {
+    font-size: 1.25rem;
+  }
+  .project-card__actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pc__btn {
+    padding: 8px 14px;
+    font-size: 12.5px;
   }
 }
