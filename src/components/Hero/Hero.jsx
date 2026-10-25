@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react'
-import Canvas3D from '../Common/Canvas3D'
+import { useState, useEffect, useRef } from 'react'
 import AnimatedCounter from '../Common/AnimatedCounter'
 import MagneticButton from '../Common/MagneticButton'
+import Canvas3D from '../Common/Canvas3D'
 import portraitImg from '../../assets/kavya-portrait.jpg'
 import './Hero.css'
 
 const TECH_MARQUEE = [
-  'React 19', 'Python', 'PHP', 'MySQL', 'JavaScript', 'Node.js',
-  'TypeScript', 'Tailwind CSS', 'Vite', 'FastAPI', 'MongoDB',
-  'Git & GitHub', 'REST APIs', 'Vercel', 'Netlify', 'Windows Forms'
+  'React 19', 'Python', 'FastAPI', 'MySQL ACID', 'JavaScript', 'Node.js',
+  'TypeScript', 'Tailwind CSS', 'Vite', 'MongoDB', 'REST APIs',
+  'Git & GitHub', 'Distributed Systems', 'Vercel', 'Netlify', 'Windows Forms'
 ]
 
 const STATUS_ITEMS = [
@@ -16,7 +16,7 @@ const STATUS_ITEMS = [
     category: 'ROLE',
     title: 'Operating Executive',
     detail: 'Pattern LLC (2026–Present)',
-    dot: '#ff7828',
+    dot: '#ff3b30',
     icon: '⚡',
   },
   {
@@ -46,6 +46,9 @@ export default function Hero() {
   const [statusIdx, setStatusIdx] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [istTime, setIstTime] = useState('')
+  const [scrollY, setScrollY] = useState(0)
+  const [mouseTilt, setMouseTilt] = useState({ rotX: 0, rotY: 0, glareX: 50, glareY: 50 })
+  const portraitRef = useRef(null)
 
   // Live IST Clock (Asia/Kolkata)
   useEffect(() => {
@@ -64,7 +67,14 @@ export default function Hero() {
     return () => clearInterval(clockTimer)
   }, [])
 
-  // Auto-cycle through credentials
+  // Parallax scroll for the monumental "PORTFOLIO" watermark
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Auto-cycle through status items
   useEffect(() => {
     if (isPaused) return
     const timer = setInterval(() => {
@@ -72,6 +82,25 @@ export default function Hero() {
     }, 3400)
     return () => clearInterval(timer)
   }, [isPaused])
+
+  // Interactive 3D tilt on portrait hover
+  const handlePortraitMouseMove = (e) => {
+    if (!portraitRef.current) return
+    const rect = portraitRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const rotX = ((y - centerY) / centerY) * -10
+    const rotY = ((x - centerX) / centerX) * 10
+    const glareX = (x / rect.width) * 100
+    const glareY = (y / rect.height) * 100
+    setMouseTilt({ rotX, rotY, glareX, glareY })
+  }
+
+  const handlePortraitMouseLeave = () => {
+    setMouseTilt({ rotX: 0, rotY: 0, glareX: 50, glareY: 50 })
+  }
 
   const currentStatus = STATUS_ITEMS[statusIdx]
 
@@ -83,7 +112,7 @@ export default function Hero() {
   return (
     <section className="hero" id="hero" aria-label="Introduction">
 
-      {/* ── AMBIENT CANVAS & SOLAR GLOWS ── */}
+      {/* ── AMBIENT BACKGROUND CANVAS & CRIMSON GLOWS ── */}
       <div className="hero__bg" aria-hidden="true">
         <div className="hero__solar-orb hero__solar-orb--main" />
         <div className="hero__solar-orb hero__solar-orb--secondary" />
@@ -103,12 +132,18 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── MONUMENTAL "PORTFOLIO" BACKGROUND WATERMARK ── */}
-      <div className="hero__watermark" aria-hidden="true">
+      {/* ── MONUMENTAL CRIMSON "PORTFOLIO" WATERMARK (PARALLAX SCROLL) ── */}
+      <div
+        className="hero__watermark"
+        aria-hidden="true"
+        style={{
+          transform: `translateX(-50%) translateY(${scrollY * 0.22}px)`,
+        }}
+      >
         <span>PORTFOLIO</span>
       </div>
 
-      {/* ── MAIN HERO STAGE ── */}
+      {/* ── MAIN 3-COLUMN STAGE (MATCHING EXACT REFERENCE IMAGE) ── */}
       <div className="hero__stage">
 
         {/* ── LEFT COLUMN: TYPOGRAPHY, BIO & ACTIONS ── */}
@@ -125,14 +160,16 @@ export default function Hero() {
             <span className="hero__name-line">MODI</span>
           </h1>
 
-          {/* Role Subhead in Solar Crimson */}
+          {/* Red Accent Role Title */}
           <div className="hero__role-badge">
-            WEB DEVELOPER &amp; SOFTWARE ENGINEER
+            <span>WEB DEVELOPER &amp; SOFTWARE ENGINEER</span>
           </div>
 
-          {/* Bio Paragraph */}
+          {/* Editorial Bio */}
           <p className="hero__bio">
-            I design and build high-performance, user-focused web experiences that combine technical strategy with visual precision. Operating Executive at <strong>Pattern LLC</strong> and Semcom BCA Rank 1 Gold Medalist.
+            I design and build high-performance, user-focused web experiences that combine
+            technical strategy with visual precision. Operating Executive at{' '}
+            <strong>Pattern LLC</strong> and Semcom BCA Rank 1 Gold Medalist.
           </p>
 
           {/* Availability Pill */}
@@ -141,17 +178,13 @@ export default function Hero() {
             <span>AVAILABLE WORLDWIDE · REMOTE &amp; HYBRID</span>
           </div>
 
-          {/* ── LIVE TELEMETRY CAPSULE (HUD) ── */}
+          {/* Live Telemetry Capsule (HUD) */}
           <div
             className="hero__announcement"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
-            <a
-              href="#potential"
-              className="hero__announcement-badge hero__status-capsule"
-              aria-label="Current status details and telemetry"
-            >
+            <div className="hero__status-capsule">
               <span className="hero__laser-border" aria-hidden="true" />
               <div className="hero__status-fixed">
                 <span className="hero__beacon" aria-hidden="true">
@@ -181,11 +214,7 @@ export default function Hero() {
                     key={idx}
                     type="button"
                     className={`hero__status-pip ${idx === statusIdx ? 'hero__status-pip--active' : ''}`}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      setStatusIdx(idx)
-                    }}
+                    onClick={() => setStatusIdx(idx)}
                     title={item.category}
                     style={idx === statusIdx ? { background: item.dot, boxShadow: `0 0 8px ${item.dot}` } : undefined}
                   />
@@ -198,7 +227,7 @@ export default function Hero() {
                   <span>{istTime} IST</span>
                 </div>
               )}
-            </a>
+            </div>
           </div>
 
           {/* Action Buttons */}
@@ -244,10 +273,21 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── CENTER COLUMN: EDITORIAL DEVELOPER PORTRAIT & FLOATING BADGE ── */}
+        {/* ── CENTER COLUMN: EDITORIAL DEVELOPER PORTRAIT & FLOATING BADGE (MATCHING REFERENCE) ── */}
         <div className="hero__col-center">
-          <div className="hero__portrait-wrapper">
+          <div
+            className="hero__portrait-wrapper"
+            ref={portraitRef}
+            onMouseMove={handlePortraitMouseMove}
+            onMouseLeave={handlePortraitMouseLeave}
+            style={{
+              transform: `perspective(1000px) rotateX(${mouseTilt.rotX}deg) rotateY(${mouseTilt.rotY}deg)`,
+            }}
+          >
+            {/* Ambient Crimson Halo */}
             <div className="hero__portrait-halo" aria-hidden="true" />
+
+            {/* Portrait Frame with Bottom Fade */}
             <div className="hero__portrait-frame">
               <img
                 src={portraitImg}
@@ -260,8 +300,9 @@ export default function Hero() {
               <div className="hero__portrait-fade" aria-hidden="true" />
             </div>
 
-            {/* Floating Editorial Spark Card */}
+            {/* Floating Editorial Spark Card (Matching Reference Badge) */}
             <div className="hero__floating-card">
+              <span className="hero__fencing-laser" aria-hidden="true" />
               <span className="hero__floating-spark" aria-hidden="true">✦</span>
               <p className="hero__floating-text">
                 Turning ideas into powerful digital experiences.
@@ -270,9 +311,11 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── RIGHT COLUMN: VERTICAL METRICS STACK ── */}
+        {/* ── RIGHT COLUMN: VERTICAL METRICS STACK (MATCHING REFERENCE) ── */}
         <div className="hero__col-right">
           <div className="hero__metrics-stack">
+
+            {/* Metric 1 */}
             <div className="hero__metric-card">
               <div className="hero__metric-num">
                 <AnimatedCounter end={9.55} decimals={2} duration={2000} />
@@ -283,6 +326,7 @@ export default function Hero() {
               </div>
             </div>
 
+            {/* Metric 2 */}
             <div className="hero__metric-card">
               <div className="hero__metric-num">
                 <AnimatedCounter end={7} suffix="+" duration={1800} />
@@ -293,6 +337,7 @@ export default function Hero() {
               </div>
             </div>
 
+            {/* Metric 3 */}
             <div className="hero__metric-card">
               <div className="hero__metric-num">
                 <AnimatedCounter end={100} suffix="%" duration={2200} />
@@ -303,6 +348,7 @@ export default function Hero() {
               </div>
             </div>
 
+            {/* Metric 4 */}
             <div className="hero__metric-card">
               <div className="hero__metric-num hero__metric-num--text">
                 Pattern LLC
@@ -312,12 +358,13 @@ export default function Hero() {
                 <span className="hero__metric-desc">US/UK CLIENT DELIVERY</span>
               </div>
             </div>
+
           </div>
         </div>
 
       </div>
 
-      {/* ── BOTTOM TECH MARQUEE ── */}
+      {/* ── BOTTOM TECH MARQUEE TICKER ── */}
       <div className="hero__marquee" aria-hidden="true">
         <div className="hero__marquee-track">
           {[...TECH_MARQUEE, ...TECH_MARQUEE, ...TECH_MARQUEE].map((tech, idx) => (
@@ -328,6 +375,7 @@ export default function Hero() {
           ))}
         </div>
       </div>
+
     </section>
   )
 }

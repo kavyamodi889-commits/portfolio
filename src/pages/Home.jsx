@@ -1,5 +1,4 @@
 import Hero from '../components/Hero/Hero'
-import RedSunSaaSShowcase from '../components/Showcase/RedSunSaaSShowcase'
 import SystemPotential from '../components/Showcase/SystemPotential'
 import Projects from '../components/Projects/Projects'
 import Skills from '../components/Skills/Skills'
@@ -13,13 +12,10 @@ import Contact from '../components/Contact/Contact'
 export default function Home() {
   return (
     <main id="main-content">
-      {/* 1. Introduction & 3D Editorial Portrait */}
+      {/* 1. Flagship Hero Showcase — Reference Scroll Lighting, 3D Tilt & Laser Fencing */}
       <Hero />
 
-      {/* 2. RedSun SaaS Showcase — Scroll Lighting & Fencing Animation (Reference Video) */}
-      <RedSunSaaSShowcase />
-
-      {/* 3. System Potential & Rotating Word Bento Grid */}
+      {/* 2. System Potential & Rotating Word Bento Grid */}
       <SystemPotential />
 
       {/* 3. Featured Projects */}

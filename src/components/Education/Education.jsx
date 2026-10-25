@@ -127,6 +127,58 @@ export default function Education() {
           )}
         </div>
 
+        {/* ── WORK PROCESS & CRIMSON SIGNATURE QUOTE (REFERENCE DESIGN) ── */}
+        <div className="edu-process-row">
+
+          {/* Work Process Stepper */}
+          <div className="work-process-card">
+            <div className="work-process-header">
+              <span className="edu-col-badge">Proven Methodology</span>
+              <h3 className="work-process-title">Engineering Work Process</h3>
+            </div>
+
+            <div className="work-process-list">
+              {[
+                { num: '01', title: 'DISCOVER', desc: 'Understanding core requirements, client goals, and domain constraints.', icon: '🔍' },
+                { num: '02', title: 'IDEATE', desc: 'Architecture planning, schema design, and modular component contracts.', icon: '💡' },
+                { num: '03', title: 'DESIGN', desc: 'Crafting responsive user flows with sub-20ms latency and high visual fidelity.', icon: '📐' },
+                { num: '04', title: 'DEVELOP', desc: 'Writing clean React 19 + FastAPI code with 100% ACID transactional integrity.', icon: '</>' },
+                { num: '05', title: 'DELIVER', desc: 'End-to-end testing, performance profiling, and production release.', icon: '🚀' },
+              ].map((step) => (
+                <div key={step.num} className="work-process-step">
+                  <span className="work-process-num font-mono">{step.num}</span>
+                  <div className="work-process-icon" aria-hidden="true">{step.icon}</div>
+                  <div className="work-process-body">
+                    <h4 className="work-process-step-title">{step.title}</h4>
+                    <p className="work-process-step-desc">{step.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Crimson Signature Quote Card (Matching Reference) */}
+          <div className="crimson-quote-card">
+            <div className="crimson-quote-glow" aria-hidden="true" />
+            <span className="crimson-quote-mark" aria-hidden="true">“</span>
+
+            <p className="crimson-quote-text">
+              Good architecture is not just how it looks, but how it works, scales, and performs under production load.
+            </p>
+
+            <div className="crimson-quote-author">
+              <span className="crimson-quote-sig">Kavya Modi</span>
+              <span className="crimson-quote-role font-mono">OPERATING EXECUTIVE // PATTERN LLC</span>
+            </div>
+
+            <a href="#contact" className="crimson-quote-cta">
+              <span>LET'S CREATE SOMETHING GREAT TOGETHER.</span>
+              <span className="crimson-quote-spark">✦</span>
+            </a>
+          </div>
+
+        </div>
+
         {/* Certifications & Credentials Grid */}
         {hasCertifications && (
           <div className="cert-section animate-fade-in">

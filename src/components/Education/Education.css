@@ -311,3 +311,194 @@
     gap: 12px;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   WORK PROCESS & CRIMSON SIGNATURE QUOTE (REFERENCE DESIGN)
+   ════════════════════════════════════════════════════════════════ */
+
+.edu-process-row {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 24px;
+  margin: 48px 0;
+  align-items: stretch;
+}
+
+.work-process-card {
+  background: rgba(14, 16, 25, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-xl);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.work-process-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 8px 0 0;
+}
+
+.work-process-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.work-process-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: all 0.2s ease;
+}
+
+.work-process-step:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(229, 29, 46, 0.3);
+  transform: translateX(4px);
+}
+
+.work-process-num {
+  font-size: 13px;
+  font-weight: 800;
+  color: #ff3b30;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.25);
+}
+
+.work-process-icon {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.work-process-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.work-process-step-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #f1f5f9;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.work-process-step-desc {
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── CRIMSON SIGNATURE QUOTE CARD ── */
+.crimson-quote-card {
+  position: relative;
+  background: linear-gradient(135deg, #a81726 0%, #7d0e19 60%, #520910 100%);
+  border: 1px solid rgba(255, 107, 107, 0.35);
+  border-radius: var(--r-xl);
+  padding: 34px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(229, 29, 46, 0.25);
+}
+
+.crimson-quote-glow {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.crimson-quote-mark {
+  font-family: serif;
+  font-size: 64px;
+  line-height: 0.8;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 8px;
+}
+
+.crimson-quote-text {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #ffffff;
+  margin: 0 0 24px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.crimson-quote-author {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 16px;
+  margin-bottom: 20px;
+}
+
+.crimson-quote-sig {
+  font-family: 'Caveat', cursive;
+  font-size: 32px;
+  color: #ffffff;
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+
+.crimson-quote-role {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #fca5a5;
+}
+
+.crimson-quote-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.crimson-quote-cta:hover {
+  background: rgba(0, 0, 0, 0.55);
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.crimson-quote-spark {
+  color: #fca5a5;
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .edu-process-row {
+    grid-template-columns: 1fr;
+  }
+}
+

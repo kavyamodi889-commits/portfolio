@@ -159,13 +159,13 @@ export default function Contact() {
         <header className="section-header">
           <div className="contact-badge-pill">
             <span className="contact-badge-dot" />
-            <span>DIRECT COMMS &middot; CHANNEL ACTIVE</span>
+            <span>AVAILABLE WORLDWIDE &middot; OPEN TO COLLABORATIONS</span>
           </div>
-          <h2 className="section-title" id="contact-heading">
-            Let&apos;s Connect
+          <h2 className="section-title contact-editorial-title" id="contact-heading">
+            LET&apos;S WORK TOGETHER
           </h2>
           <p className="section-subtitle">
-            Whether you have a role opportunity, engineering project, or architecture proposal &mdash; send a message or connect through verified channels.
+            Got an ambitious project, open engineering role, or architecture challenge? Let&apos;s talk about how we can build something exceptional together.
           </p>
         </header>
 

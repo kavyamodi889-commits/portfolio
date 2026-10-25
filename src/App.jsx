@@ -78,50 +78,67 @@ function ScrollRevealListener() {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-revealed')
-          }
-        })
-      },
-      {
-        threshold: 0.08,
-        rootMargin: '0px 0px -40px 0px',
-      }
-    )
+    const selectors = [
+      '.section-header',
+      '.skill-category',
+      '.timeline__card',
+      '.edu-card',
+      '.cert-card',
+      '.arch__canvas',
+      '.terminal-window',
+      '.recruiter__card',
+      '.recruiter__preview-container',
+      '.contact__card',
+      '.contact__form-card',
+      '.hero__card',
+      '.saas-metric-card',
+      '.saas-panel',
+      '.saas-trust-rail',
+      '.saas-showcase__header',
+      '.reveal-target',
+    ]
 
-    const observeTargets = () => {
-      const selectors = [
-        '.section-header',
-        '.pc',
-        '.spotlight-card',
-        '.skill-category',
-        '.timeline__card',
-        '.edu-card',
-        '.cert-card',
-        '.arch__canvas',
-        '.terminal-window',
-        '.recruiter__card',
-        '.recruiter__preview-container',
-        '.contact__card',
-        '.contact__form-card',
-        '.hero__card',
-      ]
+    const checkVisible = () => {
+      const windowH = window.innerHeight || 800
       const elements = document.querySelectorAll(selectors.join(', '))
       elements.forEach((el) => {
-        el.classList.add('reveal-on-scroll')
-        observer.observe(el)
+        const rect = el.getBoundingClientRect()
+        if (rect.top <= windowH + 180) {
+          el.classList.add('is-revealed')
+        }
       })
     }
 
-    observeTargets()
-    const timer = setTimeout(observeTargets, 400)
+    const initElements = () => {
+      const elements = document.querySelectorAll(selectors.join(', '))
+      elements.forEach((el) => {
+        if (!el.classList.contains('reveal-on-scroll')) {
+          el.classList.add('reveal-on-scroll')
+        }
+      })
+      checkVisible()
+    }
+
+    initElements()
+    const t1 = setTimeout(checkVisible, 80)
+    const t2 = setTimeout(checkVisible, 300)
+    const t3 = setTimeout(checkVisible, 800)
+
+    window.addEventListener('scroll', checkVisible, { passive: true })
+    window.addEventListener('resize', checkVisible, { passive: true })
+
+    const mutationObserver = new MutationObserver(() => {
+      initElements()
+    })
+    mutationObserver.observe(document.body, { childList: true, subtree: true })
 
     return () => {
-      clearTimeout(timer)
-      observer.disconnect()
+      clearTimeout(t1)
+      clearTimeout(t2)
+      clearTimeout(t3)
+      window.removeEventListener('scroll', checkVisible)
+      window.removeEventListener('resize', checkVisible)
+      mutationObserver.disconnect()
     }
   }, [pathname])
 

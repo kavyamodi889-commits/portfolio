@@ -76,21 +76,31 @@ function RevealOnScroll({ children, delay = 0 }) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    const timer = setTimeout(() => setVisible(true), 400 + delay)
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect() } },
-      { threshold: 0.02, rootMargin: '100px 0px 50px 0px' }
+      ([entry]) => {
+        if (entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight + 150) {
+          setVisible(true)
+          clearTimeout(timer)
+          obs.disconnect()
+        }
+      },
+      { threshold: 0.01, rootMargin: '200px 0px 100px 0px' }
     )
     obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
+    return () => {
+      clearTimeout(timer)
+      obs.disconnect()
+    }
+  }, [delay])
 
   return (
     <div
       ref={ref}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0) scale(1)' : 'translateY(32px) scale(0.97)',
-        transition: `opacity 0.6s ease ${delay}ms, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+        transform: visible ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.98)',
+        transition: `opacity 0.5s ease ${delay}ms, transform 0.5s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
       }}
     >
       {children}

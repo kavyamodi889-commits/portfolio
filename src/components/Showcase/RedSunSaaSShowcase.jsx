@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import AnimatedCounter from '../Common/AnimatedCounter'
+import kavyaPortrait from '../../assets/kavya-portrait.jpg'
 import './RedSunSaaSShowcase.css'
 
 const TABS = [
@@ -192,7 +193,11 @@ export default function RedSunSaaSShowcase() {
               {/* User & Action */}
               <div className="saas-dash-nav__user">
                 <div className="saas-dash-nav__avatar" title="Kavya Modi (Lead Architect)">
-                  <span>KM</span>
+                  <img
+                    src={kavyaPortrait}
+                    alt="Kavya Modi"
+                    className="saas-dash-nav__avatar-img"
+                  />
                   <span className="saas-dash-nav__status-online" />
                 </div>
                 <button

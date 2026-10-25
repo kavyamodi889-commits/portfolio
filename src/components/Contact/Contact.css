@@ -52,6 +52,13 @@
   animation: liveDot 1.6s ease-in-out infinite;
 }
 
+.contact-editorial-title {
+  font-family: var(--font-display, var(--font-heading));
+  letter-spacing: 0.04em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
 /* ── Two-Column Command Layout ── */
 .contact__layout {
   display: grid;
