@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Canvas3D from '../Common/Canvas3D'
 import AnimatedCounter from '../Common/AnimatedCounter'
 import MagneticButton from '../Common/MagneticButton'
-import Neural3DStage from './Neural3DStage'
+import portraitImg from '../../assets/kavya-portrait.jpg'
 import './Hero.css'
 
 const TECH_MARQUEE = [
@@ -83,7 +83,7 @@ export default function Hero() {
   return (
     <section className="hero" id="hero" aria-label="Introduction">
 
-      {/* ── FULL-SECTION AMBIENT BACKGROUND ── */}
+      {/* ── AMBIENT CANVAS & SOLAR GLOWS ── */}
       <div className="hero__bg" aria-hidden="true">
         <div className="hero__solar-orb hero__solar-orb--main" />
         <div className="hero__solar-orb hero__solar-orb--secondary" />
@@ -91,18 +91,57 @@ export default function Hero() {
         <Canvas3D className="hero__canvas3d" />
       </div>
 
-      {/* ── 3D SILICON STAGE — ABSOLUTE RIGHT-HALF BACKGROUND ── */}
-      <div className="hero__stage-bg" aria-hidden="true">
-        <Neural3DStage />
+      {/* ── TOP EYEBROW METADATA BAR (MATCHING REFERENCE) ── */}
+      <div className="hero__top-bar">
+        <div className="hero__top-brand">
+          <span className="hero__top-dot" aria-hidden="true" />
+          <span className="hero__top-text">WEB DEVELOPER &amp; SOFTWARE ENGINEER</span>
+        </div>
+        <div className="hero__top-status">
+          <span className="hero__top-status-text">AVAILABLE FOR ROLES &amp; FREELANCE</span>
+          <span className="hero__top-spark" aria-hidden="true">✦</span>
+        </div>
       </div>
 
-      {/* ── MAIN CONTENT LAYOUT ── */}
-      <div className="hero__inner">
+      {/* ── MONUMENTAL "PORTFOLIO" BACKGROUND WATERMARK ── */}
+      <div className="hero__watermark" aria-hidden="true">
+        <span>PORTFOLIO</span>
+      </div>
 
-        {/* LEFT CONTENT COLUMN */}
-        <div className="hero__content">
+      {/* ── MAIN HERO STAGE ── */}
+      <div className="hero__stage">
 
-          {/* ── INNOVATIVE CURRENT STATUS TELEMETRY CAPSULE ── */}
+        {/* ── LEFT COLUMN: TYPOGRAPHY, BIO & ACTIONS ── */}
+        <div className="hero__col-left">
+
+          {/* Script Greeting */}
+          <div className="hero__greeting-wrap">
+            <span className="hero__greeting">Hello, I'm</span>
+          </div>
+
+          {/* Massive Display Name */}
+          <h1 className="hero__name">
+            <span className="hero__name-line">KAVYA</span>
+            <span className="hero__name-line">MODI</span>
+          </h1>
+
+          {/* Role Subhead in Solar Crimson */}
+          <div className="hero__role-badge">
+            WEB DEVELOPER &amp; SOFTWARE ENGINEER
+          </div>
+
+          {/* Bio Paragraph */}
+          <p className="hero__bio">
+            I design and build high-performance, user-focused web experiences that combine technical strategy with visual precision. Operating Executive at <strong>Pattern LLC</strong> and Semcom BCA Rank 1 Gold Medalist.
+          </p>
+
+          {/* Availability Pill */}
+          <div className="hero__worldwide-pill">
+            <span className="hero__worldwide-icon" aria-hidden="true">🌐</span>
+            <span>AVAILABLE WORLDWIDE · REMOTE &amp; HYBRID</span>
+          </div>
+
+          {/* ── LIVE TELEMETRY CAPSULE (HUD) ── */}
           <div
             className="hero__announcement"
             onMouseEnter={() => setIsPaused(true)}
@@ -113,10 +152,7 @@ export default function Hero() {
               className="hero__announcement-badge hero__status-capsule"
               aria-label="Current status details and telemetry"
             >
-              {/* Neon Laser Perimeter Sweep */}
               <span className="hero__laser-border" aria-hidden="true" />
-              
-              {/* Fixed Permanent CURRENT STATUS Badge with Radar Beacon */}
               <div className="hero__status-fixed">
                 <span className="hero__beacon" aria-hidden="true">
                   <span className="hero__beacon-ripple" style={{ borderColor: currentStatus.dot }} />
@@ -125,24 +161,20 @@ export default function Hero() {
                     style={{ background: currentStatus.dot, boxShadow: `0 0 10px ${currentStatus.dot}` }}
                   />
                 </span>
-                <span className="hero__status-label">CURRENT STATUS</span>
+                <span className="hero__status-label">STATUS</span>
               </div>
 
               <span className="hero__status-sep" aria-hidden="true">/</span>
 
-              {/* Dynamic Category Pill */}
               <span className="hero__category-pill" style={{ color: currentStatus.dot }}>
                 {currentStatus.category}
               </span>
 
-              {/* 3D Holographic Status Flip Text */}
               <div className="hero__status-slider" key={statusIdx}>
                 <span className="hero__status-icon" aria-hidden="true">{currentStatus.icon}</span>
                 <span className="hero__status-main">{currentStatus.title}</span>
-                <span className="hero__status-detail">({currentStatus.detail})</span>
               </div>
 
-              {/* Interactive Segmented LED Pips (Clickable) */}
               <div className="hero__status-pips" aria-label="Status selectors">
                 {STATUS_ITEMS.map((item, idx) => (
                   <button
@@ -160,35 +192,16 @@ export default function Hero() {
                 ))}
               </div>
 
-              {/* Live IST Telemetry Clock Pill */}
               {istTime && (
                 <div className="hero__status-clock font-mono" title="Live Indian Standard Time">
                   <span className="hero__clock-dot" />
                   <span>{istTime} IST</span>
                 </div>
               )}
-              
-              {/* Action Prompt */}
-              <span className="hero__status-cta">
-                <span className="hero__status-cta-text">LIVE HUD</span>
-                <span className="hero__announcement-arrow">↗</span>
-              </span>
             </a>
           </div>
 
-          {/* Hero Headline */}
-          <h1 className="hero__title">
-            <span className="hero__title-line">Turning Complex</span>
-            <span className="hero__title-line">Ideas Into</span>
-            <span className="hero__title-gradient">Intelligent Web</span>
-            <span className="hero__title-gradient">Products.</span>
-          </h1>
-
-          <p className="hero__subtitle">
-            Full-Stack Web Developer &amp; Software Engineer. Operating Executive at <strong>Pattern LLC</strong> (2026 – Present). BCA graduate from Semcom with <strong>9.55 CGPA (Rank 1)</strong>. Architecting high-concurrency systems, dynamic backends, and stunning React experiences.
-          </p>
-
-          {/* CTA Buttons */}
+          {/* Action Buttons */}
           <div className="hero__actions">
             <MagneticButton
               as="a"
@@ -204,6 +217,16 @@ export default function Hero() {
               </svg>
             </MagneticButton>
 
+            <MagneticButton
+              as="a"
+              href="/resume"
+              className="btn btn-outline hero__btn-secondary"
+              strength={0.2}
+            >
+              <span>Resume Studio</span>
+              <span className="hero__btn-badge">v2.0</span>
+            </MagneticButton>
+
             <a
               href="/Kavya-Modi-Resume.pdf"
               download="Kavya-Modi-Resume.pdf"
@@ -216,50 +239,85 @@ export default function Hero() {
                 <polyline points="7 10 12 15 17 10"/>
                 <line x1="12" y1="15" x2="12" y2="3"/>
               </svg>
-              <span>Download CV</span>
-              <span className="hero__cv-badge">PDF</span>
+              <span>CV</span>
             </a>
-
-            <MagneticButton
-              as="a"
-              href="/resume"
-              className="btn btn-outline hero__btn-secondary"
-              strength={0.2}
-            >
-              <span>Resume Studio</span>
-              <span className="hero__btn-badge">v2.0</span>
-            </MagneticButton>
           </div>
+        </div>
 
-          {/* Stats Row */}
-          <div className="hero__stats-row">
-            <div className="hero__stat">
-              <span className="hero__stat-val"><AnimatedCounter end={9.55} decimals={2} duration={2000} /></span>
-              <span className="hero__stat-lbl">CGPA · RANK 1</span>
+        {/* ── CENTER COLUMN: EDITORIAL DEVELOPER PORTRAIT & FLOATING BADGE ── */}
+        <div className="hero__col-center">
+          <div className="hero__portrait-wrapper">
+            <div className="hero__portrait-halo" aria-hidden="true" />
+            <div className="hero__portrait-frame">
+              <img
+                src={portraitImg}
+                alt="Kavya Modi — Full Stack Web Developer & Software Engineer"
+                className="hero__portrait-img"
+                width="600"
+                height="800"
+                loading="eager"
+              />
+              <div className="hero__portrait-fade" aria-hidden="true" />
             </div>
-            <div className="hero__stat-div" />
-            <div className="hero__stat">
-              <span className="hero__stat-val">Pattern LLC</span>
-              <span className="hero__stat-lbl">OPS EXECUTIVE 2026</span>
-            </div>
-            <div className="hero__stat-div" />
-            <div className="hero__stat">
-              <span className="hero__stat-val"><AnimatedCounter end={7} suffix="+" duration={1800} /></span>
-              <span className="hero__stat-lbl">SHIPPED SYSTEMS</span>
-            </div>
-            <div className="hero__stat-div" />
-            <div className="hero__stat">
-              <span className="hero__stat-val"><AnimatedCounter end={100} suffix="%" duration={2200} /></span>
-              <span className="hero__stat-lbl">DATA INTEGRITY</span>
+
+            {/* Floating Editorial Spark Card */}
+            <div className="hero__floating-card">
+              <span className="hero__floating-spark" aria-hidden="true">✦</span>
+              <p className="hero__floating-text">
+                Turning ideas into powerful digital experiences.
+              </p>
             </div>
           </div>
         </div>
 
-        {/* RIGHT SPACER — 3D stage fills this area via absolute positioning */}
-        <div className="hero__stage-spacer" aria-hidden="true" />
+        {/* ── RIGHT COLUMN: VERTICAL METRICS STACK ── */}
+        <div className="hero__col-right">
+          <div className="hero__metrics-stack">
+            <div className="hero__metric-card">
+              <div className="hero__metric-num">
+                <AnimatedCounter end={9.55} decimals={2} duration={2000} />
+              </div>
+              <div className="hero__metric-meta">
+                <span className="hero__metric-title">CGPA · RANK 1</span>
+                <span className="hero__metric-desc">GOLD MEDALIST</span>
+              </div>
+            </div>
+
+            <div className="hero__metric-card">
+              <div className="hero__metric-num">
+                <AnimatedCounter end={7} suffix="+" duration={1800} />
+              </div>
+              <div className="hero__metric-meta">
+                <span className="hero__metric-title">PROJECTS SHIPPED</span>
+                <span className="hero__metric-desc">FULL-STACK SYSTEMS</span>
+              </div>
+            </div>
+
+            <div className="hero__metric-card">
+              <div className="hero__metric-num">
+                <AnimatedCounter end={100} suffix="%" duration={2200} />
+              </div>
+              <div className="hero__metric-meta">
+                <span className="hero__metric-title">DATA INTEGRITY</span>
+                <span className="hero__metric-desc">ACID OPTIMIZATION</span>
+              </div>
+            </div>
+
+            <div className="hero__metric-card">
+              <div className="hero__metric-num hero__metric-num--text">
+                Pattern LLC
+              </div>
+              <div className="hero__metric-meta">
+                <span className="hero__metric-title">OPERATING EXEC</span>
+                <span className="hero__metric-desc">US/UK CLIENT DELIVERY</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      {/* ── REDSUN INFINITE TECH MARQUEE TICKER ── */}
+      {/* ── BOTTOM TECH MARQUEE ── */}
       <div className="hero__marquee" aria-hidden="true">
         <div className="hero__marquee-track">
           {[...TECH_MARQUEE, ...TECH_MARQUEE, ...TECH_MARQUEE].map((tech, idx) => (
