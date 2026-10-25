@@ -12,21 +12,66 @@ const TECH_MARQUEE = [
 ]
 
 const STATUS_ITEMS = [
-  { tag: 'CURRENT STATUS', text: 'Operating Executive', sub: 'Pattern LLC (2026–Present)', dot: '#ff7828' },
-  { tag: 'ACADEMIC MERIT', text: 'Semcom BCA Rank 1', sub: '9.55 CGPA Distinction', dot: '#fbbf24' },
-  { tag: 'AVAILABILITY', text: 'Open to High-Impact Roles', sub: 'Vadodara & Remote', dot: '#10b981' },
-  { tag: 'ENGINE CORE', text: 'Full-Stack Architecture', sub: 'React · Python · MySQL · PHP', dot: '#38bdf8' },
+  {
+    category: 'ROLE',
+    title: 'Operating Executive',
+    detail: 'Pattern LLC (2026–Present)',
+    dot: '#ff7828',
+    icon: '⚡',
+  },
+  {
+    category: 'MERIT',
+    title: 'Semcom BCA Rank 1',
+    detail: '9.55 CGPA Distinction · Gold Medalist',
+    dot: '#fbbf24',
+    icon: '★',
+  },
+  {
+    category: 'AVAILABILITY',
+    title: 'Open to High-Impact Roles',
+    detail: 'Full-Stack & Systems · Remote / Hybrid',
+    dot: '#10b981',
+    icon: '🟢',
+  },
+  {
+    category: 'CORE ENGINE',
+    title: 'Full-Stack Architecture',
+    detail: 'React 19 · Node · Python · MySQL ACID',
+    dot: '#38bdf8',
+    icon: '⚛️',
+  },
 ]
 
 export default function Hero() {
   const [statusIdx, setStatusIdx] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+  const [istTime, setIstTime] = useState('')
 
+  // Live IST Clock (Asia/Kolkata)
   useEffect(() => {
+    const updateTime = () => {
+      const formatted = new Intl.DateTimeFormat('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      }).format(new Date())
+      setIstTime(formatted)
+    }
+    updateTime()
+    const clockTimer = setInterval(updateTime, 1000)
+    return () => clearInterval(clockTimer)
+  }, [])
+
+  // Auto-cycle through credentials
+  useEffect(() => {
+    if (isPaused) return
     const timer = setInterval(() => {
       setStatusIdx((prev) => (prev + 1) % STATUS_ITEMS.length)
-    }, 3200)
+    }, 3400)
     return () => clearInterval(timer)
-  }, [])
+  }, [isPaused])
 
   const currentStatus = STATUS_ITEMS[statusIdx]
 
@@ -57,28 +102,73 @@ export default function Hero() {
         {/* LEFT CONTENT COLUMN */}
         <div className="hero__content">
 
-          {/* Dynamic Status badge */}
-          <div className="hero__announcement">
-            <a href="#potential" className="hero__announcement-badge hero__status-cycler" aria-label="Current status details">
+          {/* ── INNOVATIVE CURRENT STATUS TELEMETRY CAPSULE ── */}
+          <div
+            className="hero__announcement"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            <a
+              href="#potential"
+              className="hero__announcement-badge hero__status-capsule"
+              aria-label="Current status details and telemetry"
+            >
+              {/* Neon Laser Perimeter Sweep */}
               <span className="hero__laser-border" aria-hidden="true" />
               
-              {/* Radar Pulse Beacon */}
-              <span className="hero__beacon" aria-hidden="true">
-                <span className="hero__beacon-ripple" style={{ borderColor: currentStatus.dot }} />
-                <span
-                  className="hero__beacon-core"
-                  style={{ background: currentStatus.dot, boxShadow: `0 0 10px ${currentStatus.dot}` }}
-                />
+              {/* Fixed Permanent CURRENT STATUS Badge with Radar Beacon */}
+              <div className="hero__status-fixed">
+                <span className="hero__beacon" aria-hidden="true">
+                  <span className="hero__beacon-ripple" style={{ borderColor: currentStatus.dot }} />
+                  <span
+                    className="hero__beacon-core"
+                    style={{ background: currentStatus.dot, boxShadow: `0 0 10px ${currentStatus.dot}` }}
+                  />
+                </span>
+                <span className="hero__status-label">CURRENT STATUS</span>
+              </div>
+
+              <span className="hero__status-sep" aria-hidden="true">/</span>
+
+              {/* Dynamic Category Pill */}
+              <span className="hero__category-pill" style={{ color: currentStatus.dot }}>
+                {currentStatus.category}
               </span>
 
-              <span className="hero__status-tag">{currentStatus.tag}</span>
-              <span className="hero__status-sep">·</span>
+              {/* 3D Holographic Status Flip Text */}
+              <div className="hero__status-slider" key={statusIdx}>
+                <span className="hero__status-icon" aria-hidden="true">{currentStatus.icon}</span>
+                <span className="hero__status-main">{currentStatus.title}</span>
+                <span className="hero__status-detail">({currentStatus.detail})</span>
+              </div>
+
+              {/* Interactive Segmented LED Pips (Clickable) */}
+              <div className="hero__status-pips" aria-label="Status selectors">
+                {STATUS_ITEMS.map((item, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className={`hero__status-pip ${idx === statusIdx ? 'hero__status-pip--active' : ''}`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      setStatusIdx(idx)
+                    }}
+                    title={item.category}
+                    style={idx === statusIdx ? { background: item.dot, boxShadow: `0 0 8px ${item.dot}` } : undefined}
+                  />
+                ))}
+              </div>
+
+              {/* Live IST Telemetry Clock Pill */}
+              {istTime && (
+                <div className="hero__status-clock font-mono" title="Live Indian Standard Time">
+                  <span className="hero__clock-dot" />
+                  <span>{istTime} IST</span>
+                </div>
+              )}
               
-              <span className="hero__status-slider" key={statusIdx}>
-                <span className="hero__status-main">{currentStatus.text}</span>
-                <span className="hero__status-sub">({currentStatus.sub})</span>
-              </span>
-              
+              {/* Action Prompt */}
               <span className="hero__status-cta">
                 <span className="hero__status-cta-text">LIVE HUD</span>
                 <span className="hero__announcement-arrow">↗</span>

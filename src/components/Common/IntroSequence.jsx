@@ -19,7 +19,7 @@ export default function IntroSequence({ onComplete }) {
   // Rapid high-precision charge counter (0 -> 100% over 1.6s)
   const startChargeCounter = useCallback(() => {
     const startTime = performance.now()
-    const duration = 1600
+    const duration = 2200
 
     const updateCounter = (now) => {
       const elapsed = now - startTime
@@ -46,12 +46,12 @@ export default function IntroSequence({ onComplete }) {
 
     startChargeCounter()
 
-    // Phase 1 -> 2: Text unrolls beside mark (at 850ms)
+    // Phase 1 → 2: Text unrolls beside mark (at 900ms)
     const t1 = setTimeout(() => {
       setPhase('expand-text')
-    }, 850)
+    }, 900)
 
-    // Phase 2 -> 3: Morph & glide to Navbar logo position + Curtain Shutter split (at 2100ms)
+    // Phase 2 → 3: Morph & glide to Navbar logo position + Curtain Shutter split (at 2600ms)
     const t2 = setTimeout(() => {
       const navLogoMark = document.querySelector('.navbar__logo-mark') || document.querySelector('.navbar__logo')
       if (navLogoMark) {
@@ -67,14 +67,14 @@ export default function IntroSequence({ onComplete }) {
         })
       }
       setPhase('morph-nav')
-    }, 2100)
+    }, 2600)
 
-    // Phase 3 -> Done: Unmount overlay and release page scroll (at 2950ms)
+    // Phase 3 → Done: Unmount overlay and release page scroll (at 3600ms)
     const t3 = setTimeout(() => {
       setPhase('done')
       document.body.classList.remove('intro-active')
       onComplete?.()
-    }, 2950)
+    }, 3600)
 
     timersRef.current = [t1, t2, t3]
   }, [onComplete, startChargeCounter])
@@ -121,14 +121,20 @@ export default function IntroSequence({ onComplete }) {
       aria-label="Loading animation"
       role="status"
     >
-      {/* ── Cinematic Dual-Curtain Shutter Split (Reference Frame 2.5s) ── */}
+      {/* ── Cinematic Dual-Curtain Shutter Split ── */}
       <div className="intro-curtain intro-curtain--top" aria-hidden="true" />
       <div className="intro-curtain intro-curtain--bottom" aria-hidden="true" />
 
-      {/* Reference video signature perimeter edge lighting */}
-      <div className="intro-screen__edge-glow" />
-      <div className="intro-screen__ambient" />
-      <div className="intro-screen__scanlines" />
+      {/* Animated Circuit-Grid Background */}
+      <div className="intro-screen__bg-grid" aria-hidden="true" />
+
+      {/* Perimeter edge lighting + ambient bloom + scanlines */}
+      <div className="intro-screen__edge-glow" aria-hidden="true" />
+      <div className="intro-screen__ambient" aria-hidden="true" />
+      <div className="intro-screen__scanlines" aria-hidden="true" />
+
+      {/* HUD Corner Marks */}
+      <div className="intro-screen__corner-marks" aria-hidden="true" />
 
       {/* ── Brand Lockup: Center Emblem ➔ Typography Cascade ➔ Navbar Docking ── */}
       <div
@@ -142,7 +148,7 @@ export default function IntroSequence({ onComplete }) {
             : undefined
         }
       >
-        {/* Emblem (KM Solar Sphere with Shockwave Rings) */}
+        {/* Emblem (KM Prism Sphere with Triple Shockwave Rings) */}
         <div className="intro-screen__mark-wrapper">
           <div className="intro-screen__shockwave intro-screen__shockwave--1" />
           <div className="intro-screen__shockwave intro-screen__shockwave--2" />
@@ -194,7 +200,7 @@ export default function IntroSequence({ onComplete }) {
         )}
       </div>
 
-      {/* Floating Micro-Light Dust Constellation */}
+      {/* Floating Particle Constellation */}
       <div className="intro-screen__particles" aria-hidden="true">
         <span className="intro-particle intro-particle--1" />
         <span className="intro-particle intro-particle--2" />
