@@ -33,7 +33,7 @@ export const profile = {
   headline: "Web Developer & Software Engineer",
   tagline: "I turn ideas into digital experiences.",
   summary:
-    "BCA graduate from Semcom, CVM University with a 9.55 CGPA and a strong foundation in full-stack web and software development. Experienced across PHP, Python, JavaScript, VB.NET, MySQL, and modern frontend frameworks like React. Currently interning as a Web Developer at Anugrah Accounting — building real-world solutions for real clients with clean code and high performance.",
+    "Operating Executive at Pattern LLC and Semcom BCA Rank 1 Gold Medalist with a 9.55 CGPA. Extensive background in full-stack web engineering, scalable system architecture, and offshore operational workflows. Experienced across React, Node.js, Python, PHP, MySQL, and modern cloud deployment pipelines.",
   location: "Bharuch, Gujarat, India",
   github: "https://github.com/kavyamodi889-commits",
   linkedin: "https://www.linkedin.com/in/kavya-modi",

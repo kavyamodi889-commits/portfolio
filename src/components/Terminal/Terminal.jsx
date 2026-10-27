@@ -88,8 +88,8 @@ export default function Terminal() {
             <p className="term-muted">&ldquo;{profile.tagline}&rdquo;</p>
             <p>{profile.summary}</p>
             <p className="term-badge-line">
-              <span className="term-pill">BCA (9.55 CGPA)</span>
-              <span className="term-pill">Web Dev Intern @ Anugrah</span>
+              <span className="term-pill">Operating Exec @ Pattern LLC</span>
+              <span className="term-pill">BCA 9.55 CGPA · Gold Medalist</span>
               <span className="term-pill">{profile.location}</span>
             </p>
           </div>

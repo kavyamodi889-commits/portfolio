@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 import './Navbar.css'
 
 const NAV_LINKS = [
@@ -10,6 +11,9 @@ const NAV_LINKS = [
 ]
 
 export default function Navbar() {
+  const location = useLocation()
+  const isResumePage = location.pathname === '/resume' || location.pathname === '/resume-studio'
+
   const [scrolled,  setScrolled]  = useState(false)
   const [activeId,  setActiveId]  = useState('hero')
   const [menuOpen,  setMenuOpen]  = useState(false)
@@ -51,6 +55,10 @@ export default function Navbar() {
     setMenuOpen(false)
     const el = document.querySelector(href)
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  if (isResumePage) {
+    return null
   }
 
   return (
