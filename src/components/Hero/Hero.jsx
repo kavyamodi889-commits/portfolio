@@ -120,7 +120,7 @@ export default function Hero() {
         <Canvas3D className="hero__canvas3d" />
       </div>
 
-      {/* ── TOP EYEBROW METADATA BAR (MATCHING REFERENCE) ── */}
+      {/* ── TOP EYEBROW METADATA BAR (CLEAN RESPONSIVE BAR) ── */}
       <div className="hero__top-bar">
         <div className="hero__top-brand">
           <span className="hero__top-dot" aria-hidden="true" />
@@ -137,45 +137,50 @@ export default function Hero() {
         className="hero__watermark"
         aria-hidden="true"
         style={{
-          transform: `translateX(-50%) translateY(${scrollY * 0.22}px)`,
+          transform: `translateX(-50%) translateY(${scrollY * 0.18}px)`,
         }}
       >
         <span>PORTFOLIO</span>
       </div>
 
-      {/* ── MAIN 3-COLUMN STAGE (MATCHING EXACT REFERENCE IMAGE) ── */}
+      {/* ── MAIN STAGE: 3-COL ON DESKTOP, SEAMLESS STORY ON MOBILE ── */}
       <div className="hero__stage">
 
         {/* ── LEFT COLUMN: TYPOGRAPHY, BIO & ACTIONS ── */}
         <div className="hero__col-left">
 
-          {/* Script Greeting */}
-          <div className="hero__greeting-wrap">
-            <span className="hero__greeting">Hello, I'm</span>
+          {/* Heading Block */}
+          <div className="hero__intro-block">
+            {/* Script Greeting */}
+            <div className="hero__greeting-wrap">
+              <span className="hero__greeting">Hello, I'm</span>
+            </div>
+
+            {/* Massive Display Name */}
+            <h1 className="hero__name">
+              <span className="hero__name-line">KAVYA</span>
+              <span className="hero__name-line">MODI</span>
+            </h1>
+
+            {/* Red Accent Role Title */}
+            <div className="hero__role-badge">
+              <span>WEB DEVELOPER &amp; SOFTWARE ENGINEER</span>
+            </div>
           </div>
 
-          {/* Massive Display Name */}
-          <h1 className="hero__name">
-            <span className="hero__name-line">KAVYA</span>
-            <span className="hero__name-line">MODI</span>
-          </h1>
+          {/* Editorial Bio & Availability */}
+          <div className="hero__bio-block">
+            <p className="hero__bio">
+              I design and build high-performance, user-focused web experiences that combine
+              technical strategy with visual precision. Operating Executive at{' '}
+              <strong>Pattern LLC</strong> and Semcom BCA Rank 1 Gold Medalist.
+            </p>
 
-          {/* Red Accent Role Title */}
-          <div className="hero__role-badge">
-            <span>WEB DEVELOPER &amp; SOFTWARE ENGINEER</span>
-          </div>
-
-          {/* Editorial Bio */}
-          <p className="hero__bio">
-            I design and build high-performance, user-focused web experiences that combine
-            technical strategy with visual precision. Operating Executive at{' '}
-            <strong>Pattern LLC</strong> and Semcom BCA Rank 1 Gold Medalist.
-          </p>
-
-          {/* Availability Pill */}
-          <div className="hero__worldwide-pill">
-            <span className="hero__worldwide-icon" aria-hidden="true">🌐</span>
-            <span>AVAILABLE WORLDWIDE · REMOTE &amp; HYBRID</span>
+            {/* Availability Pill */}
+            <div className="hero__worldwide-pill">
+              <span className="hero__worldwide-icon" aria-hidden="true">🌐</span>
+              <span>AVAILABLE WORLDWIDE · REMOTE &amp; HYBRID</span>
+            </div>
           </div>
 
           {/* Live Telemetry Capsule (HUD) */}
@@ -186,47 +191,55 @@ export default function Hero() {
           >
             <div className="hero__status-capsule">
               <span className="hero__laser-border" aria-hidden="true" />
-              <div className="hero__status-fixed">
-                <span className="hero__beacon" aria-hidden="true">
-                  <span className="hero__beacon-ripple" style={{ borderColor: currentStatus.dot }} />
-                  <span
-                    className="hero__beacon-core"
-                    style={{ background: currentStatus.dot, boxShadow: `0 0 10px ${currentStatus.dot}` }}
-                  />
+              
+              {/* Header Segment: Beacon & Category */}
+              <div className="hero__status-header">
+                <div className="hero__status-fixed">
+                  <span className="hero__beacon" aria-hidden="true">
+                    <span className="hero__beacon-ripple" style={{ borderColor: currentStatus.dot }} />
+                    <span
+                      className="hero__beacon-core"
+                      style={{ background: currentStatus.dot, boxShadow: `0 0 10px ${currentStatus.dot}` }}
+                    />
+                  </span>
+                  <span className="hero__status-label">STATUS</span>
+                </div>
+
+                <span className="hero__status-sep" aria-hidden="true">/</span>
+
+                <span className="hero__category-pill" style={{ color: currentStatus.dot }}>
+                  {currentStatus.category}
                 </span>
-                <span className="hero__status-label">STATUS</span>
               </div>
 
-              <span className="hero__status-sep" aria-hidden="true">/</span>
-
-              <span className="hero__category-pill" style={{ color: currentStatus.dot }}>
-                {currentStatus.category}
-              </span>
-
+              {/* Slider Segment: Title */}
               <div className="hero__status-slider" key={statusIdx}>
                 <span className="hero__status-icon" aria-hidden="true">{currentStatus.icon}</span>
                 <span className="hero__status-main">{currentStatus.title}</span>
               </div>
 
-              <div className="hero__status-pips" aria-label="Status selectors">
-                {STATUS_ITEMS.map((item, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    className={`hero__status-pip ${idx === statusIdx ? 'hero__status-pip--active' : ''}`}
-                    onClick={() => setStatusIdx(idx)}
-                    title={item.category}
-                    style={idx === statusIdx ? { background: item.dot, boxShadow: `0 0 8px ${item.dot}` } : undefined}
-                  />
-                ))}
-              </div>
-
-              {istTime && (
-                <div className="hero__status-clock font-mono" title="Live Indian Standard Time">
-                  <span className="hero__clock-dot" />
-                  <span>{istTime} IST</span>
+              {/* Footer Segment: Pips & Clock */}
+              <div className="hero__status-footer">
+                <div className="hero__status-pips" aria-label="Status selectors">
+                  {STATUS_ITEMS.map((item, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      className={`hero__status-pip ${idx === statusIdx ? 'hero__status-pip--active' : ''}`}
+                      onClick={() => setStatusIdx(idx)}
+                      title={item.category}
+                      style={idx === statusIdx ? { background: item.dot, boxShadow: `0 0 8px ${item.dot}` } : undefined}
+                    />
+                  ))}
                 </div>
-              )}
+
+                {istTime && (
+                  <div className="hero__status-clock font-mono" title="Live Indian Standard Time">
+                    <span className="hero__clock-dot" />
+                    <span>{istTime} IST</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -246,34 +259,36 @@ export default function Hero() {
               </svg>
             </MagneticButton>
 
-            <MagneticButton
-              as="a"
-              href="/resume"
-              className="btn btn-outline hero__btn-secondary"
-              strength={0.2}
-            >
-              <span>Resume Studio</span>
-              <span className="hero__btn-badge">v2.0</span>
-            </MagneticButton>
+            <div className="hero__actions-sub-row">
+              <MagneticButton
+                as="a"
+                href="/resume"
+                className="btn btn-outline hero__btn-secondary"
+                strength={0.2}
+              >
+                <span>Resume Studio</span>
+                <span className="hero__btn-badge">v2.0</span>
+              </MagneticButton>
 
-            <a
-              href="/Kavya-Modi-Resume.pdf"
-              download="Kavya-Modi-Resume.pdf"
-              className="hero__cv-btn"
-              id="hero-download-cv-btn"
-              aria-label="Download Kavya Modi CV as PDF"
-            >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
-              <span>CV</span>
-            </a>
+              <a
+                href="/Kavya-Modi-Resume.pdf"
+                download="Kavya-Modi-Resume.pdf"
+                className="hero__cv-btn"
+                id="hero-download-cv-btn"
+                aria-label="Download Kavya Modi CV as PDF"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>CV</span>
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* ── CENTER COLUMN: EDITORIAL DEVELOPER PORTRAIT & FLOATING BADGE (MATCHING REFERENCE) ── */}
+        {/* ── CENTER COLUMN: EDITORIAL DEVELOPER PORTRAIT & FLOATING BADGE ── */}
         <div className="hero__col-center">
           <div
             className="hero__portrait-wrapper"
@@ -300,7 +315,7 @@ export default function Hero() {
               <div className="hero__portrait-fade" aria-hidden="true" />
             </div>
 
-            {/* Floating Editorial Spark Card (Matching Reference Badge) */}
+            {/* Floating Editorial Spark Card */}
             <div className="hero__floating-card">
               <span className="hero__fencing-laser" aria-hidden="true" />
               <span className="hero__floating-spark" aria-hidden="true">✦</span>
@@ -311,7 +326,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── RIGHT COLUMN: VERTICAL METRICS STACK (MATCHING REFERENCE) ── */}
+        {/* ── RIGHT COLUMN: VERTICAL METRICS STACK ── */}
         <div className="hero__col-right">
           <div className="hero__metrics-stack">
 

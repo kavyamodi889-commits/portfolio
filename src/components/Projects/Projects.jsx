@@ -1,8 +1,8 @@
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import { projects } from '../../data/portfolioData'
 import './Projects.css'
 
-/* ── Rich Metadata & Live Interactive UI Simulation Data (Tripzia & Bhutan Inspired) ── */
+/* ── Rich Metadata & Live Interactive UI Simulation Data (Tripzia, Bhutan & Spatial 3D Inspired) ── */
 const PROJECT_META = {
   'glovix-anand': {
     metric: 'Sub-Second CDN',
@@ -24,6 +24,10 @@ const PROJECT_META = {
       badge: 'TOP DESTINATIONS',
       sub: 'IELTS & VISA INTAKE ENGINE',
       accent: '#ff5722',
+      metricVal: '500+',
+      metricLbl: 'STUDENTS GUIDED',
+      secVal: '99.4%',
+      secLbl: 'VISA SUCCESS',
     },
   },
   'anugrah-accounting': {
@@ -46,6 +50,10 @@ const PROJECT_META = {
       badge: 'ADVISORY PLATFORM',
       sub: 'DYNAMIC CONSULTATION SYSTEM',
       accent: '#06b6d4',
+      metricVal: 'Sub-85ms',
+      metricLbl: 'PAGE VALIDATION',
+      secVal: '100% ACID',
+      secLbl: 'FORM INTEGRITY',
     },
   },
   'rangila-resto': {
@@ -68,6 +76,10 @@ const PROJECT_META = {
       badge: 'HOSPITALITY UX',
       sub: 'RESERVATION & MENU SYSTEM',
       accent: '#f59e0b',
+      metricVal: '60 FPS',
+      metricLbl: 'FLUID ROUTING',
+      secVal: '100%',
+      secLbl: 'RESERVATION FEEDBACK',
     },
   },
   'pixel-plus-media': {
@@ -90,6 +102,10 @@ const PROJECT_META = {
       badge: 'CREATIVE SHOWCASE',
       sub: 'MOTION DESIGN SYSTEM',
       accent: '#a855f7',
+      metricVal: '60 FPS',
+      metricLbl: 'SMOOTH RENDERING',
+      secVal: 'Zero',
+      secLbl: 'LAYOUT SHIFT',
     },
   },
   'bank-locker': {
@@ -112,6 +128,10 @@ const PROJECT_META = {
       badge: 'ENTERPRISE VAULT',
       sub: 'ROLE-BASED ACCESS CONTROL',
       accent: '#10b981',
+      metricVal: '100% ACID',
+      metricLbl: 'ZERO TRANSACTION LOSS',
+      secVal: '0.00%',
+      secLbl: 'COLLISION RATE',
     },
   },
   'laundry-management': {
@@ -134,6 +154,10 @@ const PROJECT_META = {
       badge: 'OPERATIONS SUITE',
       sub: 'AUTOMATED INVOICING & INTAKE',
       accent: '#38bdf8',
+      metricVal: 'Instant',
+      metricLbl: 'THERMAL BILLING',
+      secVal: '100%',
+      secLbl: 'AUDIT ACCURACY',
     },
   },
   'streamverse-platform': {
@@ -156,6 +180,10 @@ const PROJECT_META = {
       badge: 'VIDEO ARCHITECTURE',
       sub: 'FASTAPI + REACT 19 STREAM',
       accent: '#ec4899',
+      metricVal: 'Sub-40ms',
+      metricLbl: 'API LATENCY',
+      secVal: '4K Ready',
+      secLbl: 'DYNAMIC BITRATE',
     },
   },
   'bizbot-ai': {
@@ -178,9 +206,13 @@ const PROJECT_META = {
       badge: 'WHATSAPP GATEWAY',
       sub: 'CONVERSATIONAL SALES & CRM',
       accent: '#25d366',
+      metricVal: 'Sub-30ms',
+      metricLbl: 'INTENT CLASSIFY',
+      secVal: '99.98%',
+      secLbl: 'DISPATCH UPTIME',
     },
   },
-};
+}
 
 /* ── SVG Icons ── */
 function IconArrow() {
@@ -207,56 +239,123 @@ function IconCheck() {
   )
 }
 
+function IconChevronLeft() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+  )
+}
+
+function IconChevronRight() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  )
+}
+
 /* ════════════════════════════════════════════════════════════════
    MAIN PROJECTS COMPONENT
+   Synthesizing User References into an Original 3D Spatial Deck:
+   • 3D Coverflow perspective stage (Ref 2 inspired)
+   • Translucent floating holographic glass HUD cards (Ref 4 inspired)
+   • Editorial Dark Architecture specs & highlights (Ref 3 inspired)
+   • Arched window preview canvases & destination badges (Ref 1 inspired)
    ════════════════════════════════════════════════════════════════ */
 export default function Projects() {
-  const [activeId, setActiveId] = useState(projects[0].id)
   const [activeFilter, setActiveFilter] = useState('All')
+  const [currentIndex, setCurrentIndex] = useState(0)
   const [activeTab, setActiveTab] = useState('specs') // 'specs' | 'architecture'
+  const touchStartX = useRef(null)
+  const deckRef = useRef(null)
 
+  // Dynamic categories with project counts
   const categories = useMemo(() => {
     const counts = { All: projects.length }
     projects.forEach((p) => { counts[p.category] = (counts[p.category] || 0) + 1 })
     return ['All', ...Object.keys(counts).filter((c) => c !== 'All')].map((c) => ({ name: c, count: counts[c] }))
   }, [])
 
+  // Filtered project list
   const filtered = useMemo(() =>
     activeFilter === 'All' ? projects : projects.filter((p) => p.category === activeFilter),
     [activeFilter]
   )
 
-  // Ensure active project exists in filtered list
-  const activeProject = useMemo(() => {
-    return filtered.find((p) => p.id === activeId) || filtered[0] || projects[0]
-  }, [filtered, activeId])
-
+  // Clamped safe active index
+  const safeIndex = Math.min(currentIndex, Math.max(0, filtered.length - 1))
+  const activeProject = filtered[safeIndex] || filtered[0] || projects[0]
   const meta = PROJECT_META[activeProject.id] || PROJECT_META['glovix-anand']
-  const activeIndex = projects.findIndex((p) => p.id === activeProject.id)
 
-  const handleSelectProject = useCallback((id) => {
-    setActiveId(id)
-  }, [])
+  // Handle category switch
+  const handleFilterChange = (categoryName) => {
+    setActiveFilter(categoryName)
+    setCurrentIndex(0)
+  }
+
+  // Navigation handlers
+  const handlePrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : filtered.length - 1))
+  }, [filtered.length])
+
+  const handleNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev < filtered.length - 1 ? prev + 1 : 0))
+  }, [filtered.length])
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') handlePrev()
+      if (e.key === 'ArrowRight') handleNext()
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [handlePrev, handleNext])
+
+  // Touch Swipe Handlers for mobile & tablet
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return
+    const touchEndX = e.changedTouches[0].clientX
+    const diff = touchStartX.current - touchEndX
+    if (Math.abs(diff) > 45) {
+      if (diff > 0) handleNext()
+      else handlePrev()
+    }
+    touchStartX.current = null
+  }
 
   return (
     <section className="section projects-section" id="projects" aria-labelledby="projects-heading">
-      {/* Ambient background glows */}
-      <div className="projects__bg-orb projects__bg-orb--1" aria-hidden="true" />
-      <div className="projects__bg-orb projects__bg-orb--2" aria-hidden="true" />
+      {/* Dynamic Ambient Background Glows */}
+      <div
+        className="projects__ambient-glow projects__ambient-glow--primary"
+        style={{ background: `radial-gradient(circle, ${meta.themeColor}26 0%, transparent 68%)` }}
+        aria-hidden="true"
+      />
+      <div className="projects__ambient-glow projects__ambient-glow--secondary" aria-hidden="true" />
       <div className="projects__bg-grid" aria-hidden="true" />
 
       <div className="container">
 
-        {/* ── SECTION HEADER (EDITORIAL LUXURY AESTHETIC) ── */}
+        {/* ── SECTION HEADER ── */}
         <header className="section-header">
-          <span className="section-label">Engineered Systems &amp; Software</span>
+          <div className="projects__header-badge">
+            <span className="badge-spark">✦</span>
+            <span>PRODUCTION SYSTEMS &amp; ARCHITECTURES</span>
+            <span className="badge-spark">✦</span>
+          </div>
           <h2 className="section-title" id="projects-heading">Featured Projects</h2>
           <p className="section-subtitle">
-            Explore live production web applications, enterprise ACID databases, and full-stack software built for speed, security, and measurable client results.
+            Explore live production web applications, enterprise ACID databases, and full-stack software engineered for sub-second responses, bulletproof security, and measurable client results.
           </p>
         </header>
 
-        {/* ── CATEGORY FILTER PILLS ── */}
+        {/* ── CATEGORY FILTER PILL RAIL (Ref 2 Inspired) ── */}
         <div className="projects__filters-wrap">
           <div className="projects__filters" role="tablist" aria-label="Filter projects by category">
             {categories.map(({ name, count }) => (
@@ -266,11 +365,7 @@ export default function Projects() {
                 role="tab"
                 aria-selected={activeFilter === name}
                 className={`pf-tab ${activeFilter === name ? 'pf-tab--active' : ''}`}
-                onClick={() => {
-                  setActiveFilter(name)
-                  const match = name === 'All' ? projects[0] : projects.find((p) => p.category === name)
-                  if (match) setActiveId(match.id)
-                }}
+                onClick={() => handleFilterChange(name)}
               >
                 <span className="pf-tab__label">{name}</span>
                 <span className="pf-tab__pill font-mono">{count}</span>
@@ -280,240 +375,341 @@ export default function Projects() {
         </div>
 
         {/* ══════════════════════════════════════════════════════════
-            FEATURED PROJECT COCKPIT STAGE
-            Asymmetric Split Layout with Tripzia-Style Arch Portal Window
-            and Bhutan-Style Frosted Glass Telemetry Console
+            SPATIAL 3D COVERFLOW STAGE (Ref 2 & Ref 4 Inspired)
+            Features true 3D perspective depth, active focused card,
+            and interactive flanking preview cards.
             ══════════════════════════════════════════════════════════ */}
-        <div className="cockpit-stage" key={activeProject.id}>
+        <div
+          className="spatial-deck"
+          ref={deckRef}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div className="spatial-deck__viewport">
+            {filtered.map((proj, pIdx) => {
+              const pMeta = PROJECT_META[proj.id] || PROJECT_META['glovix-anand']
+              const offset = pIdx - safeIndex
+              const isCenter = offset === 0
+              const isLeft = offset === -1 || (safeIndex === 0 && offset === filtered.length - 1)
+              const isRight = offset === 1 || (safeIndex === filtered.length - 1 && offset === -(filtered.length - 1))
 
-          {/* ── LEFT: TRIPZIA-INSPIRED ARCH PORTAL WINDOW ── */}
-          <div className="cockpit__arch-column">
-            <div className="arch-portal">
-              {/* Outer Glowing Perimeter Border */}
-              <div className="arch-portal__border-glow" style={{ background: meta.accentGrad }} aria-hidden="true" />
+              // Compute spatial position class
+              let cardClass = 'spatial-card--hidden'
+              if (isCenter) cardClass = 'spatial-card--center'
+              else if (isLeft) cardClass = 'spatial-card--left'
+              else if (isRight) cardClass = 'spatial-card--right'
 
-              {/* Arched Window Top Crown */}
-              <div className="arch-portal__window">
-                {/* Browser Mockup Chrome */}
-                <div className="arch-portal__chrome">
-                  <div className="arch-portal__dots" aria-hidden="true">
-                    <span className="arch-portal__dot arch-portal__dot--red" />
-                    <span className="arch-portal__dot arch-portal__dot--yellow" />
-                    <span className="arch-portal__dot arch-portal__dot--green" />
-                  </div>
-                  <div className="arch-portal__url font-mono">
-                    <span className="arch-portal__lock">🔒</span>
-                    <span>{meta.displayUrl}</span>
-                  </div>
-                  <span className={`arch-portal__status-pill ${activeProject.status === 'Active' ? 'arch-portal__status-pill--live' : ''}`}>
-                    {activeProject.status === 'Active' ? '● LIVE' : '✓ PRODUCTION'}
-                  </span>
-                </div>
+              return (
+                <article
+                  key={proj.id}
+                  className={`spatial-card ${cardClass}`}
+                  onClick={() => {
+                    if (isLeft || isRight) setCurrentIndex(pIdx)
+                  }}
+                  style={{
+                    '--card-theme': pMeta.themeColor,
+                    '--card-grad': pMeta.accentGrad,
+                  }}
+                  aria-hidden={!isCenter}
+                >
+                  {/* Glowing Perimeter Shield */}
+                  <div className="spatial-card__border-glow" aria-hidden="true" />
 
-                {/* Simulated UI Screen Canvas */}
-                <div className="arch-portal__canvas">
-                  <div className="arch-canvas__glow" style={{ background: meta.accentGrad }} aria-hidden="true" />
-
-                  {/* UI Canvas Header */}
-                  <div className="arch-canvas__header">
-                    <div>
-                      <span className="arch-canvas__category font-mono" style={{ color: meta.themeColor }}>
-                        {activeProject.category}
-                      </span>
-                      <h3 className="arch-canvas__title">{activeProject.title}</h3>
+                  {/* Top Window System Chrome */}
+                  <div className="spatial-card__chrome">
+                    <div className="spatial-chrome__dots" aria-hidden="true">
+                      <span className="spatial-chrome__dot spatial-chrome__dot--red" />
+                      <span className="spatial-chrome__dot spatial-chrome__dot--yellow" />
+                      <span className="spatial-chrome__dot spatial-chrome__dot--green" />
                     </div>
-                    <span className="arch-canvas__year font-mono">{activeProject.year}</span>
-                  </div>
-
-                  {/* Simulated Interface Pill Rail (Inspired by Tripzia & Visual Diary) */}
-                  <div className="arch-canvas__pills-rail">
-                    {meta.destinations.map((dest, dIdx) => (
-                      <span key={dIdx} className="arch-canvas__dest-pill">
-                        {dest}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Dynamic Simulation Card */}
-                  <div className="arch-canvas__sim-card">
-                    <div className="arch-canvas__sim-header">
-                      <span className="arch-canvas__sim-badge font-mono" style={{ background: `${meta.themeColor}22`, color: meta.themeColor }}>
-                        {meta.previewUI.badge}
-                      </span>
-                      <span className="arch-canvas__sim-sub font-mono">{meta.previewUI.sub}</span>
+                    <div className="spatial-chrome__url font-mono">
+                      <span className="spatial-chrome__lock">🔒</span>
+                      <span>{pMeta.displayUrl}</span>
                     </div>
-
-                    <p className="arch-canvas__sim-text">
-                      {activeProject.shortDescription}
-                    </p>
-
-                    <div className="arch-canvas__sim-metrics font-mono">
-                      <div className="arch-sim-metric">
-                        <span className="arch-sim-metric__val" style={{ color: meta.themeColor }}>
-                          {meta.statHighlight}
-                        </span>
-                        <span className="arch-sim-metric__lbl">VERIFIED PERFORMANCE</span>
-                      </div>
-                      <div className="arch-sim-metric">
-                        <span className="arch-sim-metric__val">100% ACID</span>
-                        <span className="arch-sim-metric__lbl">TRANSACTION INTEGRITY</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Arched Bottom Decorative Frame Line */}
-                  <div className="arch-canvas__bottom-bar">
-                    <span className="arch-canvas__system-tag font-mono">
-                      ENGINEERED BY KAVYA MODI · PATTERN LLC
+                    <span className={`spatial-chrome__status ${proj.status === 'Active' ? 'spatial-chrome__status--live' : ''}`}>
+                      {proj.status === 'Active' ? '● LIVE' : 'PROD'}
                     </span>
-                    <span className="arch-canvas__spark">✦</span>
                   </div>
-                </div>
-              </div>
 
-              {/* Floating Hologram Chip Badge (Inspired by Spatial Reference 4) */}
-              <div className="arch-portal__floating-chip">
-                <div className="arch-chip__pulse" style={{ background: meta.themeColor }} />
-                <div className="arch-chip__content">
-                  <span className="arch-chip__metric font-mono">{meta.metric}</span>
-                  <span className="arch-chip__sub font-mono">{meta.metricSub}</span>
-                </div>
-              </div>
-            </div>
+                  {/* Arched Visual Canvas (Ref 1 & Ref 4 Inspired) */}
+                  <div className="spatial-card__canvas">
+                    <div className="spatial-canvas__glow-orb" aria-hidden="true" />
+
+                    {/* Canvas Header */}
+                    <div className="spatial-canvas__header">
+                      <div>
+                        <span className="spatial-canvas__cat font-mono" style={{ color: pMeta.themeColor }}>
+                          {proj.category}
+                        </span>
+                        <h3 className="spatial-canvas__title">{proj.title}</h3>
+                      </div>
+                      <span className="spatial-canvas__year font-mono">{proj.year}</span>
+                    </div>
+
+                    {/* Destination / Capability Tags Rail */}
+                    <div className="spatial-canvas__tags-rail">
+                      {pMeta.destinations.map((tag, tIdx) => (
+                        <span key={tIdx} className="spatial-tag-pill">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Dynamic Simulated App Screen Canvas */}
+                    <div className="spatial-sim-screen">
+                      <div className="spatial-sim__top">
+                        <span className="spatial-sim__badge font-mono" style={{ background: `${pMeta.themeColor}20`, color: pMeta.themeColor }}>
+                          {pMeta.previewUI.badge}
+                        </span>
+                        <span className="spatial-sim__sub font-mono">{pMeta.previewUI.sub}</span>
+                      </div>
+
+                      <p className="spatial-sim__desc">{proj.shortDescription}</p>
+
+                      <div className="spatial-sim__metrics-row font-mono">
+                        <div className="spatial-sim-stat">
+                          <span className="spatial-sim-stat__val" style={{ color: pMeta.themeColor }}>
+                            {pMeta.previewUI.metricVal}
+                          </span>
+                          <span className="spatial-sim-stat__lbl">{pMeta.previewUI.metricLbl}</span>
+                        </div>
+                        <div className="spatial-sim-stat">
+                          <span className="spatial-sim-stat__val">
+                            {pMeta.previewUI.secVal}
+                          </span>
+                          <span className="spatial-sim-stat__lbl">{pMeta.previewUI.secLbl}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom System Watermark Bar */}
+                    <div className="spatial-canvas__footer">
+                      <span className="spatial-canvas__tagline font-mono">
+                        ENGINEERED BY KAVYA MODI · PATTERN LLC
+                      </span>
+                      <span className="spatial-canvas__spark">✦</span>
+                    </div>
+                  </div>
+
+                  {/* Floating 3D Holographic Chip (Ref 4 Inspired) */}
+                  <div className="spatial-card__hologram-chip">
+                    <div className="hologram-chip__pulse" style={{ background: pMeta.themeColor }} />
+                    <div className="hologram-chip__info">
+                      <span className="hologram-chip__metric font-mono">{pMeta.metric}</span>
+                      <span className="hologram-chip__sub font-mono">{pMeta.metricSub}</span>
+                    </div>
+                  </div>
+
+                  {/* Flanking card hint overlay */}
+                  {!isCenter && (
+                    <div className="spatial-card__hint-overlay">
+                      <span>Click to Focus</span>
+                    </div>
+                  )}
+                </article>
+              )
+            })}
           </div>
 
-          {/* ── RIGHT: BHUTAN-INSPIRED FROSTED GLASS TELEMETRY CONSOLE ── */}
-          <div className="cockpit__telemetry-column">
-            <div className="telemetry-panel">
-              {/* Index & Category Header */}
-              <div className="telemetry__header">
-                <span className="telemetry__index font-mono">
-                  PROJECT {String(activeIndex + 1).padStart(2, '0')} // 07
-                </span>
-                <span className="telemetry__cat-badge font-mono" style={{ color: meta.themeColor, borderColor: `${meta.themeColor}44`, background: `${meta.themeColor}14` }}>
-                  {activeProject.category}
-                </span>
+          {/* ── SLEEK CAROUSEL CONTROLS (Ref 2 Inspired) ── */}
+          <div className="spatial-deck__controls">
+            <button
+              type="button"
+              className="spatial-nav-btn spatial-nav-btn--prev"
+              onClick={handlePrev}
+              aria-label="Previous project"
+              title="Previous project (←)"
+            >
+              <IconChevronLeft />
+            </button>
+
+            {/* Step Counter & Progress Indicator */}
+            <div className="spatial-deck__pagination font-mono">
+              <span className="spatial-pagination__curr">
+                {String(safeIndex + 1).padStart(2, '0')}
+              </span>
+              <div className="spatial-pagination__track">
+                <div
+                  className="spatial-pagination__fill"
+                  style={{
+                    width: `${((safeIndex + 1) / filtered.length) * 100}%`,
+                    background: meta.themeColor,
+                    boxShadow: `0 0 12px ${meta.themeColor}`,
+                  }}
+                />
               </div>
-
-              {/* Monumental Title */}
-              <h3 className="telemetry__title">{activeProject.title}</h3>
-
-              {/* Comprehensive Description */}
-              <p className="telemetry__desc">{activeProject.description}</p>
-
-              {/* Interactive Tab Switcher for Specs */}
-              <div className="telemetry__tabs" role="tablist">
-                <button
-                  type="button"
-                  className={`telemetry__tab-btn ${activeTab === 'specs' ? 'telemetry__tab-btn--active' : ''}`}
-                  onClick={() => setActiveTab('specs')}
-                >
-                  <span>◆ Verified Capabilities</span>
-                </button>
-                <button
-                  type="button"
-                  className={`telemetry__tab-btn ${activeTab === 'architecture' ? 'telemetry__tab-btn--active' : ''}`}
-                  onClick={() => setActiveTab('architecture')}
-                >
-                  <span>◈ Architectural Highlights</span>
-                </button>
-              </div>
-
-              {/* Bhutan-Style Frosted Glass Specs Box */}
-              {activeTab === 'specs' && (
-                <div className="telemetry__specs-box animate-fade-in">
-                  <div className="telemetry__specs-metric-bar">
-                    <span className="telemetry__metric-val font-mono">{meta.metric}</span>
-                    <span className="telemetry__metric-sub font-mono">{meta.metricSub}</span>
-                  </div>
-
-                  <ul className="telemetry__specs-list">
-                    {meta.bulletSpecs.map((spec, sIdx) => (
-                      <li key={sIdx} className="telemetry__spec-item">
-                        <span className="telemetry__spec-icon" style={{ color: meta.themeColor }}>
-                          <IconCheck />
-                        </span>
-                        <span>{spec}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {activeTab === 'architecture' && (
-                <div className="telemetry__specs-box animate-fade-in">
-                  <div className="telemetry__specs-metric-bar">
-                    <span className="telemetry__metric-val font-mono">Clean Architecture</span>
-                    <span className="telemetry__metric-sub font-mono">SEPARATION OF CONCERNS</span>
-                  </div>
-
-                  <ul className="telemetry__specs-list">
-                    {activeProject.highlights.map((h, hIdx) => (
-                      <li key={hIdx} className="telemetry__spec-item">
-                        <span className="telemetry__spec-icon" style={{ color: meta.themeColor }}>
-                          <IconCheck />
-                        </span>
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Spec Icons Line (Bhutan Horizontal Badges Reference) */}
-              <div className="telemetry__icons-line">
-                {meta.specIcons.map((ic, iIdx) => (
-                  <span key={iIdx} className="telemetry__icon-chip font-mono">{ic}</span>
-                ))}
-              </div>
-
-              {/* Tech Stack Pills */}
-              <div className="telemetry__tech-row" role="list" aria-label="Technologies used">
-                {activeProject.tech.map((t) => (
-                  <span key={t} className="telemetry__tech-pill font-mono" role="listitem">{t}</span>
-                ))}
-              </div>
-
-              {/* Action Buttons — Premium Magnetic CTAs */}
-              <div className="telemetry__actions">
-                {activeProject.live && (
-                  <a
-                    href={activeProject.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="telemetry__btn telemetry__btn--primary"
-                    aria-label={`Open live demo for ${activeProject.title}`}
-                  >
-                    <span>Launch Live</span>
-                    <span className="btn-icon-wrap" aria-hidden="true">
-                      <IconArrow />
-                    </span>
-                  </a>
-                )}
-
-                {activeProject.github && (
-                  <a
-                    href={activeProject.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="telemetry__btn telemetry__btn--gh"
-                    aria-label={`View GitHub repository for ${activeProject.title}`}
-                  >
-                    <span className="gh-icon-ring" aria-hidden="true">
-                      <IconGithub />
-                    </span>
-                    <span>Source Code</span>
-                  </a>
-                )}
-              </div>
+              <span className="spatial-pagination__total">
+                {String(filtered.length).padStart(2, '0')}
+              </span>
             </div>
+
+            <button
+              type="button"
+              className="spatial-nav-btn spatial-nav-btn--next"
+              onClick={handleNext}
+              aria-label="Next project"
+              title="Next project (→)"
+            >
+              <IconChevronRight />
+            </button>
           </div>
 
+          {/* Interactive Pagination Step Dots */}
+          <div className="spatial-deck__dots" role="tablist" aria-label="Project slide dots">
+            {filtered.map((p, dIdx) => (
+              <button
+                key={p.id}
+                type="button"
+                role="tab"
+                aria-selected={dIdx === safeIndex}
+                className={`spatial-dot ${dIdx === safeIndex ? 'spatial-dot--active' : ''}`}
+                onClick={() => setCurrentIndex(dIdx)}
+                title={p.title}
+                style={dIdx === safeIndex ? { background: meta.themeColor, boxShadow: `0 0 8px ${meta.themeColor}` } : undefined}
+              />
+            ))}
+          </div>
         </div>
 
         {/* ══════════════════════════════════════════════════════════
-            INTERACTIVE PROJECT SELECTOR RAIL
-            Click any project to seamlessly switch the Cockpit Stage
+            SYNCHRONIZED TELEMETRY & ARCHITECTURE CONSOLE (Ref 3 Inspired)
+            Directly synced with the active project in the 3D deck.
+            ══════════════════════════════════════════════════════════ */}
+        <div className="telemetry-console" key={activeProject.id}>
+          {/* Header Bar */}
+          <div className="telemetry__header">
+            <div className="telemetry__index-wrap">
+              <span className="telemetry__index font-mono">
+                CASE STUDY {String(safeIndex + 1).padStart(2, '0')} // {String(filtered.length).padStart(2, '0')}
+              </span>
+              <span
+                className="telemetry__cat-badge font-mono"
+                style={{ color: meta.themeColor, borderColor: `${meta.themeColor}44`, background: `${meta.themeColor}14` }}
+              >
+                {activeProject.category}
+              </span>
+            </div>
+
+            <span className="telemetry__verified-tag font-mono">
+              VERIFIED ARCHITECTURE ✦
+            </span>
+          </div>
+
+          {/* Title & Description */}
+          <h3 className="telemetry__title">{activeProject.title}</h3>
+          <p className="telemetry__desc">{activeProject.description}</p>
+
+          {/* Interactive Specs / Architecture Tabs */}
+          <div className="telemetry__tabs" role="tablist">
+            <button
+              type="button"
+              className={`telemetry__tab-btn ${activeTab === 'specs' ? 'telemetry__tab-btn--active' : ''}`}
+              onClick={() => setActiveTab('specs')}
+            >
+              <span>◈ Verified Capabilities</span>
+            </button>
+            <button
+              type="button"
+              className={`telemetry__tab-btn ${activeTab === 'architecture' ? 'telemetry__tab-btn--active' : ''}`}
+              onClick={() => setActiveTab('architecture')}
+            >
+              <span>◆ System Highlights</span>
+            </button>
+          </div>
+
+          {/* Tab Content 1: Capabilities */}
+          {activeTab === 'specs' && (
+            <div className="telemetry__specs-box animate-fade-in">
+              <div className="telemetry__specs-metric-bar">
+                <span className="telemetry__metric-val font-mono">{meta.metric}</span>
+                <span className="telemetry__metric-sub font-mono">{meta.metricSub}</span>
+              </div>
+
+              <ul className="telemetry__specs-list">
+                {meta.bulletSpecs.map((spec, sIdx) => (
+                  <li key={sIdx} className="telemetry__spec-item">
+                    <span className="telemetry__spec-icon" style={{ color: meta.themeColor }}>
+                      <IconCheck />
+                    </span>
+                    <span>{spec}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Tab Content 2: Architecture Highlights */}
+          {activeTab === 'architecture' && (
+            <div className="telemetry__specs-box animate-fade-in">
+              <div className="telemetry__specs-metric-bar">
+                <span className="telemetry__metric-val font-mono">Clean Architecture</span>
+                <span className="telemetry__metric-sub font-mono">SEPARATION OF CONCERNS</span>
+              </div>
+
+              <ul className="telemetry__specs-list">
+                {activeProject.highlights.map((h, hIdx) => (
+                  <li key={hIdx} className="telemetry__spec-item">
+                    <span className="telemetry__spec-icon" style={{ color: meta.themeColor }}>
+                      <IconCheck />
+                    </span>
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Spec Icons Line (Ref 3 Horizontal Badges Reference) */}
+          <div className="telemetry__icons-line">
+            {meta.specIcons.map((ic, iIdx) => (
+              <span key={iIdx} className="telemetry__icon-chip font-mono">{ic}</span>
+            ))}
+          </div>
+
+          {/* Tech Stack Pills */}
+          <div className="telemetry__tech-row" role="list" aria-label="Technologies used">
+            {activeProject.tech.map((t) => (
+              <span key={t} className="telemetry__tech-pill font-mono" role="listitem">{t}</span>
+            ))}
+          </div>
+
+          {/* Action CTAs */}
+          <div className="telemetry__actions">
+            {activeProject.live && (
+              <a
+                href={activeProject.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="telemetry__btn telemetry__btn--primary"
+                style={{ '--btn-theme': meta.themeColor }}
+                aria-label={`Open live demo for ${activeProject.title}`}
+              >
+                <span>Launch Live System</span>
+                <span className="btn-icon-wrap" aria-hidden="true">
+                  <IconArrow />
+                </span>
+              </a>
+            )}
+
+            {activeProject.github && (
+              <a
+                href={activeProject.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="telemetry__btn telemetry__btn--gh"
+                aria-label={`View GitHub repository for ${activeProject.title}`}
+              >
+                <span className="gh-icon-ring" aria-hidden="true">
+                  <IconGithub />
+                </span>
+                <span>Source Code</span>
+              </a>
+            )}
+          </div>
+        </div>
+
+        {/* ══════════════════════════════════════════════════════════
+            QUICK-SWITCH THUMBNAIL RAIL
             ══════════════════════════════════════════════════════════ */}
         <div className="project-rail" role="region" aria-label="Quick project switcher">
           <div className="project-rail__header">
@@ -523,7 +719,7 @@ export default function Projects() {
 
           <div className="project-rail__grid">
             {filtered.map((proj, pIdx) => {
-              const isSelected = proj.id === activeProject.id
+              const isSelected = pIdx === safeIndex
               const pMeta = PROJECT_META[proj.id] || PROJECT_META['glovix-anand']
 
               return (
@@ -531,7 +727,7 @@ export default function Projects() {
                   key={proj.id}
                   type="button"
                   className={`project-rail__card ${isSelected ? 'project-rail__card--active' : ''}`}
-                  onClick={() => handleSelectProject(proj.id)}
+                  onClick={() => setCurrentIndex(pIdx)}
                   aria-pressed={isSelected}
                   style={{ '--card-accent': pMeta.themeColor }}
                 >

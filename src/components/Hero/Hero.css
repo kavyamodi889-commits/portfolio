@@ -410,6 +410,17 @@
   flex-wrap: wrap;
 }
 
+.hero__actions-sub-row {
+  display: contents;
+}
+
+.hero__status-header,
+.hero__status-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .hero__btn-primary {
   display: inline-flex;
   align-items: center;
@@ -751,6 +762,7 @@
 
 /* ════════════════════════════════════════════════════════════════
    RESPONSIVENESS (TABLET & MOBILE)
+   Polished UX: Clear hierarchy, centered portrait, no overflow
    ════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 1120px) {
@@ -780,36 +792,63 @@
 @media (max-width: 860px) {
   .hero {
     padding-top: calc(var(--nav-height, 76px) + 8px);
+    overflow-x: hidden;
   }
 
   .hero__top-bar {
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     font-size: 9.5px;
-    padding: 4px 18px 14px;
+    letter-spacing: 0.08em;
+    padding: 6px 16px 12px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    gap: 10px;
+  }
+
+  .hero__top-brand {
+    gap: 8px;
+  }
+
+  .hero__top-status {
+    gap: 6px;
   }
 
   .hero__watermark {
-    top: clamp(120px, 14vh, 145px);
+    top: clamp(100px, 12vh, 130px);
+    opacity: 0.12;
   }
 
   .hero__watermark span {
-    font-size: clamp(3.6rem, 16.5vw, 6.5rem);
+    font-size: clamp(3.2rem, 15vw, 5.5rem);
   }
 
   .hero__stage {
-    grid-template-columns: 1fr;
-    padding: 10px 18px 24px;
-    gap: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 18px 28px;
+    gap: 20px;
+    max-width: 580px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
   }
 
+  /* Flatten col-left to allow natural responsive storytelling */
   .hero__col-left {
+    display: contents;
+  }
+
+  .hero__intro-block {
+    order: 1;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     text-align: center;
-    padding-top: 0;
+    width: 100%;
   }
 
   .hero__greeting-wrap {
@@ -818,50 +857,167 @@
 
   .hero__role-badge {
     text-align: center;
+    margin-bottom: 12px;
+  }
+
+  /* Center Portrait placed immediately after Title for strong visual identity */
+  .hero__col-center {
+    order: 2;
+    margin: 4px 0 10px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .hero__portrait-wrapper {
+    max-width: 250px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero__portrait-frame {
+    border-radius: 20px;
+  }
+
+  .hero__floating-card {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: calc(100% - 24px);
+    max-width: 210px;
+    padding: 7px 12px;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 12px;
+  }
+
+  .hero__floating-text {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  /* Bio & Worldwide badge */
+  .hero__bio-block {
+    order: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
   }
 
   .hero__bio {
     text-align: center;
+    font-size: 13.5px;
+    line-height: 1.6;
+    max-width: 440px;
+    margin: 0 0 14px;
   }
 
+  .hero__worldwide-pill {
+    margin-bottom: 14px;
+    font-size: 9.5px;
+    padding: 5px 12px;
+  }
+
+  /* Live Telemetry Capsule formatted as mobile-friendly HUD card */
   .hero__announcement {
+    order: 4;
     max-width: 100%;
+    width: 100%;
+    margin-bottom: 16px;
   }
 
+  .hero__status-capsule {
+    border-radius: 16px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    background: rgba(14, 18, 28, 0.9);
+  }
+
+  .hero__status-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .hero__status-slider {
+    font-size: 12px;
+    padding: 2px 0;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .hero__status-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 6px;
+  }
+
+  /* Clean mobile buttons */
   .hero__actions {
+    order: 5;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .hero__btn-primary {
+    width: 100%;
     justify-content: center;
+    padding: 14px 22px;
+    font-size: 13.5px;
+    box-sizing: border-box;
   }
 
-  .hero__col-center {
-    order: -1; /* Portrait shows right below top bar on mobile */
-    margin: 8px 0;
+  .hero__actions-sub-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
   }
 
-  .hero__portrait-wrapper {
-    max-width: 290px;
+  .hero__btn-secondary {
+    flex: 1;
+    justify-content: center;
+    padding: 12px 14px;
+    font-size: 13px;
+    box-sizing: border-box;
   }
 
-  .hero__floating-card {
-    bottom: 10%;
-    right: -12px;
-    max-width: 165px;
-    padding: 8px 12px;
+  .hero__cv-btn {
+    width: auto;
+    min-width: 78px;
+    padding: 12px 16px;
+    justify-content: center;
+    box-sizing: border-box;
   }
 
-  .hero__floating-text {
-    font-size: 10.5px;
-  }
-
+  /* Metrics Stack: 2x2 grid */
   .hero__col-right {
+    order: 6;
     grid-column: span 1;
-    margin-top: 10px;
+    margin-top: 6px;
     padding-left: 0;
+    width: 100%;
   }
 
   .hero__metrics-stack {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
+    width: 100%;
   }
 
   .hero__metric-card {
@@ -872,43 +1028,67 @@
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 14px;
-    padding: 14px 10px;
+    padding: 12px 8px;
   }
 
   .hero__metric-num {
     min-width: unset;
-    font-size: 34px;
+    font-size: 28px;
+  }
+
+  .hero__metric-title {
+    font-size: 9.5px;
+  }
+
+  .hero__metric-desc {
+    font-size: 8px;
   }
 }
 
 @media (max-width: 520px) {
   .hero__top-bar {
     font-size: 8.5px;
-    letter-spacing: 0.06em;
-    padding: 4px 12px 10px;
+    letter-spacing: 0.04em;
+    padding: 6px 10px 10px;
+  }
+
+  .hero__top-text {
+    max-width: 145px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .hero__top-status-text {
+    max-width: 145px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .hero__name {
-    font-size: clamp(48px, 14vw, 68px);
+    font-size: clamp(46px, 13.5vw, 64px);
   }
 
   .hero__greeting {
-    font-size: 30px;
+    font-size: 28px;
   }
 
-  .hero__actions {
-    flex-direction: column;
-    width: 100%;
+  .hero__portrait-wrapper {
+    max-width: 220px;
   }
 
-  .hero__btn-primary,
-  .hero__btn-secondary,
-  .hero__cv-btn {
-    width: 100%;
-    justify-content: center;
+  .hero__floating-card {
+    max-width: 195px;
+    padding: 6px 10px;
   }
 
   .hero__metrics-stack {
     grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .hero__metric-num {
+    font-size: 24px;
   }
 }
