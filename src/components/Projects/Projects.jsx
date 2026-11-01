@@ -1,110 +1,166 @@
-import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { projects } from '../../data/portfolioData'
 import './Projects.css'
 
-/* ── Rich Metadata Map for Reference Design (Bhutan Specs & Metrics) ── */
+/* ── Rich Metadata & Live Interactive UI Simulation Data (Tripzia & Bhutan Inspired) ── */
 const PROJECT_META = {
   'glovix-anand': {
     metric: 'Sub-Second CDN',
     metricSub: 'GLOBAL EDUCATION PORTAL',
     themeColor: '#ff5722',
-    accentGrad: 'linear-gradient(135deg, #ff5722, #ea580c)',
+    accentGrad: 'linear-gradient(135deg, #ff5722 0%, #ea580c 100%)',
     displayUrl: 'glovix.netlify.app',
-    specIcons: ['🌐 Global CDN', '⚡ Sub-80ms', '📱 Responsive', '🎓 University DB', '🔒 SSL Secured'],
+    destinations: ['🇺🇸 USA', '🇬🇧 UK', '🇨🇦 Canada', '🇦🇺 Australia', '🇪🇺 Europe'],
+    statHighlight: '500+ Students Guided',
+    specIcons: ['🌐 Global CDN', '⚡ Sub-80ms TTI', '📱 Responsive', '🎓 University DB', '🔒 SSL Secured'],
     bulletSpecs: [
-      'Interactive Country & University Discovery Catalog',
-      'High-Conversion Visa & IELTS Student Intake Funnel',
-      'Continuous Production Deployment on Netlify',
-      'Fluid Component Architecture with Sub-Second TTI',
+      'Interactive Country & University Program Discovery Engine',
+      'High-Conversion Visa Counselling & IELTS Coaching Lead Intake',
+      'Automated Continuous Deployment Pipeline on Netlify Edge',
+      'Ultra-Lightweight Component Tree with Zero Layout Shift',
     ],
+    previewUI: {
+      type: 'education',
+      badge: 'TOP DESTINATIONS',
+      sub: 'IELTS & VISA INTAKE ENGINE',
+      accent: '#ff5722',
+    },
   },
   'anugrah-accounting': {
     metric: '100% Uptime',
     metricSub: 'CHARTERED ADVISORY PORTAL',
     themeColor: '#06b6d4',
-    accentGrad: 'linear-gradient(135deg, #06b6d4, #0284c7)',
+    accentGrad: 'linear-gradient(135deg, #06b6d4 0%, #0284c7 100%)',
     displayUrl: 'anugrah.gt.tc',
-    specIcons: ['📊 FinTech', '🐘 PHP Core', '🗄️ MySQL DB', '🛡️ Form Sanitize', '📑 Inquiry System'],
+    destinations: ['📊 Tax Advisory', '💼 Corporate Audit', '📑 GST Filing', '🛡️ Compliance'],
+    statHighlight: 'Sub-85ms Validation',
+    specIcons: ['📊 FinTech', '🐘 PHP Core', '🗄️ MySQL ACID', '🛡️ Form Sanitize', '📑 Inquiry System'],
     bulletSpecs: [
-      'Official Client Website for Chartered Accounting Firm',
-      'Dynamic PHP Consultation Scheduling & Inquiry Engine',
-      'Server-Side Validation with Zero-Data-Loss Protection',
-      'Production Deployment with Sub-100ms Page Responses',
+      'Official Client Web Platform Engineered for Chartered Accounting Firm',
+      'Dynamic PHP Consultation Scheduling & Inquiry Routing Engine',
+      'Server-Side Validation with Zero-Data-Loss Transactional Protection',
+      'Production Live Deployment in Bharuch with Sub-100ms Page Responses',
     ],
+    previewUI: {
+      type: 'accounting',
+      badge: 'ADVISORY PLATFORM',
+      sub: 'DYNAMIC CONSULTATION SYSTEM',
+      accent: '#06b6d4',
+    },
   },
   'rangila-resto': {
     metric: 'Instant Booking',
     metricSub: 'DINING & HOSPITALITY UX',
     themeColor: '#f59e0b',
-    accentGrad: 'linear-gradient(135deg, #f59e0b, #d97706)',
+    accentGrad: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
     displayUrl: 'rangila-resto.vercel.app',
+    destinations: ['🍽️ Gourmet Menu', '🍷 Pairings', '🌿 Vegan Options', '📅 Table Booking'],
+    statHighlight: 'Sub-60ms Routing',
     specIcons: ['🍽️ Interactive Menu', '📅 Table Booking', '⚡ React 19', '🚀 Vercel Edge', '🎨 Framer UI'],
     bulletSpecs: [
-      'Interactive Cuisine Menu with Dynamic Dietary Filtering',
-      'Real-Time Table Reservation Intake & Schedule Flow',
-      'Atmospheric Gallery with Optimized High-Res Imagery',
-      'Continuous Integration & Deployment on Vercel Edge',
+      'Interactive Cuisine Menu with Dynamic Dietary & Allergen Filtering',
+      'Real-Time Table Reservation Intake Flow with Confirmation Feedback',
+      'Atmospheric Gallery with Optimized High-Resolution Asset Loading',
+      'Continuous Integration & Edge Delivery on Vercel Global Network',
     ],
+    previewUI: {
+      type: 'dining',
+      badge: 'HOSPITALITY UX',
+      sub: 'RESERVATION & MENU SYSTEM',
+      accent: '#f59e0b',
+    },
   },
   'pixel-plus-media': {
     metric: '60 FPS Motion',
     metricSub: 'CREATIVE AGENCY SHOWCASE',
     themeColor: '#a855f7',
-    accentGrad: 'linear-gradient(135deg, #a855f7, #7c3aed)',
+    accentGrad: 'linear-gradient(135deg, #a855f7 0%, #7c3aed 100%)',
     displayUrl: 'pixelplusmedia.vercel.app',
-    specIcons: ['🎬 Motion UI', '✨ Micro-Animations', '⚡ Framer Motion', '📐 Modern Layouts', '📱 100% Responsive'],
+    destinations: ['🎬 Brand Identity', '✨ Motion Graphics', '📐 Visual Strategy', '📱 Digital Media'],
+    statHighlight: '100% Fluid Transitions',
+    specIcons: ['🎬 Motion UI', '✨ Micro-Animations', '⚡ Framer Motion', '📐 Modern Layouts', '📱 Responsive'],
     bulletSpecs: [
-      'Motion-Rich Agency Portfolio with Smooth Entrances',
-      'Client Case Studies with Creative Deliverable Metrics',
-      'High-Performance Image Lazy Loading & Optimized Bundles',
-      'Fluid Micro-Transitions Built for High-Impact Branding',
+      'Motion-Rich Agency Portfolio Featuring Smooth Scroll Interactivity',
+      'Client Case Studies with Creative Deliverable Metrics & Timelines',
+      'High-Performance Image Lazy Loading & Optimized Code-Split Bundles',
+      'Fluid Micro-Transitions Built for High-Impact Visual Storytelling',
     ],
+    previewUI: {
+      type: 'media',
+      badge: 'CREATIVE SHOWCASE',
+      sub: 'MOTION DESIGN SYSTEM',
+      accent: '#a855f7',
+    },
   },
   'bank-locker': {
     metric: 'ACID Secured',
     metricSub: 'ENTERPRISE VAULT SYSTEM',
     themeColor: '#10b981',
-    accentGrad: 'linear-gradient(135deg, #10b981, #059669)',
+    accentGrad: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
     displayUrl: 'enterprise-vault.internal',
+    destinations: ['🔐 RBAC Security', '🏦 Locker Matrix', '📜 Immutable Logs', '👥 Staff Access'],
+    statHighlight: 'Zero-Collision Lockers',
     specIcons: ['🔐 RBAC Security', '🏦 Locker Matrix', '🗄️ SQL ACID', '📜 Audit Trail', '💻 VB.NET Engine'],
     bulletSpecs: [
-      'Role-Based Access Control (RBAC) for Branch Staff & Auditors',
-      'Deterministic Locker Occupancy Matrix & Key Allocation',
-      'Normalized Relational Schema with Immutable Access Logs',
-      '100% ACID Transactional Integrity on All Custody Actions',
+      'Role-Based Access Control (RBAC) Enforcing Strict Staff Tier Permissions',
+      'Deterministic Safety Deposit Locker Occupancy & Key Allocation Matrix',
+      'Normalized Relational Schema with Immutable Access History Audit Logs',
+      '100% ACID Transactional Integrity on Every Custody & Release Operation',
     ],
+    previewUI: {
+      type: 'security',
+      badge: 'ENTERPRISE VAULT',
+      sub: 'ROLE-BASED ACCESS CONTROL',
+      accent: '#10b981',
+    },
   },
   'laundry-management': {
     metric: 'Automated Billing',
     metricSub: 'BUSINESS OPERATIONS ENGINE',
     themeColor: '#38bdf8',
-    accentGrad: 'linear-gradient(135deg, #38bdf8, #0284c7)',
+    accentGrad: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
     displayUrl: 'laundry-ops.internal',
+    destinations: ['🧺 Intake', '⚙️ In-Process', '✨ Ready for Pickup', '🧾 Invoiced'],
+    statHighlight: 'Instant Invoice Print',
     specIcons: ['🧺 Order Intake', '🧾 Thermal Print', '💰 Tax Engine', '🗄️ Local DB', '📊 Sales Reports'],
     bulletSpecs: [
-      'End-to-End Garment Intake, Processing & Handover Lifecycle',
-      'Automated Pricing, Discount & Tax Calculation Engine',
-      'Thermal Printer-Ready Receipt & Invoice Generation',
-      'Reliable Local SQL Record Store with Fast Lookups',
+      'End-to-End Garment Intake, Washing/Ironing, and Handover Lifecycle Tracking',
+      'Automated Pricing Engine with Custom Discounts, Surcharges & Tax Totals',
+      'Thermal Printer-Ready Receipt & Invoice Generation with Barcodes',
+      'Reliable Local SQL Record Store with Fast Multi-Filter Customer Lookups',
     ],
+    previewUI: {
+      type: 'operations',
+      badge: 'OPERATIONS SUITE',
+      sub: 'AUTOMATED INVOICING & INTAKE',
+      accent: '#38bdf8',
+    },
   },
   'streamverse-platform': {
     metric: 'Adaptive Bitrate',
     metricSub: 'FULL-STACK CLOUD PLATFORM',
     themeColor: '#ec4899',
-    accentGrad: 'linear-gradient(135deg, #ec4899, #be185d)',
+    accentGrad: 'linear-gradient(135deg, #ec4899 0%, #be185d 100%)',
     displayUrl: 'github.com/kavyamodi889-commits/youtube',
-    specIcons: ['🎥 Video Stream', '🐍 Python FastAPI', '🍃 MongoDB', '⚛️ React 19', '⚡ REST Microservices'],
+    destinations: ['🎥 4K Playback', '🐍 Python FastAPI', '🍃 MongoDB Atlas', '⚛️ React 19'],
+    statHighlight: 'Sub-40ms Microservices',
+    specIcons: ['🎥 Video Stream', '🐍 Python FastAPI', '🍃 MongoDB', '⚛️ React 19', '⚡ REST APIs'],
     bulletSpecs: [
-      'Adaptive Video Playback with Chunked Buffering',
-      'User Channels, Subscriptions & Nested Comment Threads',
-      'Python FastAPI Recommendation Microservice Integration',
-      'Creator Studio with Video Metadata & Upload Management',
+      'Adaptive Bitrate Streaming with Automatic Dynamic Resolution Scaling',
+      'Creator Studio with Video Metadata, Thumbnails & Channel Management',
+      'Python FastAPI Recommendation Microservice for Personalized Feeds',
+      'Full User Interaction Suite: Channel Subscriptions, Likes & Nested Comments',
     ],
+    previewUI: {
+      type: 'streaming',
+      badge: 'VIDEO ARCHITECTURE',
+      sub: 'FASTAPI + REACT 19 STREAM',
+      accent: '#ec4899',
+    },
   },
 }
 
-/* ── Icons ─────────────────────────────────────────── */
+/* ── SVG Icons ── */
 function IconArrow() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -121,68 +177,21 @@ function IconGithub() {
   )
 }
 
-function IconChevron({ open }) {
+function IconCheck() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform .3s ease' }} aria-hidden="true">
-      <polyline points="6 9 12 15 18 9"/>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="20 6 9 17 4 12" />
     </svg>
   )
 }
 
-/* ── Mouse Spotlight Card ─────────────────────────── */
-function SpotlightCard({ children, className = '', style = {}, ...rest }) {
-  const cardRef = useRef(null)
-  const [pos, setPos] = useState({ x: 0, y: 0, opacity: 0 })
-
-  const handleMouseMove = useCallback((e) => {
-    if (!cardRef.current) return
-    const rect = cardRef.current.getBoundingClientRect()
-    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top, opacity: 1 })
-  }, [])
-
-  const handleMouseLeave = useCallback(() => {
-    setPos((p) => ({ ...p, opacity: 0 }))
-  }, [])
-
-  return (
-    <div
-      ref={cardRef}
-      className={`spotlight-card ${className}`}
-      style={style}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      {...rest}
-    >
-      <div
-        className="spotlight-card__glow"
-        style={{ left: pos.x, top: pos.y, opacity: pos.opacity }}
-        aria-hidden="true"
-      />
-      {children}
-    </div>
-  )
-}
-
-/* ── Category Colors ──────────────────────────────── */
-const CAT_COLORS = {
-  'Web Application': { from: '#ff5722', to: '#ea580c' },
-  'Full-Stack Platform': { from: '#ec4899', to: '#be185d' },
-  'Enterprise System': { from: '#10b981', to: '#059669' },
-  'Business Software': { from: '#06b6d4', to: '#0284c7' },
-}
-function getCatColor(cat) {
-  return CAT_COLORS[cat] || { from: '#ff5722', to: '#ea580c' }
-}
-
-/* ═══════════════════════════════════════════════════
+/* ════════════════════════════════════════════════════════════════
    MAIN PROJECTS COMPONENT
-   ═══════════════════════════════════════════════════ */
+   ════════════════════════════════════════════════════════════════ */
 export default function Projects() {
+  const [activeId, setActiveId] = useState(projects[0].id)
   const [activeFilter, setActiveFilter] = useState('All')
-  const [viewMode, setViewMode] = useState('coverflow') // 'coverflow' | 'grid'
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [expandedId, setExpandedId] = useState(null)
-  const touchStartXRef = useRef(null)
+  const [activeTab, setActiveTab] = useState('specs') // 'specs' | 'architecture'
 
   const categories = useMemo(() => {
     const counts = { All: projects.length }
@@ -195,47 +204,17 @@ export default function Projects() {
     [activeFilter]
   )
 
-  // Ensure active index is within bounds when filter changes
-  useEffect(() => {
-    setActiveIndex(0)
-  }, [activeFilter])
+  // Ensure active project exists in filtered list
+  const activeProject = useMemo(() => {
+    return filtered.find((p) => p.id === activeId) || filtered[0] || projects[0]
+  }, [filtered, activeId])
 
-  // Keyboard navigation for coverflow
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (viewMode !== 'coverflow') return
-      if (e.key === 'ArrowLeft') {
-        setActiveIndex((prev) => (prev > 0 ? prev - 1 : filtered.length - 1))
-      } else if (e.key === 'ArrowRight') {
-        setActiveIndex((prev) => (prev < filtered.length - 1 ? prev + 1 : 0))
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [viewMode, filtered.length])
+  const meta = PROJECT_META[activeProject.id] || PROJECT_META['glovix-anand']
+  const activeIndex = projects.findIndex((p) => p.id === activeProject.id)
 
-  const goNext = () => {
-    setActiveIndex((prev) => (prev < filtered.length - 1 ? prev + 1 : 0))
-  }
-
-  const goPrev = () => {
-    setActiveIndex((prev) => (prev > 0 ? prev - 1 : filtered.length - 1))
-  }
-
-  const handleTouchStart = (e) => {
-    touchStartXRef.current = e.touches[0].clientX
-  }
-
-  const handleTouchEnd = (e) => {
-    if (touchStartXRef.current === null) return
-    const diff = touchStartXRef.current - e.changedTouches[0].clientX
-    if (diff > 50) goNext()
-    if (diff < -50) goPrev()
-    touchStartXRef.current = null
-  }
-
-  const activeProject = filtered[activeIndex] || filtered[0]
-  const activeMeta = activeProject ? (PROJECT_META[activeProject.id] || PROJECT_META['glovix-anand']) : null
+  const handleSelectProject = useCallback((id) => {
+    setActiveId(id)
+  }, [])
 
   return (
     <section className="section projects-section" id="projects" aria-labelledby="projects-heading">
@@ -245,18 +224,18 @@ export default function Projects() {
       <div className="projects__bg-grid" aria-hidden="true" />
 
       <div className="container">
-        {/* ── SECTION HEADER ── */}
+
+        {/* ── SECTION HEADER (EDITORIAL LUXURY AESTHETIC) ── */}
         <header className="section-header">
-          <span className="section-label">Engineered Systems Portfolio</span>
+          <span className="section-label">Engineered Systems &amp; Software</span>
           <h2 className="section-title" id="projects-heading">Featured Projects</h2>
           <p className="section-subtitle">
-            High-performance production systems, client advisory web platforms, and fault-tolerant full-stack software.
+            Explore live production web applications, enterprise ACID databases, and full-stack software built for speed, security, and measurable client results.
           </p>
         </header>
 
-        {/* ── TOP CONTROLS ROW: FILTERS + VIEW MODE TOGGLE (REFERENCE DESIGN) ── */}
-        <div className="projects__controls-bar">
-          {/* Category Filter Pills */}
+        {/* ── CATEGORY FILTER PILLS ── */}
+        <div className="projects__filters-wrap">
           <div className="projects__filters" role="tablist" aria-label="Filter projects by category">
             {categories.map(({ name, count }) => (
               <button
@@ -265,358 +244,301 @@ export default function Projects() {
                 role="tab"
                 aria-selected={activeFilter === name}
                 className={`pf-tab ${activeFilter === name ? 'pf-tab--active' : ''}`}
-                onClick={() => { setActiveFilter(name); setExpandedId(null) }}
+                onClick={() => {
+                  setActiveFilter(name)
+                  const match = name === 'All' ? projects[0] : projects.find((p) => p.category === name)
+                  if (match) setActiveId(match.id)
+                }}
               >
                 <span className="pf-tab__label">{name}</span>
-                <span className="pf-tab__pill">{count}</span>
+                <span className="pf-tab__pill font-mono">{count}</span>
               </button>
             ))}
-          </div>
-
-          {/* View Mode Toggle: 3D Coverflow vs Architectural Grid */}
-          <div className="projects__view-toggle" role="group" aria-label="Project view mode">
-            <button
-              type="button"
-              className={`projects__view-btn ${viewMode === 'coverflow' ? 'projects__view-btn--active' : ''}`}
-              onClick={() => setViewMode('coverflow')}
-              title="3D Coverflow Showcase View"
-            >
-              <span className="projects__view-btn-icon">✦</span>
-              <span>3D Coverflow</span>
-            </button>
-            <button
-              type="button"
-              className={`projects__view-btn ${viewMode === 'grid' ? 'projects__view-btn--active' : ''}`}
-              onClick={() => setViewMode('grid')}
-              title="Architectural Grid View"
-            >
-              <span className="projects__view-btn-icon">⊞</span>
-              <span>Grid View</span>
-            </button>
           </div>
         </div>
 
         {/* ══════════════════════════════════════════════════════════
-            MODE 1: 3D COVERFLOW SHOWCASE (INSPIRED BY REFERENCE 1)
+            FEATURED PROJECT COCKPIT STAGE
+            Asymmetric Split Layout with Tripzia-Style Arch Portal Window
+            and Bhutan-Style Frosted Glass Telemetry Console
             ══════════════════════════════════════════════════════════ */}
-        {viewMode === 'coverflow' && (
-          <div
-            className="p-coverflow"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            role="region"
-            aria-label="3D Project Showcase"
-          >
-            {/* 3D Perspective Stage */}
-            <div className="p-coverflow__stage">
-              {filtered.map((proj, idx) => {
-                const offset = idx - activeIndex
-                const isCenter = offset === 0
-                const isLeft = offset === -1
-                const isRight = offset === 1
-                const isFarLeft = offset < -1
-                const isFarRight = offset > 1
-                const meta = PROJECT_META[proj.id] || PROJECT_META['glovix-anand']
-                const colors = getCatColor(proj.category)
+        <div className="cockpit-stage" key={activeProject.id}>
 
-                // Skip rendering cards far outside viewport to keep DOM light
-                if (Math.abs(offset) > 2) return null
+          {/* ── LEFT: TRIPZIA-INSPIRED ARCH PORTAL WINDOW ── */}
+          <div className="cockpit__arch-column">
+            <div className="arch-portal">
+              {/* Outer Glowing Perimeter Border */}
+              <div className="arch-portal__border-glow" style={{ background: meta.accentGrad }} aria-hidden="true" />
 
-                return (
-                  <div
-                    key={proj.id}
-                    className={`p-coverflow__card-wrapper ${
-                      isCenter ? 'p-coverflow__card-wrapper--center' :
-                      isLeft ? 'p-coverflow__card-wrapper--left' :
-                      isRight ? 'p-coverflow__card-wrapper--right' :
-                      isFarLeft ? 'p-coverflow__card-wrapper--far-left' :
-                      'p-coverflow__card-wrapper--far-right'
-                    }`}
-                    onClick={() => setActiveIndex(idx)}
-                    style={{
-                      '--theme-color': meta.themeColor || colors.from,
-                      '--accent-grad': meta.accentGrad || `linear-gradient(135deg, ${colors.from}, ${colors.to})`,
-                    }}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`Project: ${proj.title}`}
-                    onKeyDown={(e) => { if (e.key === 'Enter') setActiveIndex(idx) }}
-                  >
-                    <div className="p-coverflow__card">
-                      {/* Browser Mockup Chrome Header */}
-                      <div className="p-mockup__chrome">
-                        <div className="p-mockup__dots" aria-hidden="true">
-                          <span className="p-mockup__dot p-mockup__dot--red" />
-                          <span className="p-mockup__dot p-mockup__dot--yellow" />
-                          <span className="p-mockup__dot p-mockup__dot--green" />
-                        </div>
-                        <div className="p-mockup__address-bar">
-                          <span className="p-mockup__lock-icon">🔒</span>
-                          <span className="p-mockup__url font-mono">{meta.displayUrl}</span>
-                        </div>
-                        <span className={`p-mockup__status ${proj.status === 'Active' ? 'p-mockup__status--active' : ''}`}>
-                          {proj.status === 'Active' ? '● LIVE' : '✓ PRODUCTION'}
+              {/* Arched Window Top Crown */}
+              <div className="arch-portal__window">
+                {/* Browser Mockup Chrome */}
+                <div className="arch-portal__chrome">
+                  <div className="arch-portal__dots" aria-hidden="true">
+                    <span className="arch-portal__dot arch-portal__dot--red" />
+                    <span className="arch-portal__dot arch-portal__dot--yellow" />
+                    <span className="arch-portal__dot arch-portal__dot--green" />
+                  </div>
+                  <div className="arch-portal__url font-mono">
+                    <span className="arch-portal__lock">🔒</span>
+                    <span>{meta.displayUrl}</span>
+                  </div>
+                  <span className={`arch-portal__status-pill ${activeProject.status === 'Active' ? 'arch-portal__status-pill--live' : ''}`}>
+                    {activeProject.status === 'Active' ? '● LIVE' : '✓ PRODUCTION'}
+                  </span>
+                </div>
+
+                {/* Simulated UI Screen Canvas */}
+                <div className="arch-portal__canvas">
+                  <div className="arch-canvas__glow" style={{ background: meta.accentGrad }} aria-hidden="true" />
+
+                  {/* UI Canvas Header */}
+                  <div className="arch-canvas__header">
+                    <div>
+                      <span className="arch-canvas__category font-mono" style={{ color: meta.themeColor }}>
+                        {activeProject.category}
+                      </span>
+                      <h3 className="arch-canvas__title">{activeProject.title}</h3>
+                    </div>
+                    <span className="arch-canvas__year font-mono">{activeProject.year}</span>
+                  </div>
+
+                  {/* Simulated Interface Pill Rail (Inspired by Tripzia & Visual Diary) */}
+                  <div className="arch-canvas__pills-rail">
+                    {meta.destinations.map((dest, dIdx) => (
+                      <span key={dIdx} className="arch-canvas__dest-pill">
+                        {dest}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Dynamic Simulation Card */}
+                  <div className="arch-canvas__sim-card">
+                    <div className="arch-canvas__sim-header">
+                      <span className="arch-canvas__sim-badge font-mono" style={{ background: `${meta.themeColor}22`, color: meta.themeColor }}>
+                        {meta.previewUI.badge}
+                      </span>
+                      <span className="arch-canvas__sim-sub font-mono">{meta.previewUI.sub}</span>
+                    </div>
+
+                    <p className="arch-canvas__sim-text">
+                      {activeProject.shortDescription}
+                    </p>
+
+                    <div className="arch-canvas__sim-metrics font-mono">
+                      <div className="arch-sim-metric">
+                        <span className="arch-sim-metric__val" style={{ color: meta.themeColor }}>
+                          {meta.statHighlight}
                         </span>
+                        <span className="arch-sim-metric__lbl">VERIFIED PERFORMANCE</span>
                       </div>
-
-                      {/* Visual Graphic Banner / UI Screen Canvas */}
-                      <div className="p-mockup__screen">
-                        <div className="p-mockup__ambient-glow" aria-hidden="true" />
-                        <div className="p-mockup__screen-content">
-                          <span className="p-mockup__screen-tag font-mono">{proj.category}</span>
-                          <h3 className="p-mockup__screen-title">{proj.title}</h3>
-                          <div className="p-mockup__screen-badge font-mono">
-                            <span className="p-mockup__badge-spark">✦</span>
-                            <span>{meta.metric}</span>
-                            <span className="p-mockup__badge-sub">{meta.metricSub}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Card Body: Bhutan-Inspired Frosted HUD Specs & Bullets */}
-                      <div className="p-card__body">
-                        <p className="p-card__desc">{proj.shortDescription}</p>
-
-                        {/* Bullet Specs (Reference 2 Bhutan Style) */}
-                        <div className="p-card__specs-box">
-                          <span className="p-card__specs-label font-mono">CORE CAPABILITIES &amp; OUTCOMES:</span>
-                          <ul className="p-card__specs-list">
-                            {meta.bulletSpecs.map((spec, sIdx) => (
-                              <li key={sIdx} className="p-card__spec-item">
-                                <span className="p-card__spec-bullet" aria-hidden="true">◆</span>
-                                <span>{spec}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {/* Capability Badges Line (Reference 2 Icons Line) */}
-                        <div className="p-card__icons-line">
-                          {meta.specIcons.map((ic, iIdx) => (
-                            <span key={iIdx} className="p-card__icon-badge font-mono">{ic}</span>
-                          ))}
-                        </div>
-
-                        {/* Tech Stack Pills */}
-                        <div className="p-card__tech-row" role="list" aria-label="Technologies used">
-                          {proj.tech.map((t) => (
-                            <span key={t} className="p-card__tech-pill font-mono" role="listitem">{t}</span>
-                          ))}
-                        </div>
-
-                        {/* Action Link Buttons */}
-                        <div className="p-card__actions">
-                          {proj.live && (
-                            <a
-                              href={proj.live}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="p-btn p-btn--primary"
-                              onClick={(e) => e.stopPropagation()}
-                              aria-label={`Open live platform for ${proj.title}`}
-                            >
-                              <span>Explore Live Platform</span>
-                              <IconArrow />
-                            </a>
-                          )}
-                          {proj.github && (
-                            <a
-                              href={proj.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="p-btn p-btn--gh"
-                              onClick={(e) => e.stopPropagation()}
-                              aria-label={`View source code on GitHub for ${proj.title}`}
-                            >
-                              <IconGithub />
-                              <span>Source Code</span>
-                            </a>
-                          )}
-                        </div>
+                      <div className="arch-sim-metric">
+                        <span className="arch-sim-metric__val">100% ACID</span>
+                        <span className="arch-sim-metric__lbl">TRANSACTION INTEGRITY</span>
                       </div>
                     </div>
                   </div>
-                )
-              })}
+
+                  {/* Arched Bottom Decorative Frame Line */}
+                  <div className="arch-canvas__bottom-bar">
+                    <span className="arch-canvas__system-tag font-mono">
+                      ENGINEERED BY KAVYA MODI · PATTERN LLC
+                    </span>
+                    <span className="arch-canvas__spark">✦</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Hologram Chip Badge (Inspired by Spatial Reference 4) */}
+              <div className="arch-portal__floating-chip">
+                <div className="arch-chip__pulse" style={{ background: meta.themeColor }} />
+                <div className="arch-chip__content">
+                  <span className="arch-chip__metric font-mono">{meta.metric}</span>
+                  <span className="arch-chip__sub font-mono">{meta.metricSub}</span>
+                </div>
+              </div>
             </div>
+          </div>
 
-            {/* ── 3D COVERFLOW BOTTOM CONTROLS (REFERENCE 1 ARROWS + METRICS) ── */}
-            <div className="p-coverflow__controls">
-              {/* Prev Button */}
-              <button
-                type="button"
-                className="p-nav-btn p-nav-btn--prev"
-                onClick={goPrev}
-                aria-label="Previous project"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M19 12H5M12 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              {/* Pagination Dots & Position Display */}
-              <div className="p-coverflow__dots">
-                {filtered.map((_, dotIdx) => (
-                  <button
-                    key={dotIdx}
-                    type="button"
-                    className={`p-dot ${dotIdx === activeIndex ? 'p-dot--active' : ''}`}
-                    onClick={() => setActiveIndex(dotIdx)}
-                    aria-label={`Jump to project ${dotIdx + 1}`}
-                  />
-                ))}
-                <span className="p-coverflow__counter font-mono">
-                  {String(activeIndex + 1).padStart(2, '0')} / {String(filtered.length).padStart(2, '0')}
+          {/* ── RIGHT: BHUTAN-INSPIRED FROSTED GLASS TELEMETRY CONSOLE ── */}
+          <div className="cockpit__telemetry-column">
+            <div className="telemetry-panel">
+              {/* Index & Category Header */}
+              <div className="telemetry__header">
+                <span className="telemetry__index font-mono">
+                  PROJECT {String(activeIndex + 1).padStart(2, '0')} // 07
+                </span>
+                <span className="telemetry__cat-badge font-mono" style={{ color: meta.themeColor, borderColor: `${meta.themeColor}44`, background: `${meta.themeColor}14` }}>
+                  {activeProject.category}
                 </span>
               </div>
 
-              {/* Next Button */}
-              <button
-                type="button"
-                className="p-nav-btn p-nav-btn--next"
-                onClick={goNext}
-                aria-label="Next project"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        )}
+              {/* Monumental Title */}
+              <h3 className="telemetry__title">{activeProject.title}</h3>
 
-        {/* ══════════════════════════════════════════════════════════
-            MODE 2: ARCHITECTURAL HIGH-DENSITY GRID VIEW
-            ══════════════════════════════════════════════════════════ */}
-        {viewMode === 'grid' && (
-          <div className="projects__grid animate-fade-in" key={activeFilter}>
-            {filtered.map((project, i) => {
-              const isExpanded = expandedId === project.id
-              const meta = PROJECT_META[project.id] || PROJECT_META['glovix-anand']
-              const colors = getCatColor(project.category)
-              const isLive = project.status === 'Active'
-              const num = String(i + 1).padStart(2, '0')
+              {/* Comprehensive Description */}
+              <p className="telemetry__desc">{activeProject.description}</p>
 
-              return (
-                <SpotlightCard
-                  key={project.id}
-                  className={`pc ${isExpanded ? 'pc--expanded' : ''}`}
-                  style={{
-                    '--from': colors.from,
-                    '--to': colors.to,
-                    '--theme-color': meta.themeColor || colors.from,
-                  }}
-                  id={project.id}
-                  aria-labelledby={`pt-${project.id}`}
+              {/* Interactive Tab Switcher for Specs */}
+              <div className="telemetry__tabs" role="tablist">
+                <button
+                  type="button"
+                  className={`telemetry__tab-btn ${activeTab === 'specs' ? 'telemetry__tab-btn--active' : ''}`}
+                  onClick={() => setActiveTab('specs')}
                 >
-                  {/* Top Laser Accent */}
-                  <div className="pc__accent" aria-hidden="true" />
+                  <span>◆ Verified Capabilities</span>
+                </button>
+                <button
+                  type="button"
+                  className={`telemetry__tab-btn ${activeTab === 'architecture' ? 'telemetry__tab-btn--active' : ''}`}
+                  onClick={() => setActiveTab('architecture')}
+                >
+                  <span>◈ Architectural Highlights</span>
+                </button>
+              </div>
 
-                  {/* Card Number & Header Row */}
-                  <div className="pc__top">
-                    <span className="pc__num font-mono" aria-hidden="true">{num}</span>
-                    <div className="pc__badges">
-                      <span className="pc__cat-badge" style={{ background: `${colors.from}18`, border: `1px solid ${colors.from}44`, color: colors.from }}>
-                        {project.category}
-                      </span>
-                      {isLive ? (
-                        <span className="pc__status pc__status--live">
-                          <span className="pc__pulse" aria-hidden="true" />
-                          Live
+              {/* Bhutan-Style Frosted Glass Specs Box */}
+              {activeTab === 'specs' && (
+                <div className="telemetry__specs-box animate-fade-in">
+                  <div className="telemetry__specs-metric-bar">
+                    <span className="telemetry__metric-val font-mono">{meta.metric}</span>
+                    <span className="telemetry__metric-sub font-mono">{meta.metricSub}</span>
+                  </div>
+
+                  <ul className="telemetry__specs-list">
+                    {meta.bulletSpecs.map((spec, sIdx) => (
+                      <li key={sIdx} className="telemetry__spec-item">
+                        <span className="telemetry__spec-icon" style={{ color: meta.themeColor }}>
+                          <IconCheck />
                         </span>
-                      ) : (
-                        <span className="pc__status pc__status--done">Production</span>
-                      )}
-                    </div>
-                    {project.year && <span className="pc__year font-mono">{project.year}</span>}
+                        <span>{spec}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {activeTab === 'architecture' && (
+                <div className="telemetry__specs-box animate-fade-in">
+                  <div className="telemetry__specs-metric-bar">
+                    <span className="telemetry__metric-val font-mono">Clean Architecture</span>
+                    <span className="telemetry__metric-sub font-mono">SEPARATION OF CONCERNS</span>
                   </div>
 
-                  {/* Title & Metric Pill */}
-                  <h3 className="pc__title" id={`pt-${project.id}`}>{project.title}</h3>
-                  <div className="pc__metric-badge font-mono">
-                    <span className="pc__metric-dot" />
-                    <span>{meta.metric}</span>
-                    <span className="pc__metric-sub">{meta.metricSub}</span>
-                  </div>
-
-                  {/* Description */}
-                  <p className="pc__desc">{project.shortDescription}</p>
-
-                  {/* Feature Bullets (Bhutan Style) */}
-                  <ul className="pc__highlights">
-                    {meta.bulletSpecs.slice(0, 3).map((h, hIdx) => (
-                      <li key={hIdx}>
-                        <span className="pc__check" aria-hidden="true">◆</span>
+                  <ul className="telemetry__specs-list">
+                    {activeProject.highlights.map((h, hIdx) => (
+                      <li key={hIdx} className="telemetry__spec-item">
+                        <span className="telemetry__spec-icon" style={{ color: meta.themeColor }}>
+                          <IconCheck />
+                        </span>
                         <span>{h}</span>
                       </li>
                     ))}
                   </ul>
+                </div>
+              )}
 
-                  {/* Expandable Deep Dive */}
-                  {isExpanded && (
-                    <div className="pc__deep animate-fade-in" role="region" aria-label="Engineering details">
-                      <div className="pc__deep-section">
-                        <span className="pc__deep-label">◈ Architecture &amp; Methodology</span>
-                        <p className="pc__deep-text">{project.description}</p>
-                      </div>
-                      <div className="pc__deep-section">
-                        <span className="pc__deep-label">◈ Verified Capabilities</span>
-                        <ul className="pc__highlights">
-                          {meta.bulletSpecs.map((spec, sIdx) => (
-                            <li key={sIdx}><span className="pc__check">✦</span>{spec}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  )}
+              {/* Spec Icons Line (Bhutan Horizontal Badges Reference) */}
+              <div className="telemetry__icons-line">
+                {meta.specIcons.map((ic, iIdx) => (
+                  <span key={iIdx} className="telemetry__icon-chip font-mono">{ic}</span>
+                ))}
+              </div>
 
-                  {/* Card Actions Footer */}
-                  <div className="pc__footer">
-                    <div className="pc__links">
-                      {project.live && (
-                        <a href={project.live} target="_blank" rel="noopener noreferrer" className="pc__link pc__link--live" aria-label={`Live demo of ${project.title}`}>
-                          <span>Live</span>
-                          <IconArrow />
-                        </a>
-                      )}
-                      {project.github && (
-                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="pc__link pc__link--gh" aria-label={`Source code of ${project.title}`}>
-                          <IconGithub />
-                          <span>Code</span>
-                        </a>
-                      )}
-                    </div>
+              {/* Tech Stack Pills */}
+              <div className="telemetry__tech-row" role="list" aria-label="Technologies used">
+                {activeProject.tech.map((t) => (
+                  <span key={t} className="telemetry__tech-pill font-mono" role="listitem">{t}</span>
+                ))}
+              </div>
 
-                    <button
-                      type="button"
-                      className="pc__expand-btn"
-                      onClick={() => setExpandedId((p) => (p === project.id ? null : project.id))}
-                      aria-expanded={isExpanded}
-                    >
-                      <span>{isExpanded ? 'Less' : 'Details'}</span>
-                      <IconChevron open={isExpanded} />
-                    </button>
+              {/* Action Buttons */}
+              <div className="telemetry__actions">
+                {activeProject.live && (
+                  <a
+                    href={activeProject.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="telemetry__btn telemetry__btn--primary"
+                    aria-label={`Open live demo for ${activeProject.title}`}
+                  >
+                    <span>Launch Live Platform</span>
+                    <IconArrow />
+                  </a>
+                )}
+
+                {activeProject.github && (
+                  <a
+                    href={activeProject.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="telemetry__btn telemetry__btn--gh"
+                    aria-label={`View GitHub repository for ${activeProject.title}`}
+                  >
+                    <IconGithub />
+                    <span>View Repository</span>
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ══════════════════════════════════════════════════════════
+            INTERACTIVE PROJECT SELECTOR RAIL
+            Click any project to seamlessly switch the Cockpit Stage
+            ══════════════════════════════════════════════════════════ */}
+        <div className="project-rail" role="region" aria-label="Quick project switcher">
+          <div className="project-rail__header">
+            <span className="project-rail__label font-mono">SELECT SYSTEM CASE STUDY:</span>
+            <span className="project-rail__count font-mono">{filtered.length} AVAILABLE</span>
+          </div>
+
+          <div className="project-rail__grid">
+            {filtered.map((proj, pIdx) => {
+              const isSelected = proj.id === activeProject.id
+              const pMeta = PROJECT_META[proj.id] || PROJECT_META['glovix-anand']
+
+              return (
+                <button
+                  key={proj.id}
+                  type="button"
+                  className={`project-rail__card ${isSelected ? 'project-rail__card--active' : ''}`}
+                  onClick={() => handleSelectProject(proj.id)}
+                  aria-pressed={isSelected}
+                  style={{ '--card-accent': pMeta.themeColor }}
+                >
+                  <div className="rail-card__top">
+                    <span className="rail-card__num font-mono">{String(pIdx + 1).padStart(2, '0')}</span>
+                    <span className={`rail-card__status ${proj.status === 'Active' ? 'rail-card__status--live' : ''}`}>
+                      {proj.status === 'Active' ? '● LIVE' : 'PROD'}
+                    </span>
                   </div>
 
-                  {/* Tech stack */}
-                  <div className="pc__tech" role="list" aria-label="Tech stack">
-                    {project.tech.map((t) => (
-                      <span key={t} className="pc__tag font-mono" role="listitem">{t}</span>
-                    ))}
+                  <h4 className="rail-card__title">{proj.title}</h4>
+                  <p className="rail-card__category font-mono">{proj.category}</p>
+
+                  <div className="rail-card__bottom">
+                    <span className="rail-card__metric font-mono">{pMeta.metric}</span>
+                    <span className="rail-card__arrow">→</span>
                   </div>
-                </SpotlightCard>
+
+                  {isSelected && <div className="rail-card__active-beam" aria-hidden="true" />}
+                </button>
               )
             })}
           </div>
-        )}
+        </div>
 
-        {/* Count bar */}
+        {/* Count Bar */}
         <div className="projects__count-bar">
           <span className="projects__count-text">
-            Displaying <strong>{filtered.length}</strong> of <strong>{projects.length}</strong> verified software solutions
+            Showing <strong>{filtered.length}</strong> of <strong>{projects.length}</strong> production-verified systems
           </span>
           <div className="projects__count-line" style={{ width: `${(filtered.length / projects.length) * 100}%` }} />
         </div>
+
       </div>
     </section>
   )
