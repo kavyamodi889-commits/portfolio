@@ -240,7 +240,7 @@ export const projects = [
       "Voice recognition powered by Web Speech API for hands-free interactions",
       "Live webhook JSON telemetry output & CSV exportable CRM dashboard",
     ],
-    github: null,
+    github: "https://github.com/kavyamodi889-commits/whatsapp-automation",
     live: null,
     image: null,
     featured: true,
