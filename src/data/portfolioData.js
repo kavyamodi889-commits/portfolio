@@ -224,6 +224,28 @@ export const projects = [
     featured: true,
     year: 2026,
   },
+  {
+    id: "bizbot-ai",
+    title: "BizBot AI — WhatsApp Business Automation",
+    shortDescription:
+      "Intelligent conversational assistant and omnichannel lead intake platform with WhatsApp integration, meeting scheduling, automated CRM capture, and speech recognition.",
+    description:
+      "Engineered an AI-powered conversational sales & support engine. Automates customer qualification, dynamic appointment booking with calendar slots, multi-category support ticketing, and live webhook JSON extraction with instant WhatsApp dispatch.",
+    tech: ["JavaScript", "HTML5", "CSS3", "WhatsApp Web API", "Web Speech API", "LocalStorage"],
+    category: "AI & Automation",
+    status: "Active",
+    highlights: [
+      "Omnichannel conversational engine with intent detection & slot filling",
+      "Real-time WhatsApp Web dispatch and click-to-chat lead handoff",
+      "Voice recognition powered by Web Speech API for hands-free interactions",
+      "Live webhook JSON telemetry output & CSV exportable CRM dashboard",
+    ],
+    github: null,
+    live: null,
+    image: null,
+    featured: true,
+    year: 2026,
+  },
 ];
 
 // ─── EDUCATION ─────────────────────────────────────────────────────────────────

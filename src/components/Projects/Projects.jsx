@@ -158,7 +158,29 @@ const PROJECT_META = {
       accent: '#ec4899',
     },
   },
-}
+  'bizbot-ai': {
+    metric: 'Sub-30ms Intent',
+    metricSub: 'AI & WHATSAPP AUTOMATION',
+    themeColor: '#25d366',
+    accentGrad: 'linear-gradient(135deg, #25d366 0%, #128c7e 100%)',
+    displayUrl: 'bizbot.ai',
+    destinations: ['💬 WhatsApp Cloud API', '🎙️ Web Speech STT', '📅 Slot Booking', '📊 CRM Telemetry'],
+    statHighlight: '99.98% Gateway Uptime',
+    specIcons: ['💬 WhatsApp API', '🤖 NLP Engine', '🎙️ Voice Input', '📅 Dynamic Booking', '📊 Webhook JSON'],
+    bulletSpecs: [
+      'Omnichannel Conversational Engine with Intent Detection & Contextual Slot-Filling',
+      'Real-Time WhatsApp Cloud API Dispatch with Pre-Formatted Consultation Handoff',
+      'Hands-Free Voice Dictation Powered by Browser Web Speech Recognition',
+      'Automated Support Ticket Dispatch with Attachment Previews and CSV CRM Export',
+    ],
+    previewUI: {
+      type: 'automation',
+      badge: 'WHATSAPP GATEWAY',
+      sub: 'CONVERSATIONAL SALES & CRM',
+      accent: '#25d366',
+    },
+  },
+};
 
 /* ── SVG Icons ── */
 function IconArrow() {
