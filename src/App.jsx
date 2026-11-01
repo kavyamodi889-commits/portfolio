@@ -32,45 +32,78 @@ function ScrollProgress() {
 
 function CursorFollower() {
   useEffect(() => {
-    // Only enable on desktop pointer devices
     if (window.matchMedia('(pointer: coarse)').matches) return
 
-    const cursor = document.getElementById('ambient-cursor-glow')
-    if (!cursor) return
+    const dot = document.getElementById('cursor-dot')
+    const ring = document.getElementById('cursor-ring')
+    const ambientGlow = document.getElementById('ambient-cursor-glow')
+    if (!dot || !ring) return
 
-    let mouseX = -300
-    let mouseY = -300
-    let currentX = -300
-    let currentY = -300
+    let mouseX = -300, mouseY = -300
+    let ringX = -300, ringY = -300
+    let glowX = -300, glowY = -300
     let animId
+    let isHovering = false
 
     const handleMouseMove = (e) => {
       mouseX = e.clientX
       mouseY = e.clientY
+      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`
+    }
+
+    const handleMouseEnter = (e) => {
+      const el = e.target.closest('a, button, [role="button"], .card, .skill-badge-pill, .odyssey-filter-pill, .project-card, .cert-card, .core-pillar-card')
+      if (el) {
+        isHovering = true
+        ring.classList.add('cursor-ring--hover')
+        dot.classList.add('cursor-dot--hover')
+      }
+    }
+
+    const handleMouseLeave = (e) => {
+      const el = e.target.closest('a, button, [role="button"], .card, .skill-badge-pill, .odyssey-filter-pill, .project-card, .cert-card, .core-pillar-card')
+      if (el) {
+        isHovering = false
+        ring.classList.remove('cursor-ring--hover')
+        dot.classList.remove('cursor-dot--hover')
+      }
     }
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    document.addEventListener('mouseover', handleMouseEnter, { passive: true })
+    document.addEventListener('mouseout', handleMouseLeave, { passive: true })
 
     const loop = () => {
-      currentX += (mouseX - currentX) * 0.12
-      currentY += (mouseY - currentY) * 0.12
-      cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`
+      // Ring lags behind cursor
+      ringX += (mouseX - ringX) * 0.1
+      ringY += (mouseY - ringY) * 0.1
+      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`
+
+      // Ambient glow lags more slowly
+      glowX += (mouseX - glowX) * 0.07
+      glowY += (mouseY - glowY) * 0.07
+      if (ambientGlow) {
+        ambientGlow.style.transform = `translate3d(${glowX}px, ${glowY}px, 0) translate(-50%, -50%)`
+      }
+
       animId = requestAnimationFrame(loop)
     }
     loop()
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseover', handleMouseEnter)
+      document.removeEventListener('mouseout', handleMouseLeave)
       cancelAnimationFrame(animId)
     }
   }, [])
 
   return (
-    <div
-      id="ambient-cursor-glow"
-      className="ambient-cursor-glow"
-      aria-hidden="true"
-    />
+    <>
+      <div id="cursor-dot" className="cursor-dot" aria-hidden="true" />
+      <div id="cursor-ring" className="cursor-ring" aria-hidden="true" />
+      <div id="ambient-cursor-glow" className="ambient-cursor-glow" aria-hidden="true" />
+    </>
   )
 }
 
@@ -78,43 +111,90 @@ function ScrollRevealListener() {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    const selectors = [
+    // Elements revealed with default fade-up
+    const fadeUpSelectors = [
       '.section-header',
       '.skill-category',
       '.timeline__card',
       '.edu-card',
-      '.cert-card',
       '.arch__canvas',
       '.terminal-window',
-      '.recruiter__card',
       '.recruiter__preview-container',
-      '.contact__card',
       '.contact__form-card',
-      '.hero__card',
-      '.saas-metric-card',
       '.saas-panel',
       '.saas-trust-rail',
       '.saas-showcase__header',
       '.reveal-target',
+      '.crimson-quote-card',
+      '.work-process-card',
+      '.edu-process-row',
+    ]
+
+    // Elements revealed from left
+    const fadeLeftSelectors = [
+      '.contact__info',
+      '.hero__col-left',
+      '.recruiter__card',
+    ]
+
+    // Elements revealed from right
+    const fadeRightSelectors = [
+      '.contact__form-container',
+      '.hero__col-right',
+    ]
+
+    // Elements revealed with scale
+    const scaleSelectors = [
+      '.cert-card',
+      '.core-pillar-card',
+      '.hero__metric-card',
+      '.saas-metric-card',
     ]
 
     const checkVisible = () => {
       const windowH = window.innerHeight || 800
-      const elements = document.querySelectorAll(selectors.join(', '))
-      elements.forEach((el) => {
+      const threshold = windowH * 0.92
+
+      document.querySelectorAll('.reveal-on-scroll, .reveal-on-scroll--left, .reveal-on-scroll--right, .reveal-on-scroll--scale').forEach((el) => {
         const rect = el.getBoundingClientRect()
-        if (rect.top <= windowH + 180) {
+        if (rect.top <= threshold) {
           el.classList.add('is-revealed')
         }
       })
     }
 
     const initElements = () => {
-      const elements = document.querySelectorAll(selectors.join(', '))
-      elements.forEach((el) => {
-        if (!el.classList.contains('reveal-on-scroll')) {
-          el.classList.add('reveal-on-scroll')
-        }
+      fadeUpSelectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach((el, i) => {
+          if (!el.classList.contains('reveal-on-scroll')) {
+            el.classList.add('reveal-on-scroll')
+            el.style.transitionDelay = `${i * 40}ms`
+          }
+        })
+      })
+      fadeLeftSelectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach((el, i) => {
+          if (!el.classList.contains('reveal-on-scroll--left')) {
+            el.classList.add('reveal-on-scroll--left')
+            el.style.transitionDelay = `${i * 50}ms`
+          }
+        })
+      })
+      fadeRightSelectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach((el, i) => {
+          if (!el.classList.contains('reveal-on-scroll--right')) {
+            el.classList.add('reveal-on-scroll--right')
+            el.style.transitionDelay = `${i * 50}ms`
+          }
+        })
+      })
+      scaleSelectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach((el, i) => {
+          if (!el.classList.contains('reveal-on-scroll--scale')) {
+            el.classList.add('reveal-on-scroll--scale')
+            el.style.transitionDelay = `${i * 60}ms`
+          }
+        })
       })
       checkVisible()
     }
@@ -127,9 +207,7 @@ function ScrollRevealListener() {
     window.addEventListener('scroll', checkVisible, { passive: true })
     window.addEventListener('resize', checkVisible, { passive: true })
 
-    const mutationObserver = new MutationObserver(() => {
-      initElements()
-    })
+    const mutationObserver = new MutationObserver(() => { initElements() })
     mutationObserver.observe(document.body, { childList: true, subtree: true })
 
     return () => {
