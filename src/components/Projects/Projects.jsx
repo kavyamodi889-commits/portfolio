@@ -452,7 +452,7 @@ export default function Projects() {
                 ))}
               </div>
 
-              {/* Action Buttons */}
+              {/* Action Buttons — Premium Magnetic CTAs */}
               <div className="telemetry__actions">
                 {activeProject.live && (
                   <a
@@ -462,8 +462,10 @@ export default function Projects() {
                     className="telemetry__btn telemetry__btn--primary"
                     aria-label={`Open live demo for ${activeProject.title}`}
                   >
-                    <span>Launch Live Platform</span>
-                    <IconArrow />
+                    <span>Launch Live</span>
+                    <span className="btn-icon-wrap" aria-hidden="true">
+                      <IconArrow />
+                    </span>
                   </a>
                 )}
 
@@ -475,8 +477,10 @@ export default function Projects() {
                     className="telemetry__btn telemetry__btn--gh"
                     aria-label={`View GitHub repository for ${activeProject.title}`}
                   >
-                    <IconGithub />
-                    <span>View Repository</span>
+                    <span className="gh-icon-ring" aria-hidden="true">
+                      <IconGithub />
+                    </span>
+                    <span>Source Code</span>
                   </a>
                 )}
               </div>
