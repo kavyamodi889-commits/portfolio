@@ -43,7 +43,6 @@ function CursorFollower() {
     let ringX = -300, ringY = -300
     let glowX = -300, glowY = -300
     let animId
-    let isHovering = false
 
     const handleMouseMove = (e) => {
       mouseX = e.clientX
@@ -54,7 +53,6 @@ function CursorFollower() {
     const handleMouseEnter = (e) => {
       const el = e.target.closest('a, button, [role="button"], .card, .skill-badge-pill, .odyssey-filter-pill, .project-card, .cert-card, .core-pillar-card')
       if (el) {
-        isHovering = true
         ring.classList.add('cursor-ring--hover')
         dot.classList.add('cursor-dot--hover')
       }
@@ -63,7 +61,6 @@ function CursorFollower() {
     const handleMouseLeave = (e) => {
       const el = e.target.closest('a, button, [role="button"], .card, .skill-badge-pill, .odyssey-filter-pill, .project-card, .cert-card, .core-pillar-card')
       if (el) {
-        isHovering = false
         ring.classList.remove('cursor-ring--hover')
         dot.classList.remove('cursor-dot--hover')
       }
