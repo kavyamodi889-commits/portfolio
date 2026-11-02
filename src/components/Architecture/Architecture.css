@@ -287,3 +287,26 @@
   border-radius: var(--radius-md);
   border: 1px solid rgba(255, 87, 34, 0.3);
 }
+
+@media (max-width: 640px) {
+  .architecture-section {
+    padding: 70px 0 50px;
+  }
+  .arch__canvas {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+  .arch__canvas-title {
+    font-size: 1.35rem;
+  }
+  .arch__canvas-desc {
+    font-size: 0.9rem;
+  }
+  .arch__node-card {
+    padding: 12px 14px;
+  }
+  .arch__inspector {
+    padding: 18px 16px;
+    position: static;
+  }
+}

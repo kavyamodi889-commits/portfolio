@@ -375,17 +375,17 @@ export default function Projects() {
         </div>
 
         {/* ══════════════════════════════════════════════════════════
-            SPATIAL 3D COVERFLOW STAGE (Ref 2 & Ref 4 Inspired)
-            Features true 3D perspective depth, active focused card,
-            and interactive flanking preview cards.
+            VISUAL GALLERY DECK ("My Visual Diary" Inspired)
+            Features prominent active card, flanking perspective cards,
+            and sleek circular nav controls.
             ══════════════════════════════════════════════════════════ */}
         <div
-          className="spatial-deck"
+          className="gallery-deck"
           ref={deckRef}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <div className="spatial-deck__viewport">
+          <div className="gallery-stage">
             {filtered.map((proj, pIdx) => {
               const pMeta = PROJECT_META[proj.id] || PROJECT_META['glovix-anand']
               const offset = pIdx - safeIndex
@@ -393,16 +393,16 @@ export default function Projects() {
               const isLeft = offset === -1 || (safeIndex === 0 && offset === filtered.length - 1)
               const isRight = offset === 1 || (safeIndex === filtered.length - 1 && offset === -(filtered.length - 1))
 
-              // Compute spatial position class
-              let cardClass = 'spatial-card--hidden'
-              if (isCenter) cardClass = 'spatial-card--center'
-              else if (isLeft) cardClass = 'spatial-card--left'
-              else if (isRight) cardClass = 'spatial-card--right'
+              // Compute gallery position class
+              let cardClass = 'gallery-card--hidden'
+              if (isCenter) cardClass = 'gallery-card--center'
+              else if (isLeft) cardClass = 'gallery-card--left'
+              else if (isRight) cardClass = 'gallery-card--right'
 
               return (
                 <article
                   key={proj.id}
-                  className={`spatial-card ${cardClass}`}
+                  className={`gallery-card ${cardClass}`}
                   onClick={() => {
                     if (isLeft || isRight) setCurrentIndex(pIdx)
                   }}
@@ -412,97 +412,94 @@ export default function Projects() {
                   }}
                   aria-hidden={!isCenter}
                 >
-                  {/* Glowing Perimeter Shield */}
-                  <div className="spatial-card__border-glow" aria-hidden="true" />
-
                   {/* Top Window System Chrome */}
-                  <div className="spatial-card__chrome">
-                    <div className="spatial-chrome__dots" aria-hidden="true">
-                      <span className="spatial-chrome__dot spatial-chrome__dot--red" />
-                      <span className="spatial-chrome__dot spatial-chrome__dot--yellow" />
-                      <span className="spatial-chrome__dot spatial-chrome__dot--green" />
+                  <div className="gallery-card__chrome">
+                    <div className="gallery-chrome__dots" aria-hidden="true">
+                      <span className="gallery-chrome__dot gallery-chrome__dot--red" />
+                      <span className="gallery-chrome__dot gallery-chrome__dot--yellow" />
+                      <span className="gallery-chrome__dot gallery-chrome__dot--green" />
                     </div>
-                    <div className="spatial-chrome__url font-mono">
-                      <span className="spatial-chrome__lock">🔒</span>
+                    <div className="gallery-chrome__url">
+                      <span className="gallery-chrome__lock">🔒</span>
                       <span>{pMeta.displayUrl}</span>
                     </div>
-                    <span className={`spatial-chrome__status ${proj.status === 'Active' ? 'spatial-chrome__status--live' : ''}`}>
+                    <span className={`gallery-chrome__badge ${proj.status === 'Active' ? 'gallery-chrome__badge--live' : 'gallery-chrome__badge--prod'}`}>
                       {proj.status === 'Active' ? '● LIVE' : 'PROD'}
                     </span>
                   </div>
 
-                  {/* Arched Visual Canvas (Ref 1 & Ref 4 Inspired) */}
-                  <div className="spatial-card__canvas">
-                    <div className="spatial-canvas__glow-orb" aria-hidden="true" />
+                  {/* Card Body & Dynamic UI Simulation */}
+                  <div className="gallery-card__body">
+                    <div className="gallery-card__glow-orb" aria-hidden="true" />
 
-                    {/* Canvas Header */}
-                    <div className="spatial-canvas__header">
+                    {/* Header */}
+                    <div className="gallery-card__header">
                       <div>
-                        <span className="spatial-canvas__cat font-mono" style={{ color: pMeta.themeColor }}>
+                        <span className="gallery-card__cat" style={{ color: pMeta.themeColor }}>
                           {proj.category}
                         </span>
-                        <h3 className="spatial-canvas__title">{proj.title}</h3>
+                        <h3 className="gallery-card__title">{proj.title}</h3>
                       </div>
-                      <span className="spatial-canvas__year font-mono">{proj.year}</span>
+                      <span className="gallery-card__year">{proj.year}</span>
                     </div>
 
-                    {/* Destination / Capability Tags Rail */}
-                    <div className="spatial-canvas__tags-rail">
+                    {/* Capability Tags Rail */}
+                    <div className="gallery-card__tags">
                       {pMeta.destinations.map((tag, tIdx) => (
-                        <span key={tIdx} className="spatial-tag-pill">
+                        <span key={tIdx} className="gallery-tag">
                           {tag}
                         </span>
                       ))}
                     </div>
 
                     {/* Dynamic Simulated App Screen Canvas */}
-                    <div className="spatial-sim-screen">
-                      <div className="spatial-sim__top">
-                        <span className="spatial-sim__badge font-mono" style={{ background: `${pMeta.themeColor}20`, color: pMeta.themeColor }}>
+                    <div className="gallery-card__stats">
+                      <div className="gallery-stats__top">
+                        <span className="gallery-stats__badge" style={{ background: `${pMeta.themeColor}20`, color: pMeta.themeColor }}>
                           {pMeta.previewUI.badge}
                         </span>
-                        <span className="spatial-sim__sub font-mono">{pMeta.previewUI.sub}</span>
+                        <span className="gallery-stats__sub">{pMeta.previewUI.sub}</span>
                       </div>
 
-                      <p className="spatial-sim__desc">{proj.shortDescription}</p>
+                      <p className="gallery-stats__desc">{proj.shortDescription}</p>
 
-                      <div className="spatial-sim__metrics-row font-mono">
-                        <div className="spatial-sim-stat">
-                          <span className="spatial-sim-stat__val" style={{ color: pMeta.themeColor }}>
+                      <div className="gallery-stats__metrics">
+                        <div className="gallery-metric">
+                          <span className="gallery-metric__val" style={{ color: pMeta.themeColor }}>
                             {pMeta.previewUI.metricVal}
                           </span>
-                          <span className="spatial-sim-stat__lbl">{pMeta.previewUI.metricLbl}</span>
+                          <span className="gallery-metric__lbl">{pMeta.previewUI.metricLbl}</span>
                         </div>
-                        <div className="spatial-sim-stat">
-                          <span className="spatial-sim-stat__val">
+                        <div className="gallery-metric">
+                          <span className="gallery-metric__val">
                             {pMeta.previewUI.secVal}
                           </span>
-                          <span className="spatial-sim-stat__lbl">{pMeta.previewUI.secLbl}</span>
+                          <span className="gallery-metric__lbl">{pMeta.previewUI.secLbl}</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Bottom System Watermark Bar */}
-                    <div className="spatial-canvas__footer">
-                      <span className="spatial-canvas__tagline font-mono">
+                    {/* Footer System Watermark */}
+                    <div className="gallery-card__footer">
+                      <span className="gallery-footer__tag">
                         ENGINEERED BY KAVYA MODI · PATTERN LLC
                       </span>
-                      <span className="spatial-canvas__spark">✦</span>
+                      <span className="gallery-footer__spark">✦</span>
                     </div>
                   </div>
 
-                  {/* Floating 3D Holographic Chip (Ref 4 Inspired) */}
-                  <div className="spatial-card__hologram-chip">
-                    <div className="hologram-chip__pulse" style={{ background: pMeta.themeColor }} />
-                    <div className="hologram-chip__info">
-                      <span className="hologram-chip__metric font-mono">{pMeta.metric}</span>
-                      <span className="hologram-chip__sub font-mono">{pMeta.metricSub}</span>
+                  {/* Floating Hologram Chip */}
+                  <div className="gallery-card__chip">
+                    <div className="gallery-chip__dot" style={{ background: pMeta.themeColor, boxShadow: `0 0 8px ${pMeta.themeColor}` }} />
+                    <div className="gallery-chip__text">
+                      <span className="gallery-chip__metric">{pMeta.metric}</span>
+                      <span className="gallery-chip__sub">{pMeta.metricSub}</span>
                     </div>
                   </div>
 
                   {/* Flanking card hint overlay */}
                   {!isCenter && (
-                    <div className="spatial-card__hint-overlay">
+                    <div className="gallery-card__hint">
                       <span>Click to Focus</span>
                     </div>
                   )}
@@ -512,10 +509,10 @@ export default function Projects() {
           </div>
 
           {/* ── SLEEK CAROUSEL CONTROLS (Ref 2 Inspired) ── */}
-          <div className="spatial-deck__controls">
+          <div className="gallery-deck__nav">
             <button
               type="button"
-              className="spatial-nav-btn spatial-nav-btn--prev"
+              className="gallery-nav-btn gallery-nav-btn--prev"
               onClick={handlePrev}
               aria-label="Previous project"
               title="Previous project (←)"
@@ -524,28 +521,28 @@ export default function Projects() {
             </button>
 
             {/* Step Counter & Progress Indicator */}
-            <div className="spatial-deck__pagination font-mono">
-              <span className="spatial-pagination__curr">
+            <div className="gallery-deck__progress">
+              <span className="gallery-progress__curr">
                 {String(safeIndex + 1).padStart(2, '0')}
               </span>
-              <div className="spatial-pagination__track">
+              <div className="gallery-progress__bar">
                 <div
-                  className="spatial-pagination__fill"
+                  className="gallery-progress__fill"
                   style={{
                     width: `${((safeIndex + 1) / filtered.length) * 100}%`,
                     background: meta.themeColor,
-                    boxShadow: `0 0 12px ${meta.themeColor}`,
+                    boxShadow: `0 0 10px ${meta.themeColor}`,
                   }}
                 />
               </div>
-              <span className="spatial-pagination__total">
+              <span className="gallery-progress__total">
                 {String(filtered.length).padStart(2, '0')}
               </span>
             </div>
 
             <button
               type="button"
-              className="spatial-nav-btn spatial-nav-btn--next"
+              className="gallery-nav-btn gallery-nav-btn--next"
               onClick={handleNext}
               aria-label="Next project"
               title="Next project (→)"
@@ -555,14 +552,14 @@ export default function Projects() {
           </div>
 
           {/* Interactive Pagination Step Dots */}
-          <div className="spatial-deck__dots" role="tablist" aria-label="Project slide dots">
+          <div className="gallery-deck__dots" role="tablist" aria-label="Project slide dots">
             {filtered.map((p, dIdx) => (
               <button
                 key={p.id}
                 type="button"
                 role="tab"
                 aria-selected={dIdx === safeIndex}
-                className={`spatial-dot ${dIdx === safeIndex ? 'spatial-dot--active' : ''}`}
+                className={`gallery-dot ${dIdx === safeIndex ? 'gallery-dot--active' : ''}`}
                 onClick={() => setCurrentIndex(dIdx)}
                 title={p.title}
                 style={dIdx === safeIndex ? { background: meta.themeColor, boxShadow: `0 0 8px ${meta.themeColor}` } : undefined}

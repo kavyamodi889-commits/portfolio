@@ -1284,3 +1284,32 @@
     gap: 12px;
   }
 }
+
+@media (max-width: 480px) {
+  .odyssey-viewport {
+    height: 580px;
+    perspective: 600px;
+  }
+  .odyssey-card {
+    padding: 18px 14px;
+    border-radius: 18px;
+    width: calc(100% - 16px);
+  }
+  .odyssey-card--left,
+  .odyssey-card--right {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .work-process-card {
+    padding: 18px 14px;
+    border-radius: 16px;
+  }
+  .crimson-quote-card {
+    padding: 24px 18px;
+    border-radius: 16px;
+  }
+  .crimson-quote-text {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+}

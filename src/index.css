@@ -626,3 +626,53 @@ body::before {
   padding: 0; margin: -1px; overflow: hidden;
   clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;
 }
+
+/* ── Cross-Browser Scrollbar ─────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 87, 34, 0.35) rgba(10, 13, 20, 0.85);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #07080d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 87, 34, 0.3);
+  border-radius: 99px;
+  border: 2px solid #07080d;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 87, 34, 0.6);
+}
+
+/* ── Accessibility: Focus Indicators ─────────────────── */
+:focus-visible {
+  outline: 2px solid #ff7828;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #ff7828;
+  outline-offset: 3px;
+}
+
+/* ── Reduced Motion Support (System Accessibility) ─────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

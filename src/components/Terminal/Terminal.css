@@ -296,3 +296,25 @@
 .term-action-link--alt:hover {
   background: rgba(255, 255, 255, 0.15);
 }
+
+@media (max-width: 640px) {
+  .terminal-section {
+    padding: 70px 0 50px;
+  }
+  .terminal-window {
+    border-radius: 16px;
+  }
+  .terminal-window__header {
+    padding: 10px 14px;
+  }
+  .terminal-window__body {
+    padding: 14px 12px;
+    font-size: 12px;
+    min-height: 280px;
+    max-height: 440px;
+  }
+  .terminal__chip {
+    padding: 4px 9px;
+    font-size: 11px;
+  }
+}

@@ -791,7 +791,7 @@
 
 @media (max-width: 860px) {
   .hero {
-    padding-top: calc(var(--nav-height, 76px) + 8px);
+    padding-top: calc(var(--nav-height, 76px) + 6px);
     overflow-x: hidden;
   }
 
@@ -800,25 +800,25 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    font-size: 9.5px;
+    font-size: clamp(8px, 2.2vw, 10px);
     letter-spacing: 0.08em;
-    padding: 6px 16px 12px;
+    padding: 6px 14px 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    margin-bottom: 6px;
-    gap: 10px;
-  }
-
-  .hero__top-brand {
+    margin-bottom: 4px;
     gap: 8px;
   }
 
-  .hero__top-status {
+  .hero__top-brand {
     gap: 6px;
   }
 
+  .hero__top-status {
+    gap: 5px;
+  }
+
   .hero__watermark {
-    top: clamp(100px, 12vh, 130px);
-    opacity: 0.12;
+    top: clamp(90px, 11vh, 120px);
+    opacity: 0.1;
   }
 
   .hero__watermark span {
@@ -829,9 +829,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 18px 28px;
-    gap: 20px;
-    max-width: 580px;
+    padding: 8px 16px 24px;
+    gap: 18px;
+    max-width: 540px;
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
@@ -855,48 +855,83 @@
     margin-bottom: -4px;
   }
 
+  .hero__greeting {
+    font-size: clamp(26px, 6.5vw, 34px);
+  }
+
+  .hero__name {
+    font-size: clamp(48px, 13vw, 70px);
+    margin-bottom: 8px;
+  }
+
   .hero__role-badge {
     text-align: center;
-    margin-bottom: 12px;
+    font-size: clamp(11px, 2.8vw, 12.5px);
+    letter-spacing: 0.12em;
+    margin-bottom: 10px;
   }
 
   /* Center Portrait placed immediately after Title for strong visual identity */
   .hero__col-center {
     order: 2;
-    margin: 4px 0 10px;
+    margin: 0 0 6px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     width: 100%;
   }
 
   .hero__portrait-wrapper {
-    max-width: 250px;
+    max-width: clamp(210px, 58vw, 260px);
     width: 100%;
     margin: 0 auto;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero__portrait-frame {
     border-radius: 20px;
+    border: 1px solid rgba(255, 59, 48, 0.25);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(229, 29, 46, 0.15);
+  }
+
+  .hero__portrait-halo {
+    width: 280px;
+    height: 280px;
+    filter: blur(45px);
+    opacity: 0.7;
   }
 
   .hero__floating-card {
-    position: absolute;
-    bottom: 8px;
-    left: 50%;
+    position: relative;
+    bottom: auto;
+    left: auto;
     right: auto;
-    transform: translateX(-50%);
-    width: calc(100% - 24px);
-    max-width: 210px;
-    padding: 7px 12px;
+    transform: translateY(-14px);
+    width: calc(100% - 20px);
+    max-width: 220px;
+    padding: 8px 12px;
     text-align: center;
     box-sizing: border-box;
     border-radius: 12px;
+    z-index: 6;
+    background: rgba(12, 15, 24, 0.94);
+    border: 1px solid rgba(255, 59, 48, 0.35);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75);
+    animation: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
 
   .hero__floating-text {
-    font-size: 10px;
+    font-size: 10.5px;
     line-height: 1.35;
+    text-align: left;
   }
 
   /* Bio & Worldwide badge */
@@ -912,13 +947,13 @@
   .hero__bio {
     text-align: center;
     font-size: 13.5px;
-    line-height: 1.6;
-    max-width: 440px;
-    margin: 0 0 14px;
+    line-height: 1.62;
+    max-width: 420px;
+    margin: 0 0 12px;
   }
 
   .hero__worldwide-pill {
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     font-size: 9.5px;
     padding: 5px 12px;
   }
@@ -928,17 +963,18 @@
     order: 4;
     max-width: 100%;
     width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .hero__status-capsule {
-    border-radius: 16px;
+    border-radius: 14px;
     padding: 10px 14px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     gap: 8px;
-    background: rgba(14, 18, 28, 0.9);
+    background: rgba(14, 18, 28, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .hero__status-header {
@@ -977,7 +1013,7 @@
   .hero__btn-primary {
     width: 100%;
     justify-content: center;
-    padding: 14px 22px;
+    padding: 13px 20px;
     font-size: 13.5px;
     box-sizing: border-box;
   }
@@ -998,7 +1034,7 @@
 
   .hero__cv-btn {
     width: auto;
-    min-width: 78px;
+    min-width: 80px;
     padding: 12px 16px;
     justify-content: center;
     box-sizing: border-box;
@@ -1008,7 +1044,7 @@
   .hero__col-right {
     order: 6;
     grid-column: span 1;
-    margin-top: 6px;
+    margin-top: 4px;
     padding-left: 0;
     width: 100%;
   }
@@ -1049,37 +1085,37 @@
   .hero__top-bar {
     font-size: 8.5px;
     letter-spacing: 0.04em;
-    padding: 6px 10px 10px;
+    padding: 5px 10px 8px;
   }
 
   .hero__top-text {
-    max-width: 145px;
+    max-width: 140px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   .hero__top-status-text {
-    max-width: 145px;
+    max-width: 140px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   .hero__name {
-    font-size: clamp(46px, 13.5vw, 64px);
+    font-size: clamp(44px, 13vw, 58px);
   }
 
   .hero__greeting {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .hero__portrait-wrapper {
-    max-width: 220px;
+    max-width: 215px;
   }
 
   .hero__floating-card {
-    max-width: 195px;
+    max-width: 200px;
     padding: 6px 10px;
   }
 

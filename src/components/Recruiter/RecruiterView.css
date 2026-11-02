@@ -206,11 +206,13 @@
     flex-direction: column;
   }
   .recruiter__preview-viewport {
-    height: 480px;
+    height: 440px;
     padding: 8px;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .recruiter__preview-scale {
-    min-width: 480px;
+    min-width: 320px;
+    max-width: 100%;
   }
 }

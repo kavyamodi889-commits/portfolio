@@ -15,7 +15,7 @@ export default function ScrollToTop() {
         const progress = Math.min(100, Math.max(0, (currentScroll / scrollTotal) * 100))
         setScrollProgress(progress)
       }
-      setVisible(currentScroll > 280)
+      setVisible(currentScroll > 260)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -25,86 +25,86 @@ export default function ScrollToTop() {
 
   const scrollToTop = () => {
     setIsClicked(true)
-    setTimeout(() => setIsClicked(false), 600)
+    setTimeout(() => setIsClicked(false), 700)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   if (!visible) return null
 
-  // Circle progress calculation: 48x48 box, center 24, radius 20
-  const radius = 20
+  // Circle progress calculation: 56x56 box, center 28, radius 22
+  const radius = 22
   const circumference = 2 * Math.PI * radius
   const offset = circumference - (scrollProgress / 100) * circumference
 
   return (
     <div
-      className={`stt-container ${visible ? 'stt-container--visible' : ''}`}
+      className={`stt-wrapper ${visible ? 'stt-wrapper--visible' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <button
-        className={`stt-btn ${isClicked ? 'stt-btn--clicked' : ''}`}
+        className={`stt-button ${isClicked ? 'stt-button--clicked' : ''}`}
         onClick={scrollToTop}
-        aria-label={`Scroll back to top (${Math.round(scrollProgress)}% scrolled)`}
-        title="Back to Top"
+        aria-label={`Scroll back to top — ${Math.round(scrollProgress)}% scrolled`}
+        title={`Scroll to top (${Math.round(scrollProgress)}%)`}
         type="button"
       >
-        {/* Ambient Gradient Glow Aura */}
-        <div className="stt-ambient-glow" aria-hidden="true" />
+        {/* Dynamic ambient radial halo */}
+        <div className="stt-glow" aria-hidden="true" />
 
         {/* Circular Progress SVG with Multi-Stop Gradient Ring */}
         <svg
-          className="stt-progress-ring"
-          width="52"
-          height="52"
-          viewBox="0 0 52 52"
+          className="stt-svg"
+          width="56"
+          height="56"
+          viewBox="0 0 56 56"
           aria-hidden="true"
         >
           <defs>
-            <linearGradient id="sttRingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#06b6d4" />
-              <stop offset="35%" stopColor="#38bdf8" />
-              <stop offset="70%" stopColor="#a855f7" />
-              <stop offset="100%" stopColor="#ec4899" />
+            <linearGradient id="sttGradientRing" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#38bdf8" />
+              <stop offset="45%" stopColor="#818cf8" />
+              <stop offset="75%" stopColor="#c084fc" />
+              <stop offset="100%" stopColor="#f472b6" />
             </linearGradient>
-            <filter id="sttGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <filter id="sttRingGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
           </defs>
 
-          {/* Background Track Circle */}
+          {/* Background track circle */}
           <circle
             className="stt-track"
-            cx="26"
-            cy="26"
+            cx="28"
+            cy="28"
             r={radius}
-            strokeWidth="3.2"
+            strokeWidth="3"
             fill="none"
           />
 
-          {/* Dynamic Animated Progress Stroke */}
+          {/* Progress indicator circle */}
           <circle
             className="stt-indicator"
-            cx="26"
-            cy="26"
+            cx="28"
+            cy="28"
             r={radius}
-            strokeWidth="3.2"
-            stroke="url(#sttRingGradient)"
+            strokeWidth="3"
+            stroke="url(#sttGradientRing)"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
             strokeLinecap="round"
             fill="none"
-            filter="url(#sttGlowFilter)"
+            filter="url(#sttRingGlow)"
           />
         </svg>
 
-        {/* Center Glass Core with Upward Arrow */}
+        {/* Center Glass Core */}
         <div className="stt-core">
           <svg
-            className="stt-arrow"
-            width="17"
-            height="17"
+            className="stt-icon"
+            width="18"
+            height="18"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -117,10 +117,10 @@ export default function ScrollToTop() {
           </svg>
         </div>
 
-        {/* Hover percentage indicator tooltip */}
-        <div className={`stt-tooltip ${isHovered ? 'stt-tooltip--active' : ''}`} aria-hidden="true">
-          <span>{Math.round(scrollProgress)}%</span>
-        </div>
+        {/* Floating Percentage Badge */}
+        <span className={`stt-badge ${isHovered ? 'stt-badge--visible' : ''}`} aria-hidden="true">
+          {Math.round(scrollProgress)}%
+        </span>
       </button>
     </div>
   )
