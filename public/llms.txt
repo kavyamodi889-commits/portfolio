@@ -1,0 +1,28 @@
+# Kavya Modi — Personal Developer Portfolio
+
+> Full-Stack Web Developer & Software Engineer | Operating Executive at Pattern LLC | Semcom BCA Rank 1 Gold Medalist (9.55 CGPA)
+
+Website: https://kavyamodi.vercel.app/
+GitHub: https://github.com/kavyamodi889-commits
+LinkedIn: https://www.linkedin.com/in/kavya-modi
+Email: kavyamodi746@gmail.com
+Location: Bharuch, Gujarat, India
+
+## Professional Overview
+Kavya Modi is an Operating Executive at Pattern LLC and Semcom BCA Rank 1 Gold Medalist with a 9.55 CGPA distinction. Specializing in high-concurrency systems, full-stack React 19 architecture, Python FastAPI microservices, and ACID-compliant transactional MySQL databases.
+
+## Core Technical Skills
+- Frontend: React 19, Vite, TypeScript, JavaScript (ES2024), Tailwind CSS, Responsive Design, CSS Architecture, Canvas 3D
+- Backend: Python (FastAPI), Node.js, Express, PHP, REST APIs, Microservices
+- Databases & Systems: MySQL (ACID Transactions), MongoDB, Distributed Systems Architecture
+- DevOps & Tools: Git, GitHub, Vercel, Netlify, Vite, Postman, Linux
+
+## Featured Systems & Projects
+- Glovix Anand: Global education portal and IELTS intake engine with sub-second Netlify edge deployment.
+- Anugrah Accounting: High-integrity corporate accounting platform engineered for a Bharuch chartered advisory firm.
+- Rangila Resto: Interactive restaurant hospitality experience with dynamic reservations and cuisine discovery.
+- Pixel Plus Media: Creative agency motion showcase with fluid transitions and optimized split-bundles.
+- Enterprise Vault: Safety deposit locker matrix with role-based access control and immutable audit trails.
+- Laundry Operations: Point-of-sale and automated billing system with thermal invoice printing.
+- StreamVerse: Adaptive bitrate video streaming architecture powered by React 19 and FastAPI.
+- BizBot AI: Conversational sales lead intake platform with WhatsApp Cloud API integration.

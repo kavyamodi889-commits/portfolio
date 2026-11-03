@@ -203,7 +203,7 @@ export default function Skills() {
               </div>
 
               {/* Skill pills */}
-              <div className="skill-category__items" role="list">
+              <div className="skill-category__items">
                 {group.items.map((item) => {
                   const isActive = selectedSkill === item
                   const pct = PROFICIENCY[item]
@@ -214,7 +214,6 @@ export default function Skills() {
                       className={`skill-badge-pill ${isActive ? 'skill-badge-pill--active' : ''}`}
                       onClick={() => handleSkillClick(item)}
                       aria-pressed={isActive}
-                      role="listitem"
                     >
                       {item}
                       {pct && (

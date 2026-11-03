@@ -82,7 +82,7 @@
   --text:        #ffffff;
   --text-2:      #e2e8f0;
   --text-3:      #94a3b8;
-  --text-4:      #64748b;
+  --text-4:      #94a3b8;
 
   /* Gradients */
   --grad-hero:   linear-gradient(135deg, #ffffff 30%, #ff7828 75%, #ff3d00 100%);

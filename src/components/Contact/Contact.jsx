@@ -240,7 +240,7 @@ export default function Contact() {
                 <span className="contact__channels-count">{contactLinks.length} Active</span>
               </div>
 
-              <div className="contact__links" role="list">
+              <div className="contact__links">
                 {contactLinks.filter((l) => l.public).map((link) => (
                   <div key={link.label} className="contact__link-item">
                     <a
@@ -248,7 +248,6 @@ export default function Contact() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="contact__link"
-                      role="listitem"
                       aria-label={`Connect on ${link.label}`}
                     >
                       <span className="contact__link-icon" aria-hidden="true">

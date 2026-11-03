@@ -73,7 +73,7 @@ export default function Navbar() {
         <a
           href="/"
           className="navbar__logo"
-          aria-label="Kavya Modi — Home (Click to replay intro)"
+          aria-label="Kavya Modi Web Developer — Home"
           onClick={(e) => {
             if (window.location.pathname === '/') {
               e.preventDefault()

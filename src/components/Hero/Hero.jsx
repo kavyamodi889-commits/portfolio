@@ -220,15 +220,18 @@ export default function Hero() {
 
               {/* Footer Segment: Pips & Clock */}
               <div className="hero__status-footer">
-                <div className="hero__status-pips" aria-label="Status selectors">
+                <div className="hero__status-pips" role="tablist" aria-label="Status selectors">
                   {STATUS_ITEMS.map((item, idx) => (
                     <button
                       key={idx}
                       type="button"
+                      role="tab"
+                      aria-selected={idx === statusIdx}
+                      aria-label={`Select status: ${item.category} - ${item.title}`}
                       className={`hero__status-pip ${idx === statusIdx ? 'hero__status-pip--active' : ''}`}
                       onClick={() => setStatusIdx(idx)}
                       title={item.category}
-                      style={idx === statusIdx ? { background: item.dot, boxShadow: `0 0 8px ${item.dot}` } : undefined}
+                      style={{ '--pip-color': item.dot }}
                     />
                   ))}
                 </div>

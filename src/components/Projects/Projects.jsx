@@ -559,6 +559,7 @@ export default function Projects() {
                 type="button"
                 role="tab"
                 aria-selected={dIdx === safeIndex}
+                aria-label={`Go to project ${dIdx + 1}: ${p.title}`}
                 className={`gallery-dot ${dIdx === safeIndex ? 'gallery-dot--active' : ''}`}
                 onClick={() => setCurrentIndex(dIdx)}
                 title={p.title}
@@ -600,6 +601,8 @@ export default function Projects() {
           <div className="telemetry__tabs" role="tablist">
             <button
               type="button"
+              role="tab"
+              aria-selected={activeTab === 'specs'}
               className={`telemetry__tab-btn ${activeTab === 'specs' ? 'telemetry__tab-btn--active' : ''}`}
               onClick={() => setActiveTab('specs')}
             >
@@ -607,6 +610,8 @@ export default function Projects() {
             </button>
             <button
               type="button"
+              role="tab"
+              aria-selected={activeTab === 'architecture'}
               className={`telemetry__tab-btn ${activeTab === 'architecture' ? 'telemetry__tab-btn--active' : ''}`}
               onClick={() => setActiveTab('architecture')}
             >
@@ -679,7 +684,7 @@ export default function Projects() {
                 rel="noopener noreferrer"
                 className="telemetry__btn telemetry__btn--primary"
                 style={{ '--btn-theme': meta.themeColor }}
-                aria-label={`Open live demo for ${activeProject.title}`}
+                aria-label={`Launch Live System — Open live demo for ${activeProject.title}`}
               >
                 <span>Launch Live System</span>
                 <span className="btn-icon-wrap" aria-hidden="true">
@@ -694,7 +699,7 @@ export default function Projects() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="telemetry__btn telemetry__btn--gh"
-                aria-label={`View GitHub repository for ${activeProject.title}`}
+                aria-label={`Source Code — View GitHub repository for ${activeProject.title}`}
               >
                 <span className="gh-icon-ring" aria-hidden="true">
                   <IconGithub />
