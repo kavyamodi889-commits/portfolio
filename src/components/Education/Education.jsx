@@ -361,6 +361,7 @@ export default function Education() {
                     onClick={() => setActiveIdx(idx)}
                     role="group"
                     aria-label={`Milestone: ${m.role}`}
+                    aria-hidden={!isCenter}
                   >
                     {/* Glowing Perimeter & Aura */}
                     <div className="odyssey-card__aura" aria-hidden="true" />
@@ -413,9 +414,9 @@ export default function Education() {
                     </div>
 
                     {/* Tech Badges */}
-                    <div className="odyssey-card__tech-row" role="list">
+                    <div className="odyssey-card__tech-row">
                       {m.tech.map((t) => (
-                        <span key={t} className="odyssey-card__tech-tag" role="listitem">{t}</span>
+                        <span key={t} className="odyssey-card__tech-tag">{t}</span>
                       ))}
                     </div>
                   </div>

@@ -596,9 +596,9 @@
   font-size: 10.5px;
   padding: 3px 9px;
   border-radius: var(--r-full);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
   transition: all 0.2s ease;
 }
 
@@ -661,22 +661,35 @@
 .odyssey-dots {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 2px;
 }
 
 .odyssey-dot {
-  width: 8px;
-  height: 8px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
+  background: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   transition: all 0.3s ease;
 }
 
-.odyssey-dot--active {
-  width: 24px;
+.odyssey-dot::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transition: all 0.3s ease;
+}
+
+.odyssey-dot--active::after {
+  width: 22px;
   border-radius: 4px;
   background: #ff5722;
   box-shadow: 0 0 10px #ff5722;
